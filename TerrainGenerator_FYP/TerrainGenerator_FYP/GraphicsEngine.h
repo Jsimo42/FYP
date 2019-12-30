@@ -1,4 +1,9 @@
 #pragma once
+
+#include "Libs.h"
+#include "Camera.h"
+#include "Shader.h"
+
 class GraphicsEngine
 {
 public:

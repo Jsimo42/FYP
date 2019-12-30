@@ -25,4 +25,10 @@
 
 #include "Vertex.h"
 
-
+enum Directions
+{
+	Forward = 0,
+	Back,
+	Left,
+	Right
+};
