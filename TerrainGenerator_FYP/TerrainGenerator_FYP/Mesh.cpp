@@ -129,17 +129,86 @@ void Mesh::Rotate(glm::vec3 RotationAmount)
 
 void Mesh::InitialiseMeshVAO(Primitive * PrimitiveIn)
 {
+	NumVertices = PrimitiveIn->GetNumVertices();
+	NumIndices = PrimitiveIn->GetNumIndices();
+
+	glCreateVertexArrays(1, &VAO);
+	glBindVertexArray(VAO);
+	
+	glGenBuffers(1, &VBO);
+	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	glBufferData(GL_ARRAY_BUFFER, NumVertices * sizeof(Vertex), PrimitiveIn->GetVertices(), GL_STATIC_DRAW);
+
+	if (NumIndices > 0)
+	{
+		glGenBuffers(1, &EBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, NumIndices * sizeof(GLuint), PrimitiveIn->GetIndices(), GL_STATIC_DRAW);
+	}
+
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, Position));
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, Normal));
+	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, TexCoord));
+	glEnableVertexAttribArray(2);
+
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, Tangent));
+	glEnableVertexAttribArray(3);
+
+	glBindVertexArray(0);
+
 }
 
 void Mesh::InitialiseModelVAO()
 {
+	// Create buffers/arrays
+	glCreateVertexArrays(1, &ModelVAO);
+	glBindVertexArray(ModelVAO);
+
+	glGenBuffers(1, &ModelVBO);
+	glBindBuffer(GL_ARRAY_BUFFER, ModelVBO);
+	glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(Vertex), &Vertices[0], GL_STATIC_DRAW);
+
+	if (Indices.size() > 0)
+	{
+		glGenBuffers(1, &ModelEBO);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ModelEBO);
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(GLuint), &Indices[0], GL_STATIC_DRAW);
+	}
+
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, Position));
+
+	glEnableVertexAttribArray(1);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, Normal));
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)offsetof(Vertex, TexCoord));
+
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid*)offsetof(Vertex, Tangent));
+
+	glBindVertexArray(0);
 }
 
 void Mesh::UpdateUniforms(Shader * ShaderIn)
 {
+	ShaderIn->SetMat4fv(ModelMatrix, "VS_ModelMatrix");
 }
 
 void Mesh::UpdateModelMatrix()
 {
+	ModelMatrix = glm::mat4(1.f);
+
+	ModelMatrix = glm::translate(ModelMatrix, WorldPosition);
+
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.x), glm::vec3(1.f, 0.f, 0.f));
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.y), glm::vec3(0.f, 1.f, 0.f));
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.z), glm::vec3(0.f, 0.f, 1.f));
+
+	ModelMatrix = glm::scale(ModelMatrix, WorldScale);
 }
 
