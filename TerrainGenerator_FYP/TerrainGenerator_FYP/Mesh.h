@@ -5,7 +5,7 @@
 #include "Shader.h"
 #include "Vertex.h"
 
-struct Texture
+struct TextureInfo
 {
 	GLuint ID;
 	std::string Type;
@@ -18,7 +18,7 @@ public:
 	//Mesh Loading Constructor
 	Mesh(Primitive* PrimitiveIn, glm::vec3 PositionIn = glm::vec3(0.f), glm::vec3 RotationIn = glm::vec3(0.f), glm::vec3 ScaleIn = glm::vec3(1.f)); //TODO Create Vector and Transform
 	//Model Loading Constructor
-	Mesh(std::vector<Vertex> VerticesIn, std::vector<GLuint> IndicesIn, std::vector<Texture> TexturesIn);
+	Mesh(std::vector<Vertex> VerticesIn, std::vector<GLuint> IndicesIn, std::vector<TextureInfo> TexturesIn);
 	~Mesh();
 
 	void Render(Shader* ShaderIn);
@@ -51,7 +51,7 @@ private:
 
 	std::vector<Vertex> Vertices;
 	std::vector<GLuint> Indices;
-	std::vector<Texture> Textures;
+	std::vector<TextureInfo> Textures;
 
 	glm::mat4 ModelMatrix;
 

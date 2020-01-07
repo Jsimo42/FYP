@@ -24,8 +24,9 @@
 #include <assimp/postprocess.h>
 
 #include "Vertex.h"
+#include "JSMath.h"
 
-enum Directions
+enum EDirection
 {
 	Forward = 0,
 	Back,

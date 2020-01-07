@@ -20,7 +20,7 @@ Camera::Camera(glm::vec3 PositionIn, glm::vec3 DirectionIn, glm::vec3 WorldUpIn)
 	UpdateCameraVectors();
 }
 
-void Camera::UpdateInput(const float & DeltaTimeIn, const int Direction, const double & OffsetX, const double & OffsetY)
+void Camera::UpdateInput(const float & DeltaTimeIn, const double & OffsetX, const double & OffsetY)
 {
 	UpdateMouseInput(DeltaTimeIn, OffsetX, OffsetY);
 }
@@ -34,7 +34,7 @@ const glm::mat4 Camera::GetViewMatrix()
 	return ViewMatrix;
 }
 
-void Camera::MoveCamera(const float & DeltaTimeIn, const int Direction)
+void Camera::MoveCamera(const float & DeltaTimeIn, const EDirection Direction)
 {
 	switch (Direction)
 	{

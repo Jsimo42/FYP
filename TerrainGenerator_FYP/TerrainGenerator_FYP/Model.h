@@ -20,13 +20,13 @@ public:
 
 private:
 	std::vector<Mesh*> MeshVector;
-	std::vector<Texture> TextureVector;
+	std::vector<TextureInfo> TextureVector;
 	std::string Directory;
 
 	void LoadModel(std::string Path);
 	void ProcessNode(aiNode* Node, const aiScene* Scene);
 	Mesh* ProcessMesh(aiMesh* MeshIn, const aiScene* Scene);
-	std::vector<Texture> LoadMaterialTextures(aiMaterial* Material, aiTextureType Type, std::string TypeName);
+	std::vector<TextureInfo> LoadMaterialTextures(aiMaterial* Material, aiTextureType Type, std::string TypeName);
 	GLint TextureFromFile(const char* Path, std::string Directory);
 };
 

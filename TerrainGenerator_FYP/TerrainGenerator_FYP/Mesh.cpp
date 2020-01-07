@@ -12,7 +12,7 @@ Mesh::Mesh(Primitive * PrimitiveIn, glm::vec3 PositionIn, glm::vec3 RotationIn, 
 	UpdateModelMatrix();
 }
 
-Mesh::Mesh(std::vector<Vertex> VerticesIn, std::vector<GLuint> IndicesIn, std::vector<Texture> TexturesIn)
+Mesh::Mesh(std::vector<Vertex> VerticesIn, std::vector<GLuint> IndicesIn, std::vector<TextureInfo> TexturesIn)
 {
 	Vertices = VerticesIn;
 	Indices = IndicesIn;

@@ -7,12 +7,12 @@ class Camera
 public:
 	Camera(glm::vec3 PositionIn, glm::vec3 DirectionIn, glm::vec3 WorldUpIn);
 
-	void UpdateInput(const float& DeltaTimeIn, const int Direction, const double& OffsetX, const double& OffsetY);
+	void UpdateInput(const float& DeltaTimeIn, const double& OffsetX, const double& OffsetY);
 
 	const glm::mat4 GetViewMatrix();
 	const glm::vec3 GetCameraPosition() { return CameraPosition; };
 
-	void MoveCamera(const float& DeltaTimeIn, const int Direction);
+	void MoveCamera(const float& DeltaTimeIn, const EDirection Direction);
 
 private:
 	GLfloat MoveSpeed{ 0 };

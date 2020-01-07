@@ -96,7 +96,7 @@ Mesh* Model::ProcessMesh(aiMesh* MeshIn, const aiScene* Scene)
 {
 	std::vector<Vertex> VertexVector;
 	std::vector<GLuint> IndexVector;
-	std::vector<Texture> TextureVector;
+	std::vector<TextureInfo> TextureVector;
 
 	//Process Vertices
 	for (int i = 0; i < MeshIn->mNumVertices; i++)
@@ -150,10 +150,10 @@ Mesh* Model::ProcessMesh(aiMesh* MeshIn, const aiScene* Scene)
 	{
 		aiMaterial* material = Scene->mMaterials[MeshIn->mMaterialIndex];
 
-		std::vector<Texture> DiffuseMaps = this->LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<TextureInfo> DiffuseMaps = this->LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		TextureVector.insert(TextureVector.end(), DiffuseMaps.begin(), DiffuseMaps.end());
 
-		std::vector<Texture> SpecularMaps = this->LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<TextureInfo> SpecularMaps = this->LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		TextureVector.insert(TextureVector.end(), SpecularMaps.begin(), SpecularMaps.end());
 	}
 
@@ -161,9 +161,9 @@ Mesh* Model::ProcessMesh(aiMesh* MeshIn, const aiScene* Scene)
 	return ProcessedMesh;
 }
 
-std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* Material, aiTextureType Type, std::string TypeName)
+std::vector<TextureInfo> Model::LoadMaterialTextures(aiMaterial* Material, aiTextureType Type, std::string TypeName)
 {
-	std::vector<Texture> TexVector;
+	std::vector<TextureInfo> TexVector;
 
 	for (int i = 0; i < Material->GetTextureCount(Type); i++)
 	{
@@ -176,21 +176,21 @@ std::vector<Texture> Model::LoadMaterialTextures(aiMaterial* Material, aiTexture
 			if (TextureVector[j].Path == String)
 			{
 				TexVector.push_back(TextureVector[j]);
-				skip = true;
-				break;
-			}
-		}
-
-		if (!skip)
-		{
-			Texture Texture;
-			Texture.ID = TextureFromFile(String.C_Str(), Directory);
-			Texture.Type = TypeName;
-			Texture.Path = String;
-			TexVector.push_back(Texture);
-
-			TextureVector.push_back(Texture);
-		}
+				skip = true;																						 
+				break;																								 
+			}																										 
+		}																											 
+																													 
+		if (!skip)																									 
+		{																											 
+			TextureInfo Texture;																					 
+			Texture.ID = TextureFromFile(String.C_Str(), Directory);												 
+			Texture.Type = TypeName;																				 
+			Texture.Path = String;																					 
+			TexVector.push_back(Texture);																			 
+																													 
+			TextureVector.push_back(Texture);																		 
+		}																											 
 	}
 
 	return TexVector;
