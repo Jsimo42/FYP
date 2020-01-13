@@ -1,18 +1,10 @@
-﻿  Model.cpp
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(12): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(20): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(28): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(36): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(44): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(52): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(60): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(83): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(89): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(102): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(138): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(142): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(168): warning C4018: '<': signed/unsigned mismatch
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(174): warning C4018: '<': signed/unsigned mismatch
+﻿  Layer.cpp
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(45): warning C4018: '<': signed/unsigned mismatch
+  Level.cpp
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(12): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  WorldEngine.cpp
+  Generating Code...
 LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
 soil2-debug.lib(etc1_utils.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(etc1_utils.obj)' or at 'C:\Users\jsimo\Desktop\FYP\TerrainGenerator_FYP\Debug\soil2-debug.pdb'; linking object as if no debug info
 soil2-debug.lib(image_DXT.obj) : warning LNK4099: PDB 'soil2-debug.pdb' was not found with 'soil2-debug.lib(image_DXT.obj)' or at 'C:\Users\jsimo\Desktop\FYP\TerrainGenerator_FYP\Debug\soil2-debug.pdb'; linking object as if no debug info

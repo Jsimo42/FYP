@@ -24,25 +24,6 @@ GraphicsEngine::~GraphicsEngine()
 		delete ShaderVector[i];
 	}
 
-	for (int i = 0; i < MaterialVector.size(); i++)
-	{
-		delete MaterialVector[i];
-	}
-
-	for (int i = 0; i < TextureVector.size(); i++)
-	{
-		delete TextureVector[i];
-	}
-
-	for (int i = 0; i < ModelVector.size(); i++)
-	{
-		delete ModelVector[i];
-	}
-
-	for (int i = 0; i < MeshVector.size(); i++)
-	{
-		delete MeshVector[i];
-	}
 
 	for (int i = 0; i < LightVector.size(); i++)
 	{
@@ -54,10 +35,6 @@ void GraphicsEngine::Initialise()
 {
 	InitialiseMatrices();
 	InitialiseShaders();
-	InitialiseTextures();
-	InitialiseMaterials();
-	InitialiseModels();
-	InitialiseMeshes();
 	InitialiseLights();
 	InitialiseUniforms();
 }
@@ -94,22 +71,22 @@ void GraphicsEngine::UpdateKeyboardInput()
 
 	if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
 	{
-		MainCamera.MoveCamera(DeltaTime, Forward);
+		MainCamera.MoveCamera(DeltaTime, EForward);
 	}
 
 	if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
 	{
-		MainCamera.MoveCamera(DeltaTime, Back);
+		MainCamera.MoveCamera(DeltaTime, EBack);
 	}
 
 	if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
 	{
-		MainCamera.MoveCamera(DeltaTime, Left);
+		MainCamera.MoveCamera(DeltaTime, ELeft);
 	}
 
 	if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS)
 	{
-		MainCamera.MoveCamera(DeltaTime, Right);
+		MainCamera.MoveCamera(DeltaTime, ERight);
 	}
 
 
@@ -122,20 +99,20 @@ void GraphicsEngine::UpdateKeyboardInput()
 
 		if (Axis[0] < 0)
 		{
-			MainCamera.MoveCamera(DeltaTime, Left);
+			MainCamera.MoveCamera(DeltaTime, ELeft);
 		}
 		else if (Axis[0] > 0)
 		{
-			MainCamera.MoveCamera(DeltaTime, Right);
+			MainCamera.MoveCamera(DeltaTime, ERight);
 		}
 
 		if (Axis[1] < 0)
 		{
-			MainCamera.MoveCamera(DeltaTime, Forward);
+			MainCamera.MoveCamera(DeltaTime, EForward);
 		}
 		else if (Axis[1] > 0)
 		{
-			MainCamera.MoveCamera(DeltaTime, Back);
+			MainCamera.MoveCamera(DeltaTime, EBack);
 		}
 	}
 }
@@ -168,32 +145,27 @@ void GraphicsEngine::SetWindowShouldClose()
 	glfwSetWindowShouldClose(Window, GLFW_TRUE);
 }
 
-Primitive GraphicsEngine::CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform)
+Mesh* GraphicsEngine::CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform)
 {
 	switch (PrimitiveType)
 	{
-	case EPrimitive::ECube:
-		return MeshVector.push_back(new Mesh(&Cube()));
+	case EPrimitive::EPrimCube:
+		return new Mesh(&Cube());
 		break;
-	case EPrimitive::EPyramid:
-		return MeshVector.push_back(new Mesh(&Pyramid()));
+	case EPrimitive::EPrimPyramid:
+		return new Mesh(&Pyramid());
 		break;
 	default:
 		break;
 	}
-
-	MeshCount++;
 }
 
-bool GraphicsEngine::CreateModel(std::string FileName, Transform MeshTransform)
+Model* GraphicsEngine::CreateModel(std::string FileName, Transform MeshTransform)
 {
-	ModelVector.push_back(new Model(FileName));
-	ModelCount++;
-
-	return true;
+	return new Model(FileName);
 }
 
-void GraphicsEngine::Render()
+void GraphicsEngine::RenderMesh(Mesh * RenderMesh, Transform MeshTransform, std::vector<Texture*> TextureVectorIn)
 {
 	ShaderVector[MainProgram]->UseProgram();
 
@@ -202,60 +174,142 @@ void GraphicsEngine::Render()
 
 	UpdateUniforms();
 
-	for
+	ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
+
+	for (int i = 0; i < TextureVectorIn.size(); i++)
+	{
+		TextureVectorIn[i]->Bind(i);
+	}
+
+	RenderMesh->Render(ShaderVector[MainProgram]);
+
+	for (int i = 0; i < TextureVectorIn.size(); i++)
+	{
+		TextureVectorIn[i]->Unbind();
+	}
+
+	glfwSwapBuffers(Window);
+	glFlush();
+
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	ShaderVector[MainProgram]->UnuseProgram();
+}
+
+void GraphicsEngine::RenderModel(Model * RenderModel, Transform ModelTransform, std::vector<Texture*> TextureVectorIn)
+{
 }
 
 bool GraphicsEngine::InitialiseGLFW()
 {
-	return false;
+	if (glfwInit() == GLFW_FALSE)
+	{
+		std::cout << "GLFW Initialise Error" << std::endl;
+		glfwTerminate();
+		return false;
+	}
+
+	return true;
 }
 
 bool GraphicsEngine::InitialiseWindow(const char * WindowTitle)
 {
-	return false;
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, GLMajorVersion);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, GLMinorVersion);
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+	glfwWindowHint(GLFW_RESIZABLE, true);
+
+	Window = glfwCreateWindow(WindowWidth, WindowHeight, WindowTitle, NULL, NULL);
+
+	if (Window == nullptr)
+	{
+		std::cout << "Window Initialise Error" << std::endl;
+		glfwTerminate();
+		return false;
+	}
+
+	glfwGetFramebufferSize(Window, &FrameBufferWidth, &FrameBufferHeight);
+	glfwSetFramebufferSizeCallback(Window, GraphicsEngine::FrameBufferResizeCallback);
+
+	glfwMakeContextCurrent(Window);
+
+	return true;
 }
 
 bool GraphicsEngine::InitialiseGLEW()
 {
-	return false;
+	glewExperimental = GL_TRUE;
+
+	//Error Check
+	if (glewInit() != GLEW_OK)
+	{
+		std::cout << "GLEW Initialise Error" << std::endl;
+		glfwTerminate();
+		
+		return false;
+	}
+	return true;
 }
 
 void GraphicsEngine::SetOpenGLOptions()
 {
+	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_CULL_FACE);
+	glCullFace(GL_BACK);
+	glFrontFace(GL_CCW);
+
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
+	glEnable(GL_POLYGON_MODE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+
+	glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void GraphicsEngine::InitialiseMatrices()
 {
+	ViewMatrix = glm::mat4(1.f);
+	ViewMatrix = glm::lookAt(CameraPosition, CameraPosition + ForwardVector, WorldUp);
+
+	ProjectionMatrix = glm::mat4(1.f);
+	ProjectionMatrix = glm::perspective(glm::radians(FOV), (float)FrameBufferWidth / FrameBufferHeight, NearPlane, FarPlane);
 }
 
 void GraphicsEngine::InitialiseShaders()
 {
-}
-
-void GraphicsEngine::InitialiseTextures()
-{
-}
-
-void GraphicsEngine::InitialiseMaterials()
-{
-}
-
-void GraphicsEngine::InitialiseModels()
-{
-}
-
-void GraphicsEngine::InitialiseMeshes()
-{
+	ShaderVector.push_back(new Shader("VertexShader.glsl", "FragmentShader.glsl"));
 }
 
 void GraphicsEngine::InitialiseLights()
 {
+	LightVector.push_back(new glm::vec3(5.f, 10.f, 5.f));
 }
 
 void GraphicsEngine::InitialiseUniforms()
 {
+	ShaderVector[MainProgram]->SetMat4fv(ViewMatrix, "VS_ViewMatrix");
+	ShaderVector[MainProgram]->SetMat4fv(ProjectionMatrix, "VS_ProjectionMatrix");
 }
 
 void GraphicsEngine::UpdateUniforms()
 {
+	ViewMatrix = MainCamera.GetViewMatrix();
+
+	ShaderVector[MainProgram]->SetMat4fv(ViewMatrix, "VS_ViewMatrix");
+	ShaderVector[MainProgram]->SetVec3f(MainCamera.GetCameraPosition(), "CameraPosition");
+
+	//Recalculate Projection Matrix
+	glfwGetFramebufferSize(Window, &FrameBufferWidth, &FrameBufferHeight);
+
+	ProjectionMatrix = glm::mat4(1.f);
+	ProjectionMatrix = glm::perspective(glm::radians(FOV), (float)FrameBufferWidth / FrameBufferHeight, NearPlane, FarPlane);
+
+	ShaderVector[MainProgram]->SetMat4fv(ProjectionMatrix, "VS_ProjectionMatrix");
+}
+
+void GraphicsEngine::FrameBufferResizeCallback(GLFWwindow * WindowIn, int Width, int Height)
+{
+	glViewport(0, 0, Width, Height);
 }

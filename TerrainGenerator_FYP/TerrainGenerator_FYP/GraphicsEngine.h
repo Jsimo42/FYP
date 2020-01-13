@@ -13,8 +13,8 @@ enum EShader { MainProgram = 0 };
 
 enum EPrimitive 
 {
-	ECube = 0,
-	EPyramid
+	EPrimCube = 0,
+	EPrimPyramid
 };
 
 class GraphicsEngine
@@ -30,10 +30,11 @@ public:
 	int GetWindowShouldClose();
 	void SetWindowShouldClose();
 
-	bool CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform);
-	bool CreateModel(std::string FileName, Transform MeshTransform);
+	Mesh* CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform);
+	Model* CreateModel(std::string FileName, Transform MeshTransform);
 
-	void Render();
+	void RenderMesh(Mesh* RenderMesh, Transform MeshTransform, std::vector<Texture*> TextureVectorIn);
+	void RenderModel(Model* RenderModel, Transform ModelTransform, std::vector<Texture*> TextureVectorIn);
 
 private:
 
@@ -63,9 +64,6 @@ private:
 	//Vectors
 	std::vector <Shader*> ShaderVector;
 	std::vector <TextureInfo*> TextureVector;
-	std::vector <Material*> MaterialVector;
-	std::vector <Model*> ModelVector;
-	std::vector <Mesh*> MeshVector;
 	std::vector <glm::vec3*> LightVector;
 
 	//MVP Matrices
@@ -80,8 +78,6 @@ private:
 
 	//Other
 	Camera MainCamera;
-	int ModelCount{ 0 };
-	int MeshCount{ 0 };
 
 	bool InitialiseGLEW();
 	bool InitialiseGLFW();
@@ -90,10 +86,6 @@ private:
 
 	void InitialiseMatrices();
 	void InitialiseShaders();
-	void InitialiseTextures();
-	void InitialiseMaterials();
-	void InitialiseModels();
-	void InitialiseMeshes();
 	void InitialiseLights();
 	void InitialiseUniforms();
 

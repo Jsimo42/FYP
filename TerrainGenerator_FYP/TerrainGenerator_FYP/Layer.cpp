@@ -26,8 +26,14 @@ void Layer::CreateLevel(std::string FileName)
 			switch (TestLevel[i][j])
 			{
 			case 0:
-				EntityVector.push_back(new Entity(EEntityType::ECube, glm::vec3(XPos, YPos, ZPos), glm::vec3(0, 0, 0), glm::vec3(1, 1, 1)));
+				EntityVector.push_back(new Entity(EEntityType::ECube, Transform()));
+				break;
+			case 1:
+				EntityVector.push_back(new Entity(EEntityType::EPyramid, Transform()));
+			default:
+				break;
 			}
+
 			XPos++;
 		}
 		YPos++;

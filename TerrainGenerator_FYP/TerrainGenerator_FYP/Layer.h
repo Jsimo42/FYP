@@ -16,7 +16,7 @@ public:
 	void Render(GraphicsEngine* Graphics);
 
 private:
-	int EntityVector{ 0 };
+	int EntityCount{ 0 };
 	std::vector<Entity*> EntityVector;
 
 	int TestLevel[2][2]{ 0, 0, 1, 0 };

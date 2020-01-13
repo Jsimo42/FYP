@@ -5,8 +5,6 @@
 
 int main()
 {
-    std::cout << "Hello World!\n";
-
 	WorldEngine* Engine = new WorldEngine;
 
 	Engine->CreateLevel("FilePath", 1);

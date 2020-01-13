@@ -6,13 +6,19 @@
 class Entity
 {
 public:
-	Entity(EEntityType EntityType, glm::vec3 PositionIn, glm::vec3 RotatonIn, glm::vec3 ScaleIn);
+	Entity(EEntityType EntityType, Transform TransformIn, std::string FileNameIn = "");
 	~Entity();
 
 	void Render(GraphicsEngine* Graphics);
 
 private:
 	EEntityType Type = EEntityType::ENone;
-	
+	Mesh* EntityMesh{ nullptr };
+	Model* EntityModel{ nullptr };
+	Transform EntityTransform;
+	bool bMesh{ true };
+
+	std::vector<Texture*> TextureVector;
+	GraphicsEngine * Graphics;
 };
 
