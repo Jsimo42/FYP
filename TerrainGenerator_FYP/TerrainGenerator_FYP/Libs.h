@@ -28,8 +28,16 @@
 
 enum EDirection
 {
-	Forward = 0,
-	Back,
-	Left,
-	Right
+	EForward = 0,
+	EBack,
+	ELeft,
+	ERight
+};
+
+enum EEntityType
+{
+	EModel = 0,
+	ECube,
+	EPyramid,
+	ENone
 };

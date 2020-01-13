@@ -2,7 +2,7 @@
 #include "Model.h"
 
 
-Model::Model(GLchar * Path)
+Model::Model(std::string Path)
 {
 	LoadModel(Path);
 }
@@ -169,19 +169,19 @@ std::vector<TextureInfo> Model::LoadMaterialTextures(aiMaterial* Material, aiTex
 	{
 		aiString String;
 		Material->GetTexture(Type, i, &String);
-		GLboolean skip = false;
+		GLboolean bSkip = false;
 
 		for (int j = 0; j < TextureVector.size(); j++)
 		{
 			if (TextureVector[j].Path == String)
 			{
 				TexVector.push_back(TextureVector[j]);
-				skip = true;																						 
+				bSkip = true;																						 
 				break;																								 
 			}																										 
 		}																											 
 																													 
-		if (!skip)																									 
+		if (!bSkip)																									 
 		{																											 
 			TextureInfo Texture;																					 
 			Texture.ID = TextureFromFile(String.C_Str(), Directory);												 

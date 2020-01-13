@@ -38,16 +38,16 @@ void Camera::MoveCamera(const float & DeltaTimeIn, const EDirection Direction)
 {
 	switch (Direction)
 	{
-	case Forward:
+	case EForward:
 		CameraPosition += CameraForward * MoveSpeed * DeltaTimeIn;
 		break;
-	case Back:
+	case EBack:
 		CameraPosition -= CameraForward * MoveSpeed * DeltaTimeIn;
 		break;
-	case Left:
+	case ELeft:
 		CameraPosition -= CameraRight * MoveSpeed * DeltaTimeIn;
 		break;
-	case Right:
+	case ERight:
 		CameraPosition += CameraRight * MoveSpeed * DeltaTimeIn;
 		break;
 	default:

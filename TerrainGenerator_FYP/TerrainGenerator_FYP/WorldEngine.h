@@ -2,6 +2,9 @@
 
 #include "Libs.h"
 #include "GraphicsEngine.h"
+#include "Level.h"
+
+/* Runs Setup and main update loop */
 
 using namespace std;
 
@@ -17,6 +20,9 @@ public:
 
 private:
 	GraphicsEngine* Graphics = nullptr;
+
+	std::vector<Model*> ModelVector;
+	std::vector<Mesh*> MeshVector;
 
 };
 

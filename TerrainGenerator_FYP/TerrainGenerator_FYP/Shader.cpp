@@ -85,20 +85,20 @@ void Shader::SetVec4f(glm::fvec4 Value, const GLchar * UniformName)
 	UnuseProgram();
 }
 
-void Shader::SetMat3fv(glm::mat3 Value, const GLchar * UniformName, GLboolean Transpose)
+void Shader::SetMat3fv(glm::mat3 Value, const GLchar * UniformName, GLboolean bTranspose)
 {
 	UseProgram();
 
-	glUniformMatrix3fv(glGetUniformLocation(id, UniformName), 1, Transpose, glm::value_ptr(Value));
+	glUniformMatrix3fv(glGetUniformLocation(id, UniformName), 1, bTranspose, glm::value_ptr(Value));
 
 	UnuseProgram();
 }
 
-void Shader::SetMat4fv(glm::mat4 Value, const GLchar * UniformName, GLboolean Transpose)
+void Shader::SetMat4fv(glm::mat4 Value, const GLchar * UniformName, GLboolean bTranspose)
 {
 	UseProgram();
 
-	glUniformMatrix4fv(glGetUniformLocation(id, UniformName), 1, Transpose, glm::value_ptr(Value));
+	glUniformMatrix4fv(glGetUniformLocation(id, UniformName), 1, bTranspose, glm::value_ptr(Value));
 
 	UnuseProgram();
 }

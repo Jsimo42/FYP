@@ -20,8 +20,8 @@ public:
 	void SetVec3f(glm::fvec3 Value, const GLchar* UniformName);
 	void SetVec4f(glm::fvec4 Value, const GLchar* UniformName);
 
-	void SetMat3fv(glm::mat3 Value, const GLchar* UniformName, GLboolean Transpose = GL_FALSE);
-	void SetMat4fv(glm::mat4 Value, const GLchar* UniformName, GLboolean Transpose = GL_FALSE);
+	void SetMat3fv(glm::mat3 Value, const GLchar* UniformName, GLboolean bTranspose = GL_FALSE);
+	void SetMat4fv(glm::mat4 Value, const GLchar* UniformName, GLboolean bTranspose = GL_FALSE);
 private:
 	//Variables
 	GLuint id;

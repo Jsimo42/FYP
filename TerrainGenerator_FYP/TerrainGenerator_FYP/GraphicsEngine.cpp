@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GraphicsEngine.h"
 
-
 GraphicsEngine::GraphicsEngine(const char * WindowTitle, const int Width, const int Height, const int GLMajorVer, const int GLMinorVer) : WindowWidth(Width), WindowHeight(Height), GLMajorVersion(GLMajorVer), GLMinorVersion(GLMinorVer), MainCamera(glm::vec3(20.f, 5.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f))
 {
 	Window = nullptr;
@@ -20,32 +19,32 @@ GraphicsEngine::~GraphicsEngine()
 	glfwTerminate();
 
 	//TODO Change to int
-	for (size_t i = 0; i < ShaderVector.size(); i++)
+	for (int i = 0; i < ShaderVector.size(); i++)
 	{
 		delete ShaderVector[i];
 	}
 
-	for (size_t i = 0; i < MaterialVector.size(); i++)
+	for (int i = 0; i < MaterialVector.size(); i++)
 	{
 		delete MaterialVector[i];
 	}
 
-	for (size_t i = 0; i < TextureVector.size(); i++)
+	for (int i = 0; i < TextureVector.size(); i++)
 	{
 		delete TextureVector[i];
 	}
 
-	for (size_t i = 0; i < ModelVector.size(); i++)
+	for (int i = 0; i < ModelVector.size(); i++)
 	{
 		delete ModelVector[i];
 	}
 
-	for (size_t i = 0; i < MeshVector.size(); i++)
+	for (int i = 0; i < MeshVector.size(); i++)
 	{
 		delete MeshVector[i];
 	}
 
-	for (size_t i = 0; i < LightVector.size(); i++)
+	for (int i = 0; i < LightVector.size(); i++)
 	{
 		delete LightVector[i];
 	}
@@ -113,6 +112,7 @@ void GraphicsEngine::UpdateKeyboardInput()
 		MainCamera.MoveCamera(DeltaTime, Right);
 	}
 
+
 	int ControllerAttatched = glfwJoystickPresent(GLFW_JOYSTICK_1);
 
 	if (ControllerAttatched)
@@ -142,29 +142,67 @@ void GraphicsEngine::UpdateKeyboardInput()
 
 void GraphicsEngine::UpdateMouseInput()
 {
+	glfwGetCursorPos(Window, &CurrentMouseX, &CurrentMouseY);
+
+	if (bFirstMouse)
+	{
+		LastMouseX = CurrentMouseX;
+		LastMouseY = CurrentMouseY;
+		bFirstMouse = false;
+	}
+
+	MouseOffsetX = CurrentMouseX - LastMouseX;
+	MouseOffsetY = CurrentMouseY - LastMouseY;
+
+	LastMouseX = CurrentMouseX;
+	LastMouseY = CurrentMouseY;
 }
 
 int GraphicsEngine::GetWindowShouldClose()
 {
-	return 0;
+	return glfwWindowShouldClose(Window);
 }
 
 void GraphicsEngine::SetWindowShouldClose()
 {
+	glfwSetWindowShouldClose(Window, GLFW_TRUE);
 }
 
-bool GraphicsEngine::CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform)
+Primitive GraphicsEngine::CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform)
 {
-	return false;
+	switch (PrimitiveType)
+	{
+	case EPrimitive::ECube:
+		return MeshVector.push_back(new Mesh(&Cube()));
+		break;
+	case EPrimitive::EPyramid:
+		return MeshVector.push_back(new Mesh(&Pyramid()));
+		break;
+	default:
+		break;
+	}
+
+	MeshCount++;
 }
 
 bool GraphicsEngine::CreateModel(std::string FileName, Transform MeshTransform)
 {
-	return false;
+	ModelVector.push_back(new Model(FileName));
+	ModelCount++;
+
+	return true;
 }
 
 void GraphicsEngine::Render()
 {
+	ShaderVector[MainProgram]->UseProgram();
+
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	UpdateUniforms();
+
+	for
 }
 
 bool GraphicsEngine::InitialiseGLFW()

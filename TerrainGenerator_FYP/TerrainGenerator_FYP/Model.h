@@ -6,7 +6,7 @@
 class Model
 {
 public:
-	Model(GLchar* Path);
+	Model(std::string Path);
 
 	void Render(Shader* ShaderIn);
 

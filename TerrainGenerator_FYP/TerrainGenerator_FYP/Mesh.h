@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Libs.h"
-#include "Primitive.h"
+#include "Cube.h"
+#include "Pyramid.h"
 #include "Shader.h"
 #include "Vertex.h"
 

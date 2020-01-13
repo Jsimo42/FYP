@@ -13,8 +13,8 @@ enum EShader { MainProgram = 0 };
 
 enum EPrimitive 
 {
-	Cube = 0,
-	Pyramid
+	ECube = 0,
+	EPyramid
 };
 
 class GraphicsEngine
@@ -26,10 +26,6 @@ public:
 	void Initialise();
 
 	void Update();
-	void UpdateDeltaTime();
-	void UpdateInput();
-	void UpdateKeyboardInput();
-	void UpdateMouseInput();
 
 	int GetWindowShouldClose();
 	void SetWindowShouldClose();
@@ -51,7 +47,7 @@ private:
 	const int GLMinorVersion = 6;
 
 	//Mouse Input
-	bool FirstMouse{ true };
+	bool bFirstMouse{ true };
 	double LastMouseX{ 0.f };
 	double LastMouseY{ 0.f };
 	double CurrentMouseX{ 0.f };
@@ -84,6 +80,8 @@ private:
 
 	//Other
 	Camera MainCamera;
+	int ModelCount{ 0 };
+	int MeshCount{ 0 };
 
 	bool InitialiseGLEW();
 	bool InitialiseGLFW();
@@ -100,6 +98,10 @@ private:
 	void InitialiseUniforms();
 
 	void UpdateUniforms();
+	void UpdateDeltaTime();
+	void UpdateInput();
+	void UpdateKeyboardInput();
+	void UpdateMouseInput();
 
 	static void FrameBufferResizeCallback(GLFWwindow* WindowIn, int Width, int Height);
 };
