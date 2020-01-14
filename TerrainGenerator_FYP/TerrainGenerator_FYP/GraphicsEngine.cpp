@@ -46,95 +46,6 @@ void GraphicsEngine::Update()
 	UpdateInput();
 }
 
-void GraphicsEngine::UpdateDeltaTime()
-{
-	CurrentTime = (float)glfwGetTime();
-	DeltaTime = CurrentTime - LastTime;
-	LastTime = CurrentTime;
-}
-
-void GraphicsEngine::UpdateInput()
-{
-	glfwPollEvents();
-
-	UpdateKeyboardInput();
-	UpdateMouseInput();
-	MainCamera.UpdateInput(DeltaTime, MouseOffsetX, MouseOffsetY);
-}
-
-void GraphicsEngine::UpdateKeyboardInput()
-{
-	if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
-	{
-		glfwSetWindowShouldClose(Window, GLFW_TRUE);
-	}
-
-	if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, EForward);
-	}
-
-	if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, EBack);
-	}
-
-	if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, ELeft);
-	}
-
-	if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, ERight);
-	}
-
-
-	int ControllerAttatched = glfwJoystickPresent(GLFW_JOYSTICK_1);
-
-	if (ControllerAttatched)
-	{
-		int Count;
-		const float* Axis = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &Count);
-
-		if (Axis[0] < 0)
-		{
-			MainCamera.MoveCamera(DeltaTime, ELeft);
-		}
-		else if (Axis[0] > 0)
-		{
-			MainCamera.MoveCamera(DeltaTime, ERight);
-		}
-
-		if (Axis[1] < 0)
-		{
-			MainCamera.MoveCamera(DeltaTime, EForward);
-		}
-		else if (Axis[1] > 0)
-		{
-			MainCamera.MoveCamera(DeltaTime, EBack);
-		}
-	}
-}
-
-void GraphicsEngine::UpdateMouseInput()
-{
-	glfwGetCursorPos(Window, &CurrentMouseX, &CurrentMouseY);
-
-	if (bFirstMouse)
-	{
-		LastMouseX = CurrentMouseX;
-		LastMouseY = CurrentMouseY;
-		bFirstMouse = false;
-	}
-
-	MouseOffsetX = CurrentMouseX - LastMouseX;
-	MouseOffsetY = CurrentMouseY - LastMouseY;
-
-	LastMouseX = CurrentMouseX;
-	LastMouseY = CurrentMouseY;
-}
-
 int GraphicsEngine::GetWindowShouldClose()
 {
 	return glfwWindowShouldClose(Window);
@@ -147,22 +58,40 @@ void GraphicsEngine::SetWindowShouldClose()
 
 Mesh* GraphicsEngine::CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform)
 {
+	Mesh* NewMesh{ nullptr };
+
 	switch (PrimitiveType)
 	{
 	case EPrimitive::EPrimCube:
-		return new Mesh(&Cube());
+		NewMesh = new Mesh(&Cube());
+
+		NewMesh->SetPosition(MeshTransform.Position);
+		NewMesh->SetRotation(MeshTransform.Rotation);
+		NewMesh->SetScale(MeshTransform.Scale);
+
+		return NewMesh;
 		break;
 	case EPrimitive::EPrimPyramid:
-		return new Mesh(&Pyramid());
-		break;
-	default:
+		NewMesh = new Mesh(&Pyramid());
+		
+		NewMesh->SetPosition(MeshTransform.Position);
+		NewMesh->SetRotation(MeshTransform.Rotation);
+		NewMesh->SetScale(MeshTransform.Scale);
+
+		return NewMesh;
 		break;
 	}
 }
 
-Model* GraphicsEngine::CreateModel(std::string FileName, Transform MeshTransform)
+Model* GraphicsEngine::CreateModel(std::string FileName, Transform ModelTransform)
 {
-	return new Model(FileName);
+	Model* NewModel = new Model(FileName);
+
+	NewModel->SetPosition(ModelTransform.Position);
+	NewModel->SetRotation(ModelTransform.Rotation);
+	NewModel->SetScale(ModelTransform.Scale);
+
+	return NewModel;
 }
 
 void GraphicsEngine::RenderMesh(Mesh * RenderMesh, Transform MeshTransform, std::vector<Texture*> TextureVectorIn)
@@ -199,6 +128,7 @@ void GraphicsEngine::RenderMesh(Mesh * RenderMesh, Transform MeshTransform, std:
 
 void GraphicsEngine::RenderModel(Model * RenderModel, Transform ModelTransform, std::vector<Texture*> TextureVectorIn)
 {
+
 }
 
 bool GraphicsEngine::InitialiseGLFW()
@@ -307,6 +237,95 @@ void GraphicsEngine::UpdateUniforms()
 	ProjectionMatrix = glm::perspective(glm::radians(FOV), (float)FrameBufferWidth / FrameBufferHeight, NearPlane, FarPlane);
 
 	ShaderVector[MainProgram]->SetMat4fv(ProjectionMatrix, "VS_ProjectionMatrix");
+}
+
+void GraphicsEngine::UpdateDeltaTime()
+{
+	CurrentTime = (float)glfwGetTime();
+	DeltaTime = CurrentTime - LastTime;
+	LastTime = CurrentTime;
+}
+
+void GraphicsEngine::UpdateInput()
+{
+	glfwPollEvents();
+
+	UpdateKeyboardInput();
+	UpdateMouseInput();
+	MainCamera.UpdateInput(DeltaTime, MouseOffsetX, MouseOffsetY);
+}
+
+void GraphicsEngine::UpdateKeyboardInput()
+{
+	if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	{
+		glfwSetWindowShouldClose(Window, GLFW_TRUE);
+	}
+
+	if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
+	{
+		MainCamera.MoveCamera(DeltaTime, EForward);
+	}
+
+	if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
+	{
+		MainCamera.MoveCamera(DeltaTime, EBack);
+	}
+
+	if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
+	{
+		MainCamera.MoveCamera(DeltaTime, ELeft);
+	}
+
+	if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS)
+	{
+		MainCamera.MoveCamera(DeltaTime, ERight);
+	}
+
+
+	int ControllerAttatched = glfwJoystickPresent(GLFW_JOYSTICK_1);
+
+	if (ControllerAttatched)
+	{
+		int Count;
+		const float* Axis = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &Count);
+
+		if (Axis[0] < 0)
+		{
+			MainCamera.MoveCamera(DeltaTime, ELeft);
+		}
+		else if (Axis[0] > 0)
+		{
+			MainCamera.MoveCamera(DeltaTime, ERight);
+		}
+
+		if (Axis[1] < 0)
+		{
+			MainCamera.MoveCamera(DeltaTime, EForward);
+		}
+		else if (Axis[1] > 0)
+		{
+			MainCamera.MoveCamera(DeltaTime, EBack);
+		}
+	}
+}
+
+void GraphicsEngine::UpdateMouseInput()
+{
+	glfwGetCursorPos(Window, &CurrentMouseX, &CurrentMouseY);
+
+	if (bFirstMouse)
+	{
+		LastMouseX = CurrentMouseX;
+		LastMouseY = CurrentMouseY;
+		bFirstMouse = false;
+	}
+
+	MouseOffsetX = CurrentMouseX - LastMouseX;
+	MouseOffsetY = CurrentMouseY - LastMouseY;
+
+	LastMouseX = CurrentMouseX;
+	LastMouseY = CurrentMouseY;
 }
 
 void GraphicsEngine::FrameBufferResizeCallback(GLFWwindow * WindowIn, int Width, int Height)

@@ -11,10 +11,9 @@ Layer::~Layer()
 {
 }
 
-void Layer::CreateLevel(std::string FileName)
+void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics)
 {
-	//Parse File
-		//Create Entity at position
+//TODO File Loading
 	int XPos{ 0 };
 	int YPos{ 0 };
 	int ZPos{ 0 };
@@ -23,24 +22,33 @@ void Layer::CreateLevel(std::string FileName)
 	{
 		for (int j = 0; j < 2; j++)
 		{
+			Transform EntityTransform = Transform();
+			EntityTransform.Position = glm::vec3(XPos, YPos, ZPos);
+			EntityTransform.Rotation = glm::vec3(0, 0, 0);
+			EntityTransform.Scale = glm::vec3(1, 1, 1);
+
 			switch (TestLevel[i][j])
 			{
 			case 0:
-				EntityVector.push_back(new Entity(EEntityType::ECube, Transform()));
+				EntityVector.push_back(new Entity(EEntityType::ECube, EntityTransform));
 				break;
 			case 1:
-				EntityVector.push_back(new Entity(EEntityType::EPyramid, Transform()));
+				EntityVector.push_back(new Entity(EEntityType::EPyramid, EntityTransform));
 			default:
 				break;
 			}
 
-			XPos++;
+			XPos += 10;
 		}
-		YPos++;
+	}
+
+	for (int i = 0; i < EntityVector.size(); i++)
+	{
+		EntityVector[i]->Initialise(Graphics);
 	}
 }
 
-void Layer::Render(GraphicsEngine * Graphics)
+void Layer::Render(GraphicsEngine* Graphics)
 {
 	for (int i = 0; i < EntityVector.size(); i++)
 	{

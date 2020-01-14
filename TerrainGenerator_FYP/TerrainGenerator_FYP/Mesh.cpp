@@ -53,8 +53,8 @@ void Mesh::RenderModel(Shader * ShaderIn)
 {
 	ShaderIn->UseProgram();
 
-	UpdateModelMatrix();
 	UpdateUniforms(ShaderIn);
+	UpdateModelMatrix();
 
 	unsigned int DiffuseNum = 1;
 	unsigned int SpecularNum = 1;
@@ -210,5 +210,6 @@ void Mesh::UpdateModelMatrix()
 	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.z), glm::vec3(0.f, 0.f, 1.f));
 
 	ModelMatrix = glm::scale(ModelMatrix, WorldScale);
+
 }
 

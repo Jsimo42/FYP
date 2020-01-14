@@ -2,24 +2,32 @@
 #include "Entity.h"
 
 
-Entity::Entity(EEntityType EntityType, Transform TransformIn, std::string FileNameIn)
+Entity::Entity(EEntityType EntityType, Transform TransformIn, std::string FileNameIn) : Type (EntityType), EntityTransform(TransformIn)
 {
-	switch (EntityType)
-	{
-	case EEntityType::ECube:
-		Graphics->CreatePrimitive(EPrimitive::EPrimCube, TransformIn);
-		break;
-	case EEntityType::EPyramid:
-		Graphics->CreatePrimitive(EPrimitive::EPrimPyramid, TransformIn);
-		break;
-	case EEntityType::EModel:
-		Graphics->CreateModel(FileNameIn, TransformIn);
-		break;
-	}
+	EntityTransform = TransformIn;
 }
 
 Entity::~Entity()
 {
+}
+
+void Entity::Initialise(GraphicsEngine * Graphics)
+{
+	switch (Type)
+	{
+	case EEntityType::ECube:
+		EntityMesh = Graphics->CreatePrimitive(EPrimitive::EPrimCube, EntityTransform);
+		break;
+	case EEntityType::EPyramid:
+		EntityMesh = Graphics->CreatePrimitive(EPrimitive::EPrimPyramid, EntityTransform);
+		break;
+	case EEntityType::EModel:
+		EntityModel = Graphics->CreateModel(FileName, EntityTransform);
+		break;
+	default:
+		return;
+		break;
+	}
 }
 
 void Entity::Render(GraphicsEngine * Graphics)
@@ -32,6 +40,4 @@ void Entity::Render(GraphicsEngine * Graphics)
 	{
 		Graphics->RenderModel(EntityModel, EntityTransform, TextureVector);
 	}
-
-
 }

@@ -12,7 +12,7 @@ public:
 	Layer();
 	~Layer();
 
-	void CreateLevel(std::string FileName);
+	void CreateLayer(std::string FileName, GraphicsEngine* Graphics);
 	void Render(GraphicsEngine* Graphics);
 
 private:
