@@ -34,8 +34,6 @@ public:
 	Model* CreateModel(std::string FileName, Transform ModelTransform);
 
 	void Render(std::vector<Mesh*> MeshVectorIn);
-	void RenderMesh(Mesh* RenderMesh, Transform MeshTransform, std::vector<Texture*> TextureVectorIn);
-	void RenderModel(Model* RenderModel, Transform ModelTransform, std::vector<Texture*> TextureVectorIn);
 
 private:
 

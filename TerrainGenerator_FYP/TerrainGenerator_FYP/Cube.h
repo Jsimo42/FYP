@@ -37,7 +37,13 @@ public:
 			4,6,7,
 
 			3,2,5,
-			3,5,4
+			3,5,4,
+
+			3,4,7,
+			3,7,0,
+
+			2,1,6,
+			2,6,5
 		};
 
 		unsigned NumIndices = sizeof(Indices) / sizeof(GLuint);

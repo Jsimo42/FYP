@@ -9,23 +9,9 @@ Entity::Entity(EEntityType EntityType, Transform TransformIn, std::string FileNa
 
 Entity::~Entity()
 {
-}
-
-void Entity::Initialise(GraphicsEngine * Graphics)
-{
-	switch (Type)
+	for (int i = 0; i < TextureVector.size(); i++)
 	{
-	case EEntityType::ECube:
-		EntityMesh = Graphics->CreatePrimitive(EPrimitive::EPrimCube, EntityTransform);
-		break;
-	case EEntityType::EPyramid:
-		EntityMesh = Graphics->CreatePrimitive(EPrimitive::EPrimPyramid, EntityTransform);
-		break;
-	case EEntityType::EModel:
-		EntityModel = Graphics->CreateModel(FileName, EntityTransform);
-		break;
-	default:
-		return;
-		break;
+		delete TextureVector[i];
 	}
 }
+

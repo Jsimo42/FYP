@@ -6,6 +6,7 @@
 class Model
 {
 public:
+	Model() {};
 	Model(std::string Path);
 
 	void Render(Shader* ShaderIn);

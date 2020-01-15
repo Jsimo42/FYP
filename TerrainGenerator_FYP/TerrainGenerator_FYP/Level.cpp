@@ -1,8 +1,10 @@
 #include "pch.h"
 #include "Level.h"
+#include "EntityMesh.h"
+#include "EntityModel.h"
 
 
-Level::Level(int Layers)
+Level::Level()
 {
 }
 
@@ -19,7 +21,8 @@ void Level::CreateLevel(std::vector<std::string> FilePaths, GraphicsEngine* Grap
 {
 	for (int i = 0; i < FilePaths.size(); i++)
 	{
-		LayerVector.push_back(CreateLayer(FilePaths[i], Graphics));
+		LayerVector.push_back(CreateLayer(FilePaths[i], Graphics, i));
+		LayerCount++;
 	}
 }
 
@@ -32,6 +35,7 @@ void Level::Render(GraphicsEngine* Graphics)
 	{
 		//TODO Combine Vectors
 		EntityVector = LayerVector[i]->GetEntities();
+		//std::move(LayerVector[i]->GetEntities().begin(), LayerVector[i]->GetEntities().end(), std::back_inserter(EntityVector));
 	}
 
 	for (int i = 0; i <  EntityVector.size(); i++)
@@ -42,11 +46,11 @@ void Level::Render(GraphicsEngine* Graphics)
 	Graphics->Render(MeshVector);
 }
 
-Layer* Level::CreateLayer(std::string FilePath, GraphicsEngine* Graphics)
+Layer* Level::CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum)
 {
 	Layer* NewLayer = new Layer();
 
-	NewLayer->CreateLayer(FilePath, Graphics);
+	NewLayer->CreateLayer(FilePath, Graphics, LayerNum);
 
 	return NewLayer;
 }

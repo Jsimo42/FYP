@@ -9,7 +9,7 @@
 class Level
 {
 public:
-	Level(int Layers);
+	Level();
 	~Level();
 
 	void CreateLevel(std::vector<std::string> FilePaths, GraphicsEngine* Graphics);
@@ -20,6 +20,6 @@ private:
 	int LayerCount{ 0 };
 	std::vector<Layer*> LayerVector;
 
-	Layer* CreateLayer(std::string FilePath, GraphicsEngine* Graphics);
+	Layer* CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum);
 };
 

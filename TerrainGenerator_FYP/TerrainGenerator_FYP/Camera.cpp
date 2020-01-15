@@ -68,7 +68,7 @@ void Camera::UpdateCameraVectors()
 
 void Camera::UpdateMouseInput(const float & DeltaTimeIn, const double & OffsetX, const double & OffsetY)
 {
-	Pitch += (GLfloat)OffsetY * MouseSensitivity * DeltaTimeIn;
+	Pitch -= (GLfloat)OffsetY * MouseSensitivity * DeltaTimeIn;
 	Yaw += (GLfloat)OffsetX * MouseSensitivity * DeltaTimeIn;
 
 	if (Pitch >= 80.f)

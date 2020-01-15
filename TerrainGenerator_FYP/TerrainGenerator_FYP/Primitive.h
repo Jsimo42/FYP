@@ -7,7 +7,6 @@ class Primitive
 public:
 
 	Primitive() {};
-
 	virtual ~Primitive() {};
 
 	void Set(const Vertex* VerticesIn, const unsigned NumVertices, const GLuint* IndicesIn, const unsigned NumIndices)

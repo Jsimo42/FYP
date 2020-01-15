@@ -25,10 +25,11 @@ void WorldEngine::CreateMenu()
 
 bool WorldEngine::CreateLevel(string FilePath, int Layer)
 {
-	MainLevel = new Level(1);
+	MainLevel = new Level();
 
 	std::vector<std::string> FilePathVector;
-	FilePathVector.push_back("");
+	FilePathVector.push_back("Layers/Layer1.txt");
+	FilePathVector.push_back("Layers/Layer2.txt");
 
 	MainLevel->CreateLevel(FilePathVector, Graphics);
 
@@ -47,8 +48,6 @@ void WorldEngine::Run()
 void WorldEngine::Update()
 {
 	Graphics->Update();
-	std::cout << "Update: " << i << std::endl;
-	i++;
 }
 
 void WorldEngine::Render()

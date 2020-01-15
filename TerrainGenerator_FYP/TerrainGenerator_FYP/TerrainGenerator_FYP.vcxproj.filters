@@ -28,6 +28,12 @@
     <Filter Include="Header Files\Primitives">
       <UniqueIdentifier>{a51cbf5f-80a1-45a1-a7c8-edf805da371e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\World\Entities">
+      <UniqueIdentifier>{2bd18555-3170-44b8-90ab-1ab3559deec8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\World\Entities">
+      <UniqueIdentifier>{767ad334-67f2-4a63-9fd7-1d154875c5a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="pch.h">
@@ -47,9 +53,6 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="Entity.h">
-      <Filter>Header Files\World</Filter>
     </ClInclude>
     <ClInclude Include="Primitive.h">
       <Filter>Header Files\Primitives</Filter>
@@ -84,6 +87,15 @@
     <ClInclude Include="Layer.h">
       <Filter>Header Files\World</Filter>
     </ClInclude>
+    <ClInclude Include="Entity.h">
+      <Filter>Header Files\World\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityMesh.h">
+      <Filter>Header Files\World\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityModel.h">
+      <Filter>Header Files\World\Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -97,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Entity.cpp">
-      <Filter>Source Files\World</Filter>
     </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>Source Files\Graphics</Filter>
@@ -124,6 +133,15 @@
     </ClCompile>
     <ClCompile Include="Layer.cpp">
       <Filter>Source Files\World</Filter>
+    </ClCompile>
+    <ClCompile Include="Entity.cpp">
+      <Filter>Source Files\World\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityMesh.cpp">
+      <Filter>Source Files\World\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityModel.cpp">
+      <Filter>Source Files\World\Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

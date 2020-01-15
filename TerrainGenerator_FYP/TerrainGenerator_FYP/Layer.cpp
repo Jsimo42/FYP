@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Layer.h"
+#include "EntityMesh.h"
 
 
 Layer::Layer()
@@ -11,38 +12,56 @@ Layer::~Layer()
 {
 }
 
-void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics)
+void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum)
 {
 //TODO File Loading
 	int XPos{ 0 };
-	int YPos{ 0 };
+	int YPos{ LayerNum - 1 };
 	int ZPos{ 0 };
 
-	for (int i = 0; i < 2; i++)
-	{
-		for (int j = 0; j < 8; j++)
-		{
-			Transform EntityTransform = Transform();
-			EntityTransform.Position = glm::vec3(XPos, YPos, ZPos);
-			EntityTransform.Rotation = glm::vec3(0, 0, 0);
-			EntityTransform.Scale = glm::vec3(1, 1, 1);
+	char Line;
 
-			switch (TestLevel[i][j])
+	std::fstream LayerFile(FileName);
+
+	int Width{ 5 };
+	int Height{ 5 };
+
+
+	if (LayerFile.is_open())
+	{
+		for (int i = 0; i < Height; i++)
+		{
+			for (int j = 0; j < Width; j++)
 			{
-			case 0:
-				EntityVector.push_back(new Entity(EEntityType::ECube, EntityTransform));
-				break;
-			case 1:
-				EntityVector.push_back(new Entity(EEntityType::EPyramid, EntityTransform));
-			default:
-				break;
+				LayerFile >> std::skipws >> Line;
+
+				Transform EntityTransform = Transform();
+				EntityTransform.Position = glm::vec3(XPos, YPos, ZPos);
+				EntityTransform.Rotation = glm::vec3(0, 0, 0);
+				EntityTransform.Scale = glm::vec3(1, 1, 1);
+
+				switch (Line)
+				{
+				case '0':
+					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform));
+					break;
+				case '1':
+					EntityTransform.Position.y++;
+					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform));
+				default:
+					break;
+				}
+
+				XPos += 1;
 			}
 
-			XPos += 1;
-		}
+			XPos = 0;
+			ZPos++;
 
-		XPos = 0;
-		ZPos += 1;
+			LayerFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+		}
+		
+		LayerFile.close();
 	}
 
 	for (int i = 0; i < EntityVector.size(); i++)

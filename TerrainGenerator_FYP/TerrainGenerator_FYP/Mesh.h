@@ -20,6 +20,8 @@ public:
 	Mesh(Primitive* PrimitiveIn, glm::vec3 PositionIn = glm::vec3(0.f), glm::vec3 RotationIn = glm::vec3(0.f), glm::vec3 ScaleIn = glm::vec3(1.f)); //TODO Create Vector and Transform
 	//Model Loading Constructor
 	Mesh(std::vector<Vertex> VerticesIn, std::vector<GLuint> IndicesIn, std::vector<TextureInfo> TexturesIn);
+
+	Mesh() {};
 	~Mesh();
 
 	void Render(Shader* ShaderIn);
