@@ -94,6 +94,34 @@ Model* GraphicsEngine::CreateModel(std::string FileName, Transform ModelTransfor
 	return NewModel;
 }
 
+void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn)
+{
+	ShaderVector[MainProgram]->UseProgram();
+
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	UpdateUniforms();
+
+	ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
+
+	//TODO Bind Relevant Textures
+
+	for (int i = 0; i < MeshVectorIn.size(); i++)
+	{
+		MeshVectorIn[i]->Render(ShaderVector[MainProgram]);
+	}
+	//TODO Unbind Textures
+
+	glfwSwapBuffers(Window);
+	glFlush();
+
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	ShaderVector[MainProgram]->UnuseProgram();
+}
+
 void GraphicsEngine::RenderMesh(Mesh * RenderMesh, Transform MeshTransform, std::vector<Texture*> TextureVectorIn)
 {
 	ShaderVector[MainProgram]->UseProgram();

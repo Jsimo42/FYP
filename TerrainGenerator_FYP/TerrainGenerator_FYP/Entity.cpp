@@ -29,15 +29,3 @@ void Entity::Initialise(GraphicsEngine * Graphics)
 		break;
 	}
 }
-
-void Entity::Render(GraphicsEngine * Graphics)
-{
-	if (bMesh)
-	{
-		Graphics->RenderMesh(EntityMesh, EntityTransform, TextureVector);
-	}
-	else
-	{
-		Graphics->RenderModel(EntityModel, EntityTransform, TextureVector);
-	}
-}

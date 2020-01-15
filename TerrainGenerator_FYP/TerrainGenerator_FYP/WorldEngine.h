@@ -32,5 +32,6 @@ private:
 	std::vector<Model*> ModelVector;
 	std::vector<Mesh*> MeshVector;
 
+	int i = 0;
 };
 

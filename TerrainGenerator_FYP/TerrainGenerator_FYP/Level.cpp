@@ -23,12 +23,23 @@ void Level::CreateLevel(std::vector<std::string> FilePaths, GraphicsEngine* Grap
 	}
 }
 
-void Level::Render(GraphicsEngine * Graphics)
+void Level::Render(GraphicsEngine* Graphics)
 {
+	std::vector<Entity*> EntityVector;
+	std::vector<Mesh*> MeshVector;
+
 	for (int i = 0; i < LayerVector.size(); i++)
 	{
-		LayerVector[i]->Render(Graphics);
+		//TODO Combine Vectors
+		EntityVector = LayerVector[i]->GetEntities();
 	}
+
+	for (int i = 0; i <  EntityVector.size(); i++)
+	{
+		MeshVector.push_back(EntityVector[i]->GetMesh());
+	}
+
+	Graphics->Render(MeshVector);
 }
 
 Layer* Level::CreateLayer(std::string FilePath, GraphicsEngine* Graphics)

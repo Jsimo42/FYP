@@ -11,7 +11,8 @@ public:
 
 	void Initialise(GraphicsEngine* Graphics);
 
-	void Render(GraphicsEngine* Graphics);
+	Mesh* GetMesh() const { return EntityMesh; };
+	Model* GetModel() const{ return EntityModel; };
 
 private:
 	EEntityType Type = EEntityType::ENone;

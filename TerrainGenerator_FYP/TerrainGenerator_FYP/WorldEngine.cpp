@@ -47,6 +47,8 @@ void WorldEngine::Run()
 void WorldEngine::Update()
 {
 	Graphics->Update();
+	std::cout << "Update: " << i << std::endl;
+	i++;
 }
 
 void WorldEngine::Render()

@@ -20,7 +20,7 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics)
 
 	for (int i = 0; i < 2; i++)
 	{
-		for (int j = 0; j < 2; j++)
+		for (int j = 0; j < 8; j++)
 		{
 			Transform EntityTransform = Transform();
 			EntityTransform.Position = glm::vec3(XPos, YPos, ZPos);
@@ -38,8 +38,11 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics)
 				break;
 			}
 
-			XPos += 10;
+			XPos += 1;
 		}
+
+		XPos = 0;
+		ZPos += 1;
 	}
 
 	for (int i = 0; i < EntityVector.size(); i++)
@@ -48,10 +51,3 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics)
 	}
 }
 
-void Layer::Render(GraphicsEngine* Graphics)
-{
-	for (int i = 0; i < EntityVector.size(); i++)
-	{
-		EntityVector[i]->Render(Graphics);
-	}
-}
