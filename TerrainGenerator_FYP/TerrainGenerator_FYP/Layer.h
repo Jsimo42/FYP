@@ -19,7 +19,5 @@ public:
 private:
 	int EntityCount{ 0 };
 	std::vector<Entity*> EntityVector;
-
-	int TestLevel[8][2]{ 0, 0, 1, 0 ,  0, 0, 1, 0 , 0, 0, 1, 0 , 0, 0, 1, 0};
 };
 

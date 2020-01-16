@@ -94,6 +94,6 @@ private:
 	void UpdateKeyboardInput();
 	void UpdateMouseInput();
 
-	static void FrameBufferResizeCallback(GLFWwindow* WindowIn, int Width, int Height);
+	static void WindowResize(GLFWwindow* WindowIn, int Width, int Height);
 };
 

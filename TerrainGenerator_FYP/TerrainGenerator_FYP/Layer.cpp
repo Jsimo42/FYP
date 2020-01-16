@@ -16,15 +16,15 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 {
 //TODO File Loading
 	int XPos{ 0 };
-	int YPos{ LayerNum - 1 };
+	int YPos{ LayerNum - 1 + LayerNum };
 	int ZPos{ 0 };
 
 	char Line;
 
 	std::fstream LayerFile(FileName);
 
-	int Width{ 5 };
-	int Height{ 5 };
+	int Width{ 20 };
+	int Height{ 20 };
 
 
 	if (LayerFile.is_open())
@@ -46,7 +46,6 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform));
 					break;
 				case '1':
-					EntityTransform.Position.y++;
 					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform));
 				default:
 					break;

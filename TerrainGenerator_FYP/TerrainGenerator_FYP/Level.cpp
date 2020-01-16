@@ -34,8 +34,11 @@ void Level::Render(GraphicsEngine* Graphics)
 	for (int i = 0; i < LayerVector.size(); i++)
 	{
 		//TODO Combine Vectors
-		EntityVector = LayerVector[i]->GetEntities();
-		//std::move(LayerVector[i]->GetEntities().begin(), LayerVector[i]->GetEntities().end(), std::back_inserter(EntityVector));
+		std::vector<Entity*> NewEntityVector = LayerVector[i]->GetEntities();
+		EntityVector.insert(EntityVector.end(), NewEntityVector.begin(), NewEntityVector.end());
+		//std::move(NewEntityVector.begin(), NewEntityVector.end(), std::back_inserter(EntityVector));
+
+		NewEntityVector.clear();
 	}
 
 	for (int i = 0; i <  EntityVector.size(); i++)

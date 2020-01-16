@@ -20,8 +20,8 @@ void main()
 	Normal = mat3(VS_ModelMatrix) * normalize(VertexNormal);
 	TexCoords = vec2(VertexTexCoords.x, VertexTexCoords.y  * -1.f); //Flip UVs
 
-	vec3 N = mat3(VS_ModelMatrix) * normalize(VertexNormal);
 	vec3 T = mat3(VS_ModelMatrix) * normalize(VertexTangent);
+	vec3 N = mat3(VS_ModelMatrix) * normalize(VertexNormal);
 	vec3 B = cross(T, N);
 
 	TBNMatrix = mat3(T, B, N);

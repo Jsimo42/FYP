@@ -104,11 +104,20 @@ void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn)
 	UpdateUniforms();
 
 	ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
+	ShaderVector[MainProgram]->SetVec3f(*LightVector[0], "LightPosition");
+
+	glm::vec3 MeshColour;
 
 	//TODO Bind Relevant Textures
 
 	for (int i = 0; i < MeshVectorIn.size(); i++)
 	{
+		float R = (rand() % 100);
+		float G = (rand() % 100);
+		float B = (rand() % 100);
+		MeshColour = glm::vec3(R / 100, G / 100, B / 100);
+
+		ShaderVector[MainProgram]->SetVec3f(MeshColour, "Colour");
 		MeshVectorIn[i]->Render(ShaderVector[MainProgram]);
 	}
 	//TODO Unbind Textures
@@ -153,7 +162,7 @@ bool GraphicsEngine::InitialiseWindow(const char * WindowTitle)
 	}
 
 	glfwGetFramebufferSize(Window, &FrameBufferWidth, &FrameBufferHeight);
-	glfwSetFramebufferSizeCallback(Window, GraphicsEngine::FrameBufferResizeCallback);
+	glfwSetFramebufferSizeCallback(Window, GraphicsEngine::WindowResize);
 
 	glfwMakeContextCurrent(Window);
 
@@ -207,7 +216,7 @@ void GraphicsEngine::InitialiseShaders()
 
 void GraphicsEngine::InitialiseLights()
 {
-	LightVector.push_back(new glm::vec3(5.f, 10.f, 5.f));
+	LightVector.push_back(new glm::vec3(0.f, 4.f, 0.f));
 }
 
 void GraphicsEngine::InitialiseUniforms()
@@ -321,7 +330,7 @@ void GraphicsEngine::UpdateMouseInput()
 	LastMouseY = CurrentMouseY;
 }
 
-void GraphicsEngine::FrameBufferResizeCallback(GLFWwindow * WindowIn, int Width, int Height)
+void GraphicsEngine::WindowResize(GLFWwindow * WindowIn, int Width, int Height)
 {
 	glViewport(0, 0, Width, Height);
 }
