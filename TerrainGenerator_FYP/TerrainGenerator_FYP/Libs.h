@@ -5,6 +5,7 @@
 #include <sstream>
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 #include <glew.h>
 #include <glfw3.h>
@@ -40,4 +41,20 @@ enum EEntityType
 	ECube,
 	EPyramid,
 	ENone
+};
+
+enum EColour
+{
+	EWhite = 0,
+	EYellow,
+	EOrange,
+	ERed,
+	EPink,
+	EPurple,
+	EDarkBlue,
+	EBlue,
+	ELightBlue,
+	ELightGreen,
+	EGreen,
+	EBlack
 };

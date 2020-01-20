@@ -2,6 +2,7 @@
 
 #include "Libs.h"
 #include "GraphicsEngine.h"
+#include "MainMenu.h"
 #include "Level.h"
 
 /* Runs Setup and main update loop */
@@ -18,7 +19,7 @@ public:
 
 	void CreateMenu();
 
-	bool CreateLevel(string FilePath, int Layer);
+	bool CreateLevel();
 
 	void Run();
 
@@ -27,10 +28,16 @@ public:
 
 private:
 	GraphicsEngine* Graphics{ nullptr };
+	MainMenu* Menu{ nullptr };
 	Level* MainLevel{ nullptr };
 
 	std::vector<Model*> ModelVector;
 	std::vector<Mesh*> MeshVector;
+
+	bool bGenerateGround{ false };
+	int LayerCount{ 0 };
+	std::vector<std::string> LayerFilePaths;
+	std::unordered_map<EColour, std::string> ColourMeshKey; //Colour to Primitive or Model File
 
 	int i = 0;
 };

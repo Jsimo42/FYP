@@ -14,9 +14,10 @@ Layer::~Layer()
 
 void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum)
 {
-//TODO File Loading
+	//TODO File Loading
+
 	int XPos{ 0 };
-	int YPos{ LayerNum - 1 + LayerNum };
+	int YPos{ LayerNum - 1};
 	int ZPos{ 0 };
 
 	char Line;
@@ -26,6 +27,8 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 	int Width{ 20 };
 	int Height{ 20 };
 
+	//TODO Image Loading
+	//unsigned char* Image = SOIL_load_image("Layers/Image.png", &Width, &Height, NULL, SOIL_LOAD_RGBA);
 
 	if (LayerFile.is_open())
 	{
@@ -42,10 +45,10 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 
 				switch (Line)
 				{
-				case '0':
+				case '1':
 					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform));
 					break;
-				case '1':
+				case '2':
 					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform));
 				default:
 					break;

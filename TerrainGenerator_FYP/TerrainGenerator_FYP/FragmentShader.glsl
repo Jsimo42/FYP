@@ -15,6 +15,7 @@ out vec4 FragmentColour;
 
 float Attenuation;
 vec3 N;
+vec3 Grey = vec3(0.7, 0.7, 0.7);
 
 void main()
 {
@@ -35,5 +36,5 @@ void main()
 	vec3 SpecularColour = vec3(1,1,1) * pow(max(dot(N, HalvedDirection), 0), 30); //Blinn-Phong 
 
 	//Final Colour
-	FragmentColour = vec4(Colour, 1);// *vec4(SpecularColour, 1) * Attenuation;
+	FragmentColour = vec4(Grey, 1);// *vec4(SpecularColour, 1) * Attenuation;
 }

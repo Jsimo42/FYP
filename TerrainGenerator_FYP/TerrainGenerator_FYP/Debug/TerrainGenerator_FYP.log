@@ -1,9 +1,3 @@
-﻿  GraphicsEngine.cpp
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(22): warning C4018: '<': signed/unsigned mismatch
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(28): warning C4018: '<': signed/unsigned mismatch
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(113): warning C4018: '<': signed/unsigned mismatch
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(115): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(116): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(117): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(84): warning C4715: 'GraphicsEngine::CreatePrimitive': not all control paths return a value
+﻿  Layer.cpp
+c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(69): warning C4018: '<': signed/unsigned mismatch
   TerrainGenerator_FYP.vcxproj -> C:\Users\t7038904\source\FYP\TerrainGenerator_FYP\Debug\TerrainGenerator_FYP.exe
