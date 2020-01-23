@@ -2,7 +2,7 @@
 #include "Texture.h"
 
 
-Texture::Texture(const char * FileName, GLenum Type) : TextureType(Type)
+Texture::Texture(const char * FileName, GLenum Type, GLuint TextureUnit) : TextureType(Type), ID(TextureUnit)
 {
 	LoadFromFile(FileName);
 }
@@ -18,7 +18,7 @@ void Texture::Bind(const int TextureUnit)
 	glBindTexture(TextureType, ID);
 }
 
-void Texture::Unbind()
+void Texture::UnBind()
 {
 	glActiveTexture(0);
 	glBindTexture(TextureType, 0);

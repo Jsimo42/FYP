@@ -5,13 +5,13 @@
 class Texture
 {
 public:
-	Texture(const char* FileName, GLenum Type);
+	Texture(const char* FileName, GLenum Type, GLuint TextureUnit);
 	~Texture();
 
 	GLuint GetID() const { return ID; };
 
 	void Bind(const int TextureUnit);
-	void Unbind();
+	void UnBind();
 
 private: 
 	GLuint ID;

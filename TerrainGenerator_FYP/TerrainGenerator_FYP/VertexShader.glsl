@@ -20,11 +20,10 @@ void main()
 	Normal = mat3(VS_ModelMatrix) * normalize(VertexNormal);
 	TexCoords = vec2(VertexTexCoords.x, VertexTexCoords.y  * -1.f); //Flip UVs
 
-	vec3 T = mat3(VS_ModelMatrix) * normalize(VertexTangent);
-	vec3 N = mat3(VS_ModelMatrix) * normalize(VertexNormal);
-	vec3 B = cross(T, N);
-
-	TBNMatrix = mat3(T, B, N);
+	vec3 VS_Tangent = mat3(VS_ModelMatrix) * normalize(VertexTangent);
+	vec3 VS_Normal = mat3(VS_ModelMatrix) * normalize(VertexNormal);
+	vec3 VS_BiTangent = cross(VS_Tangent, VS_Normal);
+	TBNMatrix = mat3(VS_Tangent, VS_BiTangent, VS_Normal);
 
 	mat4 CombinedMatrix = VS_ProjectionMatrix * VS_ViewMatrix * VS_ModelMatrix;
 	gl_Position = CombinedMatrix * vec4(VertexPosition, 1.f);

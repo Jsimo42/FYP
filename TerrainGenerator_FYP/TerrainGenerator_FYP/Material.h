@@ -2,21 +2,25 @@
 
 #include "Libs.h"
 #include "Shader.h"
+#include "Texture.h"
 
 class Material
 {
 public:
-	Material(glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec3 Specular, GLint DiffuseTexture, GLint NormalTexture, GLint MetallicTexture, GLint RoughnessTexture);
+	Material(glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec3 Specular, Texture* DiffuseTexture, Texture* NormalTexture, Texture* MetallicTexture, Texture* RoughnessTexture);
 
-	void SendUniforms(Shader& ShaderIn);
+	void RenderMaterial(Shader& ShaderIn);
+	void UnBindTextures();
 
 private:
 	glm::vec3 Ambient;
 	glm::vec3 Diffuse;
 	glm::vec3 Specular;
-	GLint DiffuseTexture;
-	GLint NormalTexture;
-	GLint MetallicTexture;
-	GLint RoughnessTexture;
+	Texture* DiffuseTexture;
+	Texture* NormalTexture;
+	Texture* MetallicTexture;
+	Texture* RoughnessTexture;
+
+	void SendUniforms(Shader& ShaderIn);
 };
 
