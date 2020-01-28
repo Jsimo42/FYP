@@ -12,15 +12,15 @@ public:
 		Vertex Vertices[]
 		{
 			//Positions											//Normals						//TexCoords
-			glm::vec3(-0.5f, 0.5f, 0.5f),						glm::vec3(0.f,0.f,1.f),			glm::vec2(0.f, 2.f),	glm::vec3(0.f,0.f,0.f),
+			glm::vec3(-0.5f, 0.5f, 0.5f),						glm::vec3(0.f,0.f,1.f),			glm::vec2(0.f, 0.5f),	glm::vec3(0.f,0.f,0.f),
 			glm::vec3(-0.5f, -0.5f, 0.5f),						glm::vec3(0.f,0.f,1.f),			glm::vec2(0.f, 0.f),	glm::vec3(0.f,0.f,0.f),
-			glm::vec3(0.5f, -0.5f, 0.5f),						glm::vec3(0.f,0.f,1.f),			glm::vec2(2.f, 0.f),	glm::vec3(0.f,0.f,0.f),
-			glm::vec3(0.5f, 0.5f, 0.5f),						glm::vec3(0.f,0.f,1.f),			glm::vec2(2.f, 2.f),	glm::vec3(0.f,0.f,0.f),
+			glm::vec3(0.5f, -0.5f, 0.5f),						glm::vec3(0.f,0.f,1.f),			glm::vec2(0.5f, 0.5f),	glm::vec3(0.f,0.f,0.f),
+			glm::vec3(0.5f, 0.5f, 0.5f),						glm::vec3(0.f,0.f,1.f),			glm::vec2(0.5f, 0.f),	glm::vec3(0.f,0.f,0.f),
 
-			glm::vec3(0.5f, 0.5f, -0.5f),						glm::vec3(0.f,0.f,-1.f),		glm::vec2(0.f, 2.f),	glm::vec3(0.f,0.f,0.f),
+			glm::vec3(0.5f, 0.5f, -0.5f),						glm::vec3(0.f,0.f,-1.f),		glm::vec2(0.f, 0.5f),	glm::vec3(0.f,0.f,0.f),
 			glm::vec3(0.5f, -0.5f, -0.5f),						glm::vec3(0.f,0.f,-1.f),		glm::vec2(0.f, 0.f),	glm::vec3(0.f,0.f,0.f),
-			glm::vec3(-0.5f, -0.5f, -0.5f),						glm::vec3(0.f,0.f,-1.f),		glm::vec2(2.f, 0.f),	glm::vec3(0.f,0.f,0.f),
-			glm::vec3(-0.5f, 0.5f, -0.5f),						glm::vec3(0.f,0.f,-1.f),		glm::vec2(2.f, 2.f), 	glm::vec3(0.f,0.f,0.f)
+			glm::vec3(-0.5f, -0.5f, -0.5f),						glm::vec3(0.f,0.f,-1.f),		glm::vec2(0.5f, 0.5f),	glm::vec3(0.f,0.f,0.f),
+			glm::vec3(-0.5f, 0.5f, -0.5f),						glm::vec3(0.f,0.f,-1.f),		glm::vec2(0.5f, 0.f), 	glm::vec3(0.f,0.f,0.f)
 		};
 
 		unsigned NumVertices = sizeof(Vertices) / sizeof(Vertex);

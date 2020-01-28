@@ -10,6 +10,9 @@
 #include <glew.h>
 #include <glfw3.h>
 
+#include <opencv2/core.hpp>
+#include <opencv2/imgcodecs.hpp>
+
 #include <glm.hpp>
 #include <vec2.hpp>
 #include <vec3.hpp>

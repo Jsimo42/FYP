@@ -12,7 +12,6 @@ struct Material
 };
 
 uniform float bIsModel;
-
 uniform vec3 LightPosition;
 uniform vec3 CameraPosition;
 uniform vec3 Colour;
@@ -43,8 +42,8 @@ void main()
 
 	//Diffuse Light
 	vec3 PositionToLight = normalize(LightPosition - Position);
-	vec3 DiffuseConstant = vec3(1.f, 0.f, 0.f);
-	vec3 DiffuseColour = Grey * (clamp(dot(PositionToLight, N), 0, 1));
+	vec3 DiffuseConstant = Grey.xyz;
+	vec3 DiffuseColour = DiffuseConstant * (clamp(dot(PositionToLight, N), 0, 1));
 
 	//Specular
 	vec3 LightToPosition = normalize(Position - LightPosition);
@@ -55,6 +54,7 @@ void main()
 	//Final Colour
 	FragmentColour = vec4(DiffuseColour, 1);// *vec4(SpecularColour, 1) * Attenuation;
 }
+
 
 vec3 CalculateAmbient()
 {
