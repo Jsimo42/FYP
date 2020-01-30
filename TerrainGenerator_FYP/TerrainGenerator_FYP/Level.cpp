@@ -30,13 +30,12 @@ void Level::Render(GraphicsEngine* Graphics)
 {
 	std::vector<Entity*> EntityVector;
 	std::vector<Mesh*> MeshVector;
+	std::vector<Material*> MaterialVector;
 
 	for (int i = 0; i < LayerVector.size(); i++)
 	{
-		//TODO Combine Vectors
 		std::vector<Entity*> NewEntityVector = LayerVector[i]->GetEntities();
 		EntityVector.insert(EntityVector.end(), NewEntityVector.begin(), NewEntityVector.end());
-		//std::move(NewEntityVector.begin(), NewEntityVector.end(), std::back_inserter(EntityVector));
 
 		NewEntityVector.clear();
 	}
@@ -44,9 +43,10 @@ void Level::Render(GraphicsEngine* Graphics)
 	for (int i = 0; i <  EntityVector.size(); i++)
 	{
 		MeshVector.push_back(EntityVector[i]->GetMesh());
+		MaterialVector.push_back(EntityVector[i]->GetMaterial());
 	}
 
-	Graphics->Render(MeshVector);
+	Graphics->Render(MeshVector, MaterialVector);
 }
 
 Layer* Level::CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum)

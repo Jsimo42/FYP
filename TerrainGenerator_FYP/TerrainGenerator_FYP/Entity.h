@@ -10,15 +10,20 @@ public:
 	~Entity();
 
 	virtual void Initialise(GraphicsEngine* Graphics) {};
+	virtual void Initialise(GraphicsEngine* Graphics, Material* MeshMaterialIn) {};
 
 	virtual Model* GetModel() const { return new Model(); };
 	virtual Mesh* GetMesh() const { return new Mesh(); };
+
+	Material* GetMaterial() const { return MeshMaterial; };
+	EEntityType GetEntityType() const { return Type; };
+
 protected:
 	EEntityType Type = EEntityType::ENone;
 
 	Transform EntityTransform = Transform();
 	bool bMesh{ true };
 
-	std::vector<Texture*> TextureVector;
+	Material* MeshMaterial = nullptr;
 };
 

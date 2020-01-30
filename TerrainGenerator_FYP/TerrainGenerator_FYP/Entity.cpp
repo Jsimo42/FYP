@@ -9,9 +9,6 @@ Entity::Entity(EEntityType EntityType, Transform TransformIn, std::string FileNa
 
 Entity::~Entity()
 {
-	for (int i = 0; i < TextureVector.size(); i++)
-	{
-		delete TextureVector[i];
-	}
+	delete MeshMaterial;
 }
 

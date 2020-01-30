@@ -6,8 +6,10 @@ EntityMesh::EntityMesh(EEntityType EntityType, Transform TransformIn, std::strin
 {
 }
 
-void EntityMesh::Initialise(GraphicsEngine * Graphics)
+void EntityMesh::Initialise(GraphicsEngine * Graphics, Material* MeshMaterialIn)
 {
+	MeshMaterial = MeshMaterialIn;
+
 	switch (Type)
 	{
 	case EEntityType::ECube:

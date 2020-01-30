@@ -6,7 +6,7 @@ class EntityModel : public Entity
 public:
 	EntityModel(EEntityType EntityType, Transform TransformIn, std::string FileNameIn);
 
-	void Initialise(GraphicsEngine* Graphics) override;
+	void Initialise(GraphicsEngine* Graphics, Material* MeshMaterialIn) override;
 
 	Model* GetModel() const { return Model; };
 
