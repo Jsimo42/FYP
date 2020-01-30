@@ -68,7 +68,7 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 
 	for (int i = 0; i < EntityVector.size(); i++)
 	{
-		EntityVector[i]->Initialise(Graphics);
+		EntityVector[i]->Initialise(Graphics, new Material());
 	}
 }
 

@@ -70,12 +70,12 @@ void Mesh::RenderModel(Shader * ShaderIn)
 		if (Name == "texture_diffuse")
 		{
 			Number = std::to_string(DiffuseNum++);	
-			ShaderIn->Set1i(i, "myMat.diffuseTexture");
+			ShaderIn->Set1i(i, "MeshMaterial.DiffuseTexture");
 		}
 		else if (Name == "texture_specular")
 		{
 			Number = std::to_string(SpecularNum++);
-			ShaderIn->Set1i(i, "myMat.metallicTexture");
+			ShaderIn->Set1i(i, "MeshMaterial.MetallicTexture");
 		}
 
 		glActiveTexture(GL_TEXTURE0);

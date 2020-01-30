@@ -94,42 +94,6 @@ Model* GraphicsEngine::CreateModel(std::string FileName, Transform ModelTransfor
 	return NewModel;
 }
 
-void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn)
-{
-	ShaderVector[MainProgram]->UseProgram();
-
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	UpdateUniforms();
-
-	ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
-	ShaderVector[MainProgram]->SetVec3f(*LightVector[0], "LightPosition");
-
-	glm::vec3 MeshColour;
-
-	//TODO Bind Relevant Textures
-
-	for (int i = 0; i < MeshVectorIn.size(); i++)
-	{
-		float R = (rand() % 100);
-		float G = (rand() % 100);
-		float B = (rand() % 100);
-		MeshColour = glm::vec3(R / 100, G / 100, B / 100);
-
-		ShaderVector[MainProgram]->SetVec3f(MeshColour, "Colour");
-		MeshVectorIn[i]->Render(ShaderVector[MainProgram]);
-	}
-	//TODO Unbind Textures
-
-	glfwSwapBuffers(Window);
-	glFlush();
-
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	ShaderVector[MainProgram]->UnuseProgram();
-}
 
 void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn, std::vector<Material*> MaterialVectorIn)
 {
@@ -242,7 +206,7 @@ void GraphicsEngine::InitialiseShaders()
 
 void GraphicsEngine::InitialiseLights()
 {
-	LightVector.push_back(new glm::vec3(0.f, 4.f, 0.f));
+	LightVector.push_back(new glm::vec3(20.f, 5.f, 20.f));
 }
 
 void GraphicsEngine::InitialiseUniforms()
