@@ -24,7 +24,7 @@ in mat3 TBNMatrix;
 
 out vec4 FragmentColour;
 
-float Attenuation;
+float Attenuation = 1.f;
 vec3 N;
 vec3 Grey = vec3(0.7, 0.7, 0.7);
 
@@ -35,24 +35,13 @@ vec3 CalculateSpecular();
 
 void main()
 {
-	vec3 LightVector = normalize(LightPosition - Position);
-	Attenuation = 1.f;
-
 	N = normalize(Normal);
 
-	//Diffuse Light
-	vec3 PositionToLight = normalize(LightPosition - Position);
-	vec3 DiffuseConstant = Grey.xyz;
-	vec3 DiffuseColour = DiffuseConstant * (clamp(dot(PositionToLight, N), 0, 1));
-
-	//Specular
-	vec3 LightToPosition = normalize(Position - LightPosition);
-	vec3 PositionToView = normalize(CameraPosition - Position);
-	vec3 HalvedDirection = normalize(LightToPosition + PositionToView);
-	vec3 SpecularColour = vec3(1,1,1) * pow(max(dot(N, HalvedDirection), 0), 30); //Blinn-Phong 
+	vec3 DiffuseColour = CalculateDiffuse();
+	vec3 SpecularColour = CalculateSpecular();
 
 	//Final Colour
-	FragmentColour = vec4(DiffuseColour, 1);// *vec4(SpecularColour, 1) * Attenuation;
+	FragmentColour = vec4(vec4(DiffuseColour, 1) + vec4(DiffuseColour, 1) + vec4(DiffuseColour, 1)) * Attenuation;
 }
 
 
@@ -64,17 +53,29 @@ vec3 CalculateAmbient()
 
 vec3 CalculateDiffuse()
 {
-	return MeshMaterial.Diffuse;
+	//Diffuse Light
+	vec3 PositionToLight = normalize(LightPosition - Position);
+	float DiffuseColour = (clamp(dot(PositionToLight, N), 0, 1));
+
+	return Grey * DiffuseColour;// *texture(MeshMaterial.DiffuseTexture, TexCoords).rgb;
 }
 
 
 vec3 CalculateNormal()
 {
+	vec3 Normal = normalize(TBNMatrix * (255.f / 128.f * texture2D(MeshMaterial.NormalTexture, TexCoords).xyz - 1));
+
 	return Normal;
 }
 
 
 vec3 CalculateSpecular()
 {
-	return MeshMaterial.Specular;
+	//Specular
+	vec3 LightToPosition = normalize(Position - LightPosition);
+	vec3 PositionToView = normalize(CameraPosition - Position);
+	vec3 HalvedDirection = normalize(LightToPosition + PositionToView);
+	float SpecularColour = pow(max(dot(N, HalvedDirection), 0), 30);
+
+	return MeshMaterial.Specular * SpecularColour;// *texture(MeshMaterial.MetallicTexture, TexCoords).rgb;
 }

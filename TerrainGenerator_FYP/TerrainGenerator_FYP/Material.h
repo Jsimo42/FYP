@@ -14,7 +14,7 @@ public:
 
 private:
 	glm::vec3 Ambient;
-	glm::vec3 Diffuse;
+	glm::vec3 Diffuse = glm::vec3(0.5f, 0.5f, 0.5f);
 	glm::vec3 Specular;
 	Texture* DiffuseTexture;
 	Texture* NormalTexture;
