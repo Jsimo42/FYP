@@ -6,7 +6,7 @@
 class Entity
 {
 public:
-	Entity(EEntityType EntityType, Transform TransformIn, std::string FileNameIn = "");
+	Entity(EEntityType EntityType, Transform TransformIn, Material* MaterialIn, std::string FileNameIn = "");
 	~Entity();
 
 	virtual void Initialise(GraphicsEngine* Graphics) {};

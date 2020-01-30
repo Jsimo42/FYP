@@ -17,10 +17,25 @@ void Material::RenderMaterial(Shader & ShaderIn)
 {
 	SendUniforms(ShaderIn);
 
-	DiffuseTexture->Bind(0);
-	NormalTexture->Bind(1);
-	MetallicTexture->Bind(2);
-	RoughnessTexture->Bind(3);
+	if (DiffuseTexture)
+	{
+		DiffuseTexture->Bind(0);
+	}
+
+	if (NormalTexture)
+	{
+		NormalTexture->Bind(1);
+	}
+
+	if (MetallicTexture)
+	{
+		MetallicTexture->Bind(2);
+	}
+
+	if (RoughnessTexture)
+	{
+		RoughnessTexture->Bind(3);
+	}
 }
 
 void Material::UnBindTextures()
@@ -33,12 +48,27 @@ void Material::UnBindTextures()
 
 void Material::SendUniforms(Shader & ShaderIn)
 {
-	//TODO Set Names when created FS
 	ShaderIn.SetVec3f(Ambient, "MeshMaterial.Ambient");
 	ShaderIn.SetVec3f(Diffuse, "MeshMaterial.Diffuse");
 	ShaderIn.SetVec3f(Specular, "MeshMaterial.Specular");
-	ShaderIn.Set1i(DiffuseTexture->GetID(), "MeshMaterial.DiffuseTexture");
-	ShaderIn.Set1i(NormalTexture->GetID(), "MeshMaterial.NormalTexture");
-	ShaderIn.Set1i(MetallicTexture->GetID(), "MeshMaterial.MetallicTexture");
-	ShaderIn.Set1i(RoughnessTexture->GetID(), "MeshMaterial.RoughnessTexture");
+
+	if (DiffuseTexture)
+	{
+		ShaderIn.Set1i(DiffuseTexture->GetID(), "MeshMaterial.DiffuseTexture");
+	}
+
+	if (NormalTexture)
+	{
+		ShaderIn.Set1i(NormalTexture->GetID(), "MeshMaterial.NormalTexture");
+	}
+
+	if (MetallicTexture)
+	{
+		ShaderIn.Set1i(MetallicTexture->GetID(), "MeshMaterial.MetallicTexture");
+	}
+
+	if (RoughnessTexture)
+	{
+		ShaderIn.Set1i(RoughnessTexture->GetID(), "MeshMaterial.RoughnessTexture");
+	}
 }

@@ -4,7 +4,7 @@
 class EntityModel : public Entity
 {
 public:
-	EntityModel(EEntityType EntityType, Transform TransformIn, std::string FileNameIn);
+	EntityModel(EEntityType EntityType, Transform TransformIn, Material* MaterialIn, std::string FileNameIn);
 
 	void Initialise(GraphicsEngine* Graphics, Material* MeshMaterialIn) override;
 

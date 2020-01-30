@@ -2,7 +2,7 @@
 #include "EntityModel.h"
 
 
-EntityModel::EntityModel(EEntityType EntityType, Transform TransformIn, std::string FileNameIn) : Entity(EntityType, TransformIn, FileNameIn)
+EntityModel::EntityModel(EEntityType EntityType, Transform TransformIn, Material* MaterialIn, std::string FileNameIn) : Entity(EntityType, TransformIn, MaterialIn, FileNameIn)
 {
 }
 

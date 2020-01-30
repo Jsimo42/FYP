@@ -2,7 +2,7 @@
 #include "EntityMesh.h"
 
 
-EntityMesh::EntityMesh(EEntityType EntityType, Transform TransformIn, std::string FileNameIn) : Entity(EntityType, TransformIn, FileNameIn)
+EntityMesh::EntityMesh(EEntityType EntityType, Transform TransformIn, Material* MaterialIn, std::string FileNameIn) : Entity(EntityType, TransformIn, MaterialIn, FileNameIn)
 {
 }
 

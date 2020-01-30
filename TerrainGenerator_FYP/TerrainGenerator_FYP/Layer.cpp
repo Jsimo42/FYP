@@ -46,10 +46,10 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 				switch (Line)
 				{
 				case '1':
-					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform));
+					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform, new Material()));
 					break;
 				case '2':
-					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform));
+					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform, new Material()));
 				default:
 					break;
 				}
