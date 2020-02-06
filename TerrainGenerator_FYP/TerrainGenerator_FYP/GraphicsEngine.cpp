@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GraphicsEngine.h"
 
-GraphicsEngine::GraphicsEngine(const char * WindowTitle, const int Width, const int Height, const int GLMajorVer, const int GLMinorVer) : WindowWidth(Width), WindowHeight(Height), GLMajorVersion(GLMajorVer), GLMinorVersion(GLMinorVer), MainCamera(glm::vec3(20.f, 5.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f))
+GraphicsEngine::GraphicsEngine(const char * WindowTitle, const int Width, const int Height, const int GLMajorVer, const int GLMinorVer) : WindowWidth(Width), WindowHeight(Height), GLMajorVersion(GLMajorVer), GLMinorVersion(GLMinorVer), MainCamera(glm::vec3(0.f, 5.f, 5.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f))
 {
 	Window = nullptr;
 	FrameBufferWidth = WindowWidth;
@@ -206,7 +206,7 @@ void GraphicsEngine::InitialiseShaders()
 
 void GraphicsEngine::InitialiseLights()
 {
-	LightVector.push_back(new glm::vec3(20.f, 5.f, 20.f));
+	LightVector.push_back(new glm::vec3(0.f, 5.f, 5.f));
 }
 
 void GraphicsEngine::InitialiseUniforms()

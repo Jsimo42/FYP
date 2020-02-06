@@ -15,24 +15,37 @@ Layer::~Layer()
 void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum)
 {
 	//TODO File Loading
+	int Width{ 20 };
+	int Depth{ 20 };
 
-	int XPos{ 0 };
+	int XPos{ -Width/2 };
 	int YPos{ LayerNum - 1};
-	int ZPos{ 0 };
+	int ZPos{ -Depth/2 };
 
 	char Line;
 
 	std::fstream LayerFile(FileName);
 
-	int Width{ 20 };
-	int Height{ 20 };
+
 
 	//TODO Image Loading
 	//unsigned char* Image = SOIL_load_image("Layers/Image.png", &Width, &Height, NULL, SOIL_LOAD_RGBA);
+	cv::Mat Image;
+	std::string ImageName = "Layers/Image.png";
+	Image = cv::imread(ImageName, cv::IMREAD_COLOR);
+
+	if (!Image.data)
+	{
+		std::cout << "Cant Load Image: " << ImageName << std::endl;
+	}
+
+	//glm::vec3 Colour = Image.at<glm::vec3>(10, 10);
+
+	//Colour[0];
 
 	if (LayerFile.is_open())
 	{
-		for (int i = 0; i < Height; i++)
+		for (int i = 0; i < Depth; i++)
 		{
 			for (int j = 0; j < Width; j++)
 			{
@@ -57,7 +70,7 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 				XPos += 1;
 			}
 
-			XPos = 0;
+			XPos = -Width / 2;
 			ZPos++;
 
 			LayerFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');

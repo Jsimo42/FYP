@@ -21,7 +21,7 @@ void Level::CreateLevel(std::vector<std::string> FilePaths, GraphicsEngine* Grap
 {
 	for (int i = 0; i < FilePaths.size(); i++)
 	{
-		LayerVector.push_back(CreateLayer(FilePaths[i], Graphics, i));
+		LayerVector.push_back(CreateLayer(FilePaths[i], Graphics, LayerCount));
 		LayerCount++;
 	}
 }

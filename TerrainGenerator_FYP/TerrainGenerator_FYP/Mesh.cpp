@@ -9,7 +9,7 @@ Mesh::Mesh(Primitive * PrimitiveIn, glm::vec3 PositionIn, glm::vec3 RotationIn, 
 	WorldScale = ScaleIn;
 
 	InitialiseMeshVAO(PrimitiveIn);
-	UpdateModelMatrix();
+//	UpdateModelMatrix();
 }
 
 Mesh::Mesh(std::vector<Vertex> VerticesIn, std::vector<GLuint> IndicesIn, std::vector<TextureInfo> TexturesIn)
@@ -30,8 +30,9 @@ Mesh::~Mesh()
 
 void Mesh::Render(Shader * ShaderIn)
 {
-	UpdateUniforms(ShaderIn);
+
 	UpdateModelMatrix();
+	UpdateUniforms(ShaderIn);
 
 	ShaderIn->UseProgram();
 
@@ -53,8 +54,9 @@ void Mesh::RenderModel(Shader * ShaderIn)
 {
 	ShaderIn->UseProgram();
 
-	UpdateUniforms(ShaderIn);
+
 	UpdateModelMatrix();
+	UpdateUniforms(ShaderIn);
 
 	unsigned int DiffuseNum = 1;
 	unsigned int SpecularNum = 1;
