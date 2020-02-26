@@ -204,23 +204,29 @@ GLint Model::TextureFromFile(const char* Path, std::string Directory)
 	GLuint TextureID;
 	glGenTextures(1, &TextureID);
 
-	int Width{ 0 };
-	int Height{ 0 };
+	cv::Mat Image;
+	std::string ImageName = FilePath;
+	Image = cv::imread(ImageName, cv::IMREAD_COLOR);
 
-	unsigned char* Image = SOIL_load_image(FilePath.c_str(), &Width, &Height, 0, SOIL_LOAD_RGB);
+	if (!Image.data)
+	{
+		std::cout << "Cant Load Image: " << ImageName << std::endl;
+	}
+	else
+	{
+		cv::flip(Image, Image, 0);
 
-	// Assign texture to ID
-	glBindTexture(GL_TEXTURE_2D, TextureID);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Width, Height, 0, GL_RGB, GL_UNSIGNED_BYTE, Image);
-	glGenerateMipmap(GL_TEXTURE_2D);
+		// Assign texture to ID
+		glBindTexture(GL_TEXTURE_2D, TextureID);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Image.cols, Image.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, Image.ptr());
 
-	// Parameters
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-	glBindTexture(GL_TEXTURE_2D, 0);
-	SOIL_free_image_data(Image);
+		// Parameters
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glBindTexture(GL_TEXTURE_2D, 0);
+	}
 
 	return TextureID;
 }

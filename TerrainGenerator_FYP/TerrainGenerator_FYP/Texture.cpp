@@ -31,7 +31,9 @@ void Texture::LoadFromFile(const char * FileName)
 		glDeleteTextures(1, &ID);
 	}
 
-	unsigned char* Image = SOIL_load_image(FileName, &Width, &Height, NULL, SOIL_LOAD_RGBA);
+	cv::Mat Image;
+	std::string ImageName = FileName;
+	Image = cv::imread(ImageName, cv::IMREAD_COLOR);
 
 	glGenTextures(1, &ID);
 	glBindTexture(TextureType, ID);
@@ -41,17 +43,18 @@ void Texture::LoadFromFile(const char * FileName)
 	glTexParameteri(TextureType, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(TextureType, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 
-	if (Image)
+	if (Image.data)
 	{
-		glTexImage2D(TextureType, 0, GL_RGBA, Width, Height, 0, GL_RGBA, GL_UNSIGNED_BYTE, Image);
+		cv::flip(Image, Image, 0); //1.10 load time
+		
+		glTexImage2D(TextureType, 0, GL_RGB, Image.cols, Image.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, Image.ptr());
 		glGenerateMipmap(TextureType);
 	}
 	else
 	{
-		std::cout << "Image Load Error: " << FileName << std::endl;
+		std::cout << "Image Load Error: " << ImageName << std::endl;
 	}
 
 	glActiveTexture(0);
 	glBindTexture(TextureType, 0);
-	SOIL_free_image_data(Image);
 }

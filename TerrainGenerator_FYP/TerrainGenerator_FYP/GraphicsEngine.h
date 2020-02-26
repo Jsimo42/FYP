@@ -63,7 +63,7 @@ private:
 	//Vectors
 	std::vector <Shader*> ShaderVector;
 	std::vector <TextureInfo*> TextureVector;
-	std::vector <glm::vec3*> LightVector;
+	std::vector <glm::vec3> LightVector;
 
 	//MVP Matrices
 	glm::mat4 ViewMatrix = glm::mat4(0.f);

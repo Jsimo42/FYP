@@ -10,7 +10,7 @@
 #include <glew.h>
 #include <glfw3.h>
 
-#include <opencv2/core.hpp>
+#include <opencv2/core/core_c.h>
 #include <opencv2/imgcodecs.hpp>
 
 #include <glm.hpp>
@@ -21,7 +21,7 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 
-#include <SOIL2.h>
+//#include <SOIL2.h>
 
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>

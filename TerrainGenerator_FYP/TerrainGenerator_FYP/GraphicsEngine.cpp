@@ -23,12 +23,6 @@ GraphicsEngine::~GraphicsEngine()
 	{
 		delete ShaderVector[i];
 	}
-
-
-	for (int i = 0; i < LightVector.size(); i++)
-	{
-		delete LightVector[i];
-	}
 }
 
 void GraphicsEngine::Initialise()
@@ -44,6 +38,8 @@ void GraphicsEngine::Update()
 	glfwPollEvents();
 	UpdateDeltaTime();
 	UpdateInput();
+
+	LightVector[0] = MainCamera.GetCameraPosition();
 }
 
 int GraphicsEngine::GetWindowShouldClose()
@@ -105,7 +101,7 @@ void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn, std::vector<Materia
 	UpdateUniforms();
 
 	ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
-	ShaderVector[MainProgram]->SetVec3f(*LightVector[0], "LightPosition");
+	ShaderVector[MainProgram]->SetVec3f(LightVector[0], "LightPosition");
 
 	for (int i = 0; i < MeshVectorIn.size(); i++)
 	{
@@ -206,7 +202,7 @@ void GraphicsEngine::InitialiseShaders()
 
 void GraphicsEngine::InitialiseLights()
 {
-	LightVector.push_back(new glm::vec3(20.f, 5.f, 20.f));
+	LightVector.push_back(glm::vec3(20.f, 5.f, 20.f));
 }
 
 void GraphicsEngine::InitialiseUniforms()
