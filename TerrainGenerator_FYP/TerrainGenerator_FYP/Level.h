@@ -17,7 +17,7 @@ public:
 	void Render(GraphicsEngine* Graphics);
 
 private:
-	int LayerCount{ 1 };
+	int LayerCount{ 0 };
 	std::vector<Layer*> LayerVector;
 
 	Layer* CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum);
