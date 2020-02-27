@@ -26,8 +26,6 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 
 	std::fstream LayerFile(FileName);
 
-
-
 	//TODO Image Loading
 	cv::Mat Image;
 	std::string ImageName = "Layers/Image.png";
@@ -41,6 +39,12 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 	//cv::Vec3f Colour = Image.at<cv::Vec3f>(10, 10);
 
 	//Colour[0];
+
+	cv::Mat Image2;
+	ImageName = "Textures/Test.jfif";
+	Image2 = cv::imread(ImageName, cv::IMREAD_COLOR);
+
+	Material* TestMat = new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image2, GL_TEXTURE_2D, 0), new Texture(Image2, GL_TEXTURE_2D, 1), new Texture(Image2, GL_TEXTURE_2D, 2), new Texture(Image2, GL_TEXTURE_2D, 3));
 
 	if (LayerFile.is_open())
 	{
@@ -58,10 +62,10 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 				switch (Line)
 				{
 				case '1':
-					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform, new Material()));
+					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform, TestMat));
 					break;
 				case '2':
-					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform, new Material()));
+					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform, TestMat));
 				default:
 					break;
 				}
@@ -80,7 +84,7 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 
 	for (int i = 0; i < EntityVector.size(); i++)
 	{
-		EntityVector[i]->Initialise(Graphics, new Material());
+		EntityVector[i]->Initialise(Graphics, TestMat);
 	}
 }
 

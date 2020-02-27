@@ -2,9 +2,9 @@
 #include "Texture.h"
 
 
-Texture::Texture(const char * FileName, GLenum Type, GLuint TextureUnit) : TextureType(Type), ID(TextureUnit)
+Texture::Texture(const cv::Mat Image, GLenum Type, GLuint TextureUnit) : TextureType(Type), ID(TextureUnit)
 {
-	LoadFromFile(FileName);
+	LoadFromFile(Image);
 }
 
 Texture::~Texture()
@@ -24,16 +24,17 @@ void Texture::UnBind()
 	glBindTexture(TextureType, 0);
 }
 
-void Texture::LoadFromFile(const char * FileName)
+void Texture::LoadFromFile(const cv::Mat Image)
 {
 	if (ID)
 	{
 		glDeleteTextures(1, &ID);
 	}
 
-	cv::Mat Image;
-	std::string ImageName = FileName;
-	Image = cv::imread(ImageName, cv::IMREAD_COLOR);
+
+	glPixelStorei(GL_UNPACK_ALIGNMENT, (Image.step & 3) ? 1 : 4);
+
+	glPixelStorei(GL_UNPACK_ROW_LENGTH, Image.step / Image.elemSize());
 
 	glGenTextures(1, &ID);
 	glBindTexture(TextureType, ID);
@@ -45,14 +46,15 @@ void Texture::LoadFromFile(const char * FileName)
 
 	if (Image.data)
 	{
-		cv::flip(Image, Image, 0); //1.10 load time
+		cv::flip(Image, Image, 0);
 		
 		glTexImage2D(TextureType, 0, GL_RGB, Image.cols, Image.rows, 0, GL_BGR, GL_UNSIGNED_BYTE, Image.ptr());
 		glGenerateMipmap(TextureType);
 	}
 	else
 	{
-		std::cout << "Image Load Error: " << ImageName << std::endl;
+		//TODO Image Name
+		std::cout << "Image Load Error: " << Image.data << std::endl;
 	}
 
 	glActiveTexture(0);

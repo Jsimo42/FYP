@@ -39,7 +39,7 @@ void GraphicsEngine::Update()
 	UpdateDeltaTime();
 	UpdateInput();
 
-	LightVector[0] = MainCamera.GetCameraPosition();
+	//LightVector[0] = MainCamera.GetCameraPosition();
 }
 
 int GraphicsEngine::GetWindowShouldClose()

@@ -5,7 +5,7 @@
 class Texture
 {
 public:
-	Texture(const char* FileName, GLenum Type, GLuint TextureUnit);
+	Texture(const cv::Mat Image, GLenum Type, GLuint TextureUnit);
 	~Texture();
 
 	GLuint GetID() const { return ID; };
@@ -19,6 +19,6 @@ private:
 	int Height;
 	int Width;
 
-	void LoadFromFile(const char* FileName);
+	void LoadFromFile(const cv::Mat Image);
 };
 
