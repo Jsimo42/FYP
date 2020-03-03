@@ -270,6 +270,15 @@ void GraphicsEngine::UpdateKeyboardInput()
 		MainCamera.MoveCamera(DeltaTime, ERight);
 	}
 
+	if (glfwGetKey(Window, GLFW_KEY_E) == GLFW_PRESS)
+	{
+		MainCamera.MoveCamera(DeltaTime, EUp);
+	}
+
+	if (glfwGetKey(Window, GLFW_KEY_Q) == GLFW_PRESS)
+	{
+		MainCamera.MoveCamera(DeltaTime, EDown);
+	}
 
 	int ControllerAttatched = glfwJoystickPresent(GLFW_JOYSTICK_1);
 

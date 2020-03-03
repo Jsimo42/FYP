@@ -1,5 +1,5 @@
-﻿  GraphicsEngine.cpp
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\GraphicsEngine.cpp(22,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\GraphicsEngine.cpp(106,20): warning C4018: '<': signed/unsigned mismatch
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\GraphicsEngine.cpp(80): warning C4715: 'GraphicsEngine::CreatePrimitive': not all control paths return a value
-  TerrainGenerator_FYP.vcxproj -> C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\Debug\TerrainGenerator_FYP.exe
+﻿  Layer.cpp
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(96): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(25): warning C4101: 'Line': unreferenced local variable
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  TerrainGenerator_FYP.vcxproj -> D:\Documents\FYP\TerrainGenerator_FYP\Debug\TerrainGenerator_FYP.exe

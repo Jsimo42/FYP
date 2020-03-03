@@ -35,7 +35,9 @@ enum EDirection
 	EForward = 0,
 	EBack,
 	ELeft,
-	ERight
+	ERight,
+	EUp,
+	EDown
 };
 
 enum EEntityType

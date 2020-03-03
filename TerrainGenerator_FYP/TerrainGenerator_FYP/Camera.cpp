@@ -49,6 +49,12 @@ void Camera::MoveCamera(const float & DeltaTimeIn, const EDirection Direction)
 		break;
 	case ERight:
 		CameraPosition += CameraRight * MoveSpeed * DeltaTimeIn;
+		break;	
+	case EDown:
+		CameraPosition -= CameraUp * MoveSpeed * DeltaTimeIn;
+		break;
+	case EUp:
+		CameraPosition += CameraUp * MoveSpeed * DeltaTimeIn;
 		break;
 	default:
 		break;	

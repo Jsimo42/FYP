@@ -30,8 +30,8 @@ Mesh::~Mesh()
 
 void Mesh::Render(Shader * ShaderIn)
 {
-	UpdateUniforms(ShaderIn);
 	UpdateModelMatrix();
+	UpdateUniforms(ShaderIn);
 
 	ShaderIn->UseProgram();
 
@@ -205,11 +205,11 @@ void Mesh::UpdateModelMatrix()
 
 	ModelMatrix = glm::translate(ModelMatrix, WorldPosition);
 
-	//ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.x), glm::vec3(1.f, 0.f, 0.f));
-	//ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.y), glm::vec3(0.f, 1.f, 0.f));
-	//ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.z), glm::vec3(0.f, 0.f, 1.f));
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.x), glm::vec3(1.f, 0.f, 0.f));
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.y), glm::vec3(0.f, 1.f, 0.f));
+	ModelMatrix = glm::rotate(ModelMatrix, glm::radians(WorldRotation.z), glm::vec3(0.f, 0.f, 1.f));
 
-	//ModelMatrix = glm::scale(ModelMatrix, WorldScale);
+	ModelMatrix = glm::scale(ModelMatrix, WorldScale);
 
 }
 

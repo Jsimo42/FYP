@@ -28,13 +28,11 @@ void Texture::LoadFromFile(const cv::Mat Image)
 {
 	if (ID)
 	{
-		glDeleteTextures(1, &ID);
+		//glDeleteTextures(1, &ID);
 	}
 
-
-	glPixelStorei(GL_UNPACK_ALIGNMENT, (Image.step & 3) ? 1 : 4);
-
-	glPixelStorei(GL_UNPACK_ROW_LENGTH, Image.step / Image.elemSize());
+	//glPixelStorei(GL_UNPACK_ALIGNMENT, (Image.step & 3) ? 1 : 4);
+	//glPixelStorei(GL_UNPACK_ROW_LENGTH, Image.step / Image.elemSize());
 
 	glGenTextures(1, &ID);
 	glBindTexture(TextureType, ID);

@@ -14,7 +14,7 @@ public:
 	void UnBind();
 
 private: 
-	GLuint ID;
+	GLuint ID{99};
 	GLenum TextureType;
 	int Height;
 	int Width;

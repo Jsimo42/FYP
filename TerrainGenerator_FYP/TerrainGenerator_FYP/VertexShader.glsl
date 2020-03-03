@@ -20,6 +20,7 @@ void main()
 	Normal = mat3(VS_ModelMatrix) * normalize(VertexNormal);
 	TexCoords = vec2(VertexTexCoords.x, VertexTexCoords.y  * -1.f); //Flip UVs
 
+	//Normal Mapping
 	vec3 VS_Tangent = mat3(VS_ModelMatrix) * normalize(VertexTangent);
 	vec3 VS_Normal = mat3(VS_ModelMatrix) * normalize(VertexNormal);
 	vec3 VS_BiTangent = cross(VS_Tangent, VS_Normal);

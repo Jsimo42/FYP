@@ -42,7 +42,7 @@ void main()
 	vec3 SpecularColour = CalculateSpecular();
 
 	//Final Colour
-	FragmentColour = vec4(vec4(AmbientColour, 1) + vec4(DiffuseColour, 1) + vec4(SpecularColour, 1)) * Attenuation;
+	FragmentColour = vec4(texture(MeshMaterial.DiffuseTexture, TexCoords).rgb, 1.0f);//vec4(vec4(AmbientColour, 1) + vec4(DiffuseColour, 1) + vec4(SpecularColour, 1)) * Attenuation;
 }
 
 
@@ -58,7 +58,7 @@ vec3 CalculateDiffuse()
 	vec3 PositionToLight = normalize(LightPosition - Position);
 	float DiffuseColour = (clamp(dot(PositionToLight, N), 0, 1));
 
-	return DiffuseColour * MeshMaterial.Diffuse * texture(MeshMaterial.DiffuseTexture, TexCoords).rgb;
+	return MeshMaterial.Diffuse * texture(MeshMaterial.DiffuseTexture, TexCoords).rgb;
 }
 
 
@@ -78,5 +78,5 @@ vec3 CalculateSpecular()
 	vec3 HalvedDirection = normalize(LightToPosition + PositionToView);
 	float SpecularColour = pow(max(dot(N, HalvedDirection), 0), 30);
 
-	return MeshMaterial.Specular * SpecularColour * texture(MeshMaterial.MetallicTexture, TexCoords).rgb;
+	return MeshMaterial.Specular * texture(MeshMaterial.MetallicTexture, TexCoords).rgb;
 }

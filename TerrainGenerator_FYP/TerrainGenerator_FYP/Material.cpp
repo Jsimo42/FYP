@@ -19,22 +19,22 @@ void Material::RenderMaterial(Shader & ShaderIn)
 
 	if (DiffuseTexture)
 	{
-		DiffuseTexture->Bind(0);
+		DiffuseTexture->Bind(DiffuseTexture->GetID());
 	}
 
 	if (NormalTexture)
 	{
-		NormalTexture->Bind(1);
+		NormalTexture->Bind(NormalTexture->GetID());
 	}
 
 	if (MetallicTexture)
 	{
-		MetallicTexture->Bind(2);
+		MetallicTexture->Bind(MetallicTexture->GetID());
 	}
 
 	if (RoughnessTexture)
 	{
-		RoughnessTexture->Bind(3);
+		RoughnessTexture->Bind(RoughnessTexture->GetID());
 	}
 }
 

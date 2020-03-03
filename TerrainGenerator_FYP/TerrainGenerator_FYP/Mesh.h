@@ -44,7 +44,7 @@ private:
 	unsigned NumVertices{ 0 };
 	unsigned NumIndices{ 0 };	
 
-	GLuint VAO;
+	GLuint VAO ;
 	GLuint VBO;
 	GLuint EBO;
 
