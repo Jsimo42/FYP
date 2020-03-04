@@ -21,8 +21,6 @@
 #include <gtc/matrix_transform.hpp>
 #include <gtc/type_ptr.hpp>
 
-//#include <SOIL2.h>
-
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
@@ -62,4 +60,19 @@ enum EColour
 	ELightGreen,
 	EGreen,
 	EBlack
+};
+
+const std::string ColourNames[12]{ "White", "Yellow", "Orange", "Red", "Pink", "Purple", "DarkBlue", "Blue", "LightBlue", "LightGreen", "Green", "Black" };
+
+struct Agent
+{
+	Agent(EColour LayerColourIn, cv::Vec3b ColourIn, bool bIsMeshIn, EEntityType MeshTypeIn, std::string FileNameIn = "") : LayerColour(LayerColourIn), Colour(ColourIn), bIsMesh(bIsMeshIn), MeshType(MeshTypeIn), FileName(FileNameIn) {};
+
+	EColour LayerColour;
+	cv::Vec3b Colour;
+
+	bool bIsMesh = true;
+	EEntityType MeshType = EEntityType::ENone;
+
+	std::string FileName = "";
 };

@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Layer.h"
 #include "EntityMesh.h"
+#include "EntityModel.h"
 
 
 Layer::Layer()
@@ -12,90 +13,86 @@ Layer::~Layer()
 {
 }
 
-void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum)
+void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
 {
-	//TODO File Loading
-	int Width{ 32 };
-	int Depth{ 32 };
+	//TODO A4 Image size - 2480 x 3508
+	int Width{ 320 };
+	int Depth{ 320 };
 
-	int XPos{ -Width/2 };
-	int YPos{ LayerNum - 1};
-	int ZPos{ -Depth/2 };
+	int XPos{ -Width / 20 };
+	int YPos{ LayerNum - 1 };
+	int ZPos{ -Depth / 20 };
 
-	char Line;
-
-	std::fstream LayerFile(FileName);
-
-	//TODO Image Loading
 	cv::Mat Image;
-	std::string ImageName;
+	Image = cv::imread("Textures/Red.png", cv::IMREAD_COLOR);
+	std::unordered_map<std::string, Material*> Materials;
+	Materials.insert({ "Red", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+	
+	Image = cv::imread("Textures/Blue.png", cv::IMREAD_COLOR);
+	Materials.insert({ "Blue", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
 
-	cv::Mat Image2;
-	ImageName = "Textures/Test.jfif";
-	Image2 = cv::imread(ImageName, cv::IMREAD_COLOR);
+	Image = cv::imread("Textures/Green.png", cv::IMREAD_COLOR);
+	Materials.insert({ "Green", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
 
-	Material* TestMat = new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image2, GL_TEXTURE_2D, 0), new Texture(Image2, GL_TEXTURE_2D, 1), new Texture(Image2, GL_TEXTURE_2D, 2), new Texture(Image2, GL_TEXTURE_2D, 3));
-	 
-	ImageName = "Layers/TestLayer.png";
-	Image = cv::imread(ImageName, cv::IMREAD_COLOR);
+	Image = cv::imread("Textures/Pink.png", cv::IMREAD_COLOR);
+	Materials.insert({ "Pink", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
 
-	if (!Image.data)
+	Image = cv::imread("Textures/Yellow.png", cv::IMREAD_COLOR);
+	Materials.insert({ "Yellow", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+
+	Image = cv::imread("Textures/LightBlue.png", cv::IMREAD_COLOR);
+	Materials.insert({ "LightBlue", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+
+	Image = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+	Materials.insert({ "White", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+
+	cv::Mat Layer;
+	Layer = cv::imread(FileName, cv::IMREAD_COLOR);
+
+	if (!Layer.data)
 	{
-		std::cout << "Cant Load Image: " << ImageName << std::endl;
+		std::cout << "Cant Load Image: " << FileName << std::endl;
 	}
 
-	cv::Vec3f Colour;
+	cv::Vec3b Colour;
 
-	if (LayerFile.is_open())
+	for (int i = 1; i < Depth; i += 10)
 	{
-		for (int i = 1; i < Depth; i += 10)
+		for (int j = 1; j < Width; j += 10)
 		{
-			for (int j = 1; j < Width; j += 10)
+			Colour = Layer.at<cv::Vec3b>(i, j);
+
+			Transform EntityTransform = Transform();
+			EntityTransform.Position = glm::vec3(XPos, YPos, ZPos);
+			EntityTransform.Rotation = glm::vec3(0, 0, 0);
+			EntityTransform.Scale = glm::vec3(1, 1, 1);
+
+			//BGR
+			for (int a = 0; a < Agents.size(); a++)
 			{
-				Colour = Image.at<cv::Vec3f>(j, i); //TODO Fix Assertion
-				//LayerFile >> std::skipws >> Line;
-
-				Transform EntityTransform = Transform();
-				EntityTransform.Position = glm::vec3(XPos, YPos, ZPos);
-				EntityTransform.Rotation = glm::vec3(0, 0, 0);
-				EntityTransform.Scale = glm::vec3(1, 1, 1);
-
-				//BGR
-				if (Colour[0] == 0 && Colour[1] == 0 && Colour[2] == 0)
+				if (Colour == Agents[a]->Colour)
 				{
-					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform, TestMat));
+					if (Agents[a]->bIsMesh)
+					{
+						EntityVector.push_back(new EntityMesh(Agents[a]->MeshType, EntityTransform, Materials.at(ColourNames[Agents[a]->LayerColour]))); //TODO  Materials.at(Agents[a]->LayerColour)
+					}
+					else
+					{
+						EntityVector.push_back(new EntityModel(Agents[a]->MeshType, EntityTransform, Materials.at("White"), Agents[a]->FileName));
+					}
 				}
-				else if (Colour[0] == 0 && Colour[1] == 0 && Colour[2] == 255)
-				{
-					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform, TestMat));
-				}
-
-				/*switch (Line)
-				{
-				case '1':
-					EntityVector.push_back(new EntityMesh(EEntityType::ECube, EntityTransform, TestMat));
-					break;
-				case '2':
-					EntityVector.push_back(new EntityMesh(EEntityType::EPyramid, EntityTransform, TestMat));
-				default:
-					break;
-				}*/
-
-				XPos++;
 			}
 
-			XPos = -Width/2;
-			ZPos++;
-
-			LayerFile.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+			XPos++;
 		}
-		
-		LayerFile.close();
+
+		XPos = -Width/20;
+		ZPos++;
 	}
 
 	for (int i = 0; i < EntityVector.size(); i++)
 	{
-		EntityVector[i]->Initialise(Graphics, TestMat);
+		EntityVector[i]->Initialise(Graphics);
 	}
 }
 

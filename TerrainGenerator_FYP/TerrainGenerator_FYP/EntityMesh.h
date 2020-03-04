@@ -6,7 +6,7 @@ class EntityMesh : public Entity
 public:
 	EntityMesh(EEntityType EntityType, Transform TransformIn, Material* MaterialIn, std::string FileNameIn = "");
 
-	void Initialise(GraphicsEngine* Graphics, Material* MeshMaterialIn) override;
+	void Initialise(GraphicsEngine* Graphics) override;
 
 	Mesh* GetMesh() const { return Mesh; };
 

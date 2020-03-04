@@ -37,7 +37,7 @@ private:
 	bool bGenerateGround{ false };
 	int LayerCount{ 0 };
 	std::vector<std::string> LayerFilePaths;
-	std::unordered_map<EColour, std::string> ColourMeshKey; //Colour to Primitive or Model File
+	std::vector<Agent*> Agents;
 
 	int i = 0;
 };

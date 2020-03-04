@@ -10,7 +10,6 @@ public:
 	~Entity();
 
 	virtual void Initialise(GraphicsEngine* Graphics) {};
-	virtual void Initialise(GraphicsEngine* Graphics, Material* MeshMaterialIn) {};
 
 	virtual Model* GetModel() const { return new Model(); };
 	virtual Mesh* GetMesh() const { return new Mesh(); };

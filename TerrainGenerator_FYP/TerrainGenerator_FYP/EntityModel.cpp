@@ -6,9 +6,7 @@ EntityModel::EntityModel(EEntityType EntityType, Transform TransformIn, Material
 {
 }
 
-void EntityModel::Initialise(GraphicsEngine * Graphics, Material* MeshMaterialIn)
+void EntityModel::Initialise(GraphicsEngine * Graphics)
 {
-	MeshMaterial = MeshMaterialIn;
-
 	Model = Graphics->CreateModel(FileName, EntityTransform);
 }
