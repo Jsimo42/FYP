@@ -35,7 +35,6 @@ private:
 	std::vector<Mesh*> MeshVector;
 
 	bool bGenerateGround{ false };
-	int LayerCount{ 0 };
 	std::vector<std::string> LayerFilePaths;
 	std::vector<Agent*> Agents;
 

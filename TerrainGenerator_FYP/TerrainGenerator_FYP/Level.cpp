@@ -17,11 +17,11 @@ Level::~Level()
 	}
 }
 
-void Level::CreateLevel(std::vector<std::string> FilePaths, GraphicsEngine* Graphics, std::vector<Agent*> Agents)
+void Level::CreateLevel(bool GenerateGround, std::vector<std::string> FilePaths, GraphicsEngine* Graphics, std::vector<Agent*> Agents)
 {
 	for (int i = 0; i < FilePaths.size(); i++)
 	{
-		LayerVector.push_back(CreateLayer(FilePaths[i], Graphics, LayerCount, Agents));
+		LayerVector.push_back(CreateLayer(GenerateGround, FilePaths[i], Graphics, LayerCount, Agents));
 		LayerCount++;
 	}
 }
@@ -49,11 +49,11 @@ void Level::Render(GraphicsEngine* Graphics)
 	Graphics->Render(MeshVector, MaterialVector);
 }
 
-Layer* Level::CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
+Layer* Level::CreateLayer(bool GenerateGround, std::string FilePath, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
 {
 	Layer* NewLayer = new Layer();
 
-	NewLayer->CreateLayer(FilePath, Graphics, LayerNum, Agents);
+	NewLayer->CreateLayer(GenerateGround, FilePath, Graphics, LayerNum, Agents);
 
 	return NewLayer;
 }

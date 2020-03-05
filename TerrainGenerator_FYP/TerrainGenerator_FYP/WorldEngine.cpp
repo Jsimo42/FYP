@@ -26,13 +26,13 @@ bool WorldEngine::Initialise()
 
 void WorldEngine::CreateMenu()
 {
-	Menu->ShowMenu(bGenerateGround, LayerCount, LayerFilePaths, Agents);
+	Menu->ShowMenu(bGenerateGround, LayerFilePaths, Agents);
 	CreateLevel();
 }
 
 bool WorldEngine::CreateLevel()
 {
-	MainLevel->CreateLevel(LayerFilePaths, Graphics, Agents);
+	MainLevel->CreateLevel(bGenerateGround, LayerFilePaths, Graphics, Agents);
 
 	return true;
 }

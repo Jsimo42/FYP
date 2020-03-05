@@ -15,8 +15,10 @@ void MainMenu::Initialise()
 {
 }
 
-void MainMenu::ShowMenu(bool & bGenerateLevel, int & Layers, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
+void MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
 {
+	bGenerateGround = true;
+
 	LayerFilePaths.push_back("Layers/TestLayer.png");
 	//LayerFilePaths.push_back("Layers/Layer2.txt");
 	//LayerFilePaths.push_back("Layers/Layer3.txt");
@@ -29,4 +31,7 @@ void MainMenu::ShowMenu(bool & bGenerateLevel, int & Layers, std::vector<std::st
 	Agents.push_back(new Agent(EColour::ELightBlue, cv::Vec3b(255, 255, 0), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EYellow, cv::Vec3b(0, 255, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EPink, cv::Vec3b(255, 0, 255), true, EEntityType::ECube));
+
+	//TODO Setup Model Loading
+	//Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), true, EEntityType::EModel, "Models/scene.fbx"));
 }
