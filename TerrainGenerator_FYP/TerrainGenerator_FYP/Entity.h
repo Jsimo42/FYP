@@ -19,6 +19,7 @@ public:
 
 protected:
 	EEntityType Type = EEntityType::ENone;
+	std::string FileName{ "" };
 
 	Transform EntityTransform = Transform();
 	bool bMesh{ true };

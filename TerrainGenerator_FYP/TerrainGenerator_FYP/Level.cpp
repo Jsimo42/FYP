@@ -17,11 +17,17 @@ Level::~Level()
 	}
 }
 
-void Level::CreateLevel(bool GenerateGround, std::vector<std::string> FilePaths, GraphicsEngine* Graphics, std::vector<Agent*> Agents)
+void Level::CreateLevel(bool bGenerateGround, std::vector<std::string> FilePaths, GraphicsEngine* Graphics, std::vector<Agent*> Agents)
 {
+	if (bGenerateGround)
+	{
+		LayerVector.push_back(CreateLayer("Layers/DefaultGround.png", Graphics, 1, Agents));
+		LayerCount++;
+	}
+
 	for (int i = 0; i < FilePaths.size(); i++)
 	{
-		LayerVector.push_back(CreateLayer(GenerateGround, FilePaths[i], Graphics, LayerCount, Agents));
+		LayerVector.push_back(CreateLayer(FilePaths[i], Graphics, LayerCount, Agents));
 		LayerCount++;
 	}
 }
@@ -30,7 +36,9 @@ void Level::Render(GraphicsEngine* Graphics)
 {
 	std::vector<Entity*> EntityVector;
 	std::vector<Mesh*> MeshVector;
-	std::vector<Material*> MaterialVector;
+	std::vector<Model*> ModelVector;
+	std::vector<Material*> MeshMaterialVector;
+	std::vector<Material*> ModelMaterialVector;
 
 	for (int i = 0; i < LayerVector.size(); i++)
 	{
@@ -42,18 +50,30 @@ void Level::Render(GraphicsEngine* Graphics)
 
 	for (int i = 0; i <  EntityVector.size(); i++)
 	{
-		MeshVector.push_back(EntityVector[i]->GetMesh());
-		MaterialVector.push_back(EntityVector[i]->GetMaterial());
+		if (EntityVector[i]->GetEntityType() == EEntityType::EModel)
+		{
+			ModelVector.push_back(EntityVector[i]->GetModel());
+			ModelMaterialVector.push_back(EntityVector[i]->GetMaterial());
+		}
+		else
+		{
+			MeshVector.push_back(EntityVector[i]->GetMesh());
+			MeshMaterialVector.push_back(EntityVector[i]->GetMaterial());
+		}
+
+		
 	}
 
-	Graphics->Render(MeshVector, MaterialVector);
+	Graphics->Render(MeshVector, MeshMaterialVector);
+	//TODO Put into 1 Function
+	//Graphics->RenderModel(ModelVector, ModelMaterialVector);
 }
 
-Layer* Level::CreateLayer(bool GenerateGround, std::string FilePath, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
+Layer* Level::CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
 {
 	Layer* NewLayer = new Layer();
 
-	NewLayer->CreateLayer(GenerateGround, FilePath, Graphics, LayerNum, Agents);
+	NewLayer->CreateLayer(FilePath, Graphics, LayerNum, Agents);
 
 	return NewLayer;
 }

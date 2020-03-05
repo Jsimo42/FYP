@@ -12,7 +12,7 @@ public:
 	Level();
 	~Level();
 
-	void CreateLevel(bool GenerateGround, std::vector<std::string> FilePaths, GraphicsEngine* Graphics, std::vector<Agent*> Agents);
+	void CreateLevel(bool bGenerateGround, std::vector<std::string> FilePaths, GraphicsEngine* Graphics, std::vector<Agent*> Agents);
 
 	void Render(GraphicsEngine* Graphics);
 
@@ -20,6 +20,6 @@ private:
 	int LayerCount{ 1 };
 	std::vector<Layer*> LayerVector;
 
-	Layer* CreateLayer(bool GenerateGround, std::string FilePath, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents);
+	Layer* CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents);
 };
 

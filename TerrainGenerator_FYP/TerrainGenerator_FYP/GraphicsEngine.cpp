@@ -119,6 +119,34 @@ void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn, std::vector<Materia
 	ShaderVector[MainProgram]->UnuseProgram();
 }
 
+void GraphicsEngine::RenderModel(std::vector<Model*> ModelVectorIn, std::vector<Material*> MaterialVectorIn)
+{
+	ShaderVector[MainProgram]->UseProgram();
+
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	UpdateUniforms();
+
+	ShaderVector[MainProgram]->Set1f(1.f, "bIsModel");
+	ShaderVector[MainProgram]->SetVec3f(LightVector[0], "LightPosition");
+
+	for (int i = 0; i < ModelVectorIn.size(); i++)
+	{
+		MaterialVectorIn[i]->RenderMaterial(*ShaderVector[MainProgram]);
+		ModelVectorIn[i]->Render(ShaderVector[MainProgram]);
+		MaterialVectorIn[i]->UnBindTextures();
+	}
+
+	glfwSwapBuffers(Window);
+	glFlush();
+
+	glBindVertexArray(0);
+	glBindTexture(GL_TEXTURE_2D, 0);
+
+	ShaderVector[MainProgram]->UnuseProgram();
+}
+
 bool GraphicsEngine::InitialiseGLFW()
 {
 	if (glfwInit() == GLFW_FALSE)

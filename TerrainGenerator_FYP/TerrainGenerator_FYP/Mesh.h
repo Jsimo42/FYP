@@ -27,13 +27,13 @@ public:
 	void Render(Shader* ShaderIn);
 	void RenderModel(Shader* ShaderIn);
 
-	void SetPosition(glm::vec3 NewPosition) { WorldPosition = NewPosition; };
+	void SetPosition(glm::vec3 NewPosition) { WorldPosition = NewPosition; 	UpdateModelMatrix();};
 	void SetRotation(glm::vec3 NewRotation);
-	void SetScale(glm::vec3 NewScale) { WorldScale = NewScale; };
+	void SetScale(glm::vec3 NewScale) { WorldScale = NewScale; UpdateModelMatrix();};
 
-	void Move(glm::vec3 MoveAmount) { WorldPosition += MoveAmount; };
+	void Move(glm::vec3 MoveAmount) { WorldPosition += MoveAmount; UpdateModelMatrix();};
 	void Rotate(glm::vec3 RotationAmount);
-	void Scale(glm::vec3 ScaleAmount) { WorldScale += ScaleAmount; };
+	void Scale(glm::vec3 ScaleAmount) { WorldScale += ScaleAmount; UpdateModelMatrix();};
 
 private:
 	//Transforms

@@ -1,2 +1,6 @@
-﻿  MainMenu.cpp
+﻿  Level.cpp
+c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(14): warning C4018: '<': signed/unsigned mismatch
+c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(28): warning C4018: '<': signed/unsigned mismatch
+c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(43): warning C4018: '<': signed/unsigned mismatch
+c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(51): warning C4018: '<': signed/unsigned mismatch
   TerrainGenerator_FYP.vcxproj -> C:\Users\t7038904\source\FYP\TerrainGenerator_FYP\Debug\TerrainGenerator_FYP.exe

@@ -30,7 +30,6 @@ Mesh::~Mesh()
 
 void Mesh::Render(Shader * ShaderIn)
 {
-	UpdateModelMatrix();
 	UpdateUniforms(ShaderIn);
 
 	ShaderIn->UseProgram();
@@ -54,7 +53,6 @@ void Mesh::RenderModel(Shader * ShaderIn)
 	ShaderIn->UseProgram();
 
 	UpdateUniforms(ShaderIn);
-	UpdateModelMatrix();
 
 	unsigned int DiffuseNum = 1;
 	unsigned int SpecularNum = 1;
@@ -107,6 +105,8 @@ void Mesh::SetRotation(glm::vec3 NewRotation)
 	{
 		WorldRotation.z = WorldRotation.z - 360;
 	}
+
+	UpdateModelMatrix();
 }
 
 void Mesh::Rotate(glm::vec3 RotationAmount)
@@ -125,6 +125,8 @@ void Mesh::Rotate(glm::vec3 RotationAmount)
 	{
 		WorldRotation.z = WorldRotation.z - 360;
 	}
+
+	UpdateModelMatrix();
 }
 
 void Mesh::InitialiseMeshVAO(Primitive * PrimitiveIn)

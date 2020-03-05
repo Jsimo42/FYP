@@ -12,7 +12,7 @@ public:
 	Layer();
 	~Layer();
 
-	void CreateLayer(bool GenerateGround, std::string FileName, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents);
+	void CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents);
 
 	std::vector<Entity*> GetEntities() { return EntityVector; };
 

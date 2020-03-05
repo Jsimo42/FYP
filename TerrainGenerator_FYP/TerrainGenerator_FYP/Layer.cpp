@@ -13,9 +13,9 @@ Layer::~Layer()
 {
 }
 
-void Layer::CreateLayer(bool GenerateGround, std::string FileName, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
+void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
 {
-	//TODO A4 Image size - 2480 x 3508
+	//TODO A4 Image size - 2480 x 3500
 	int Width{ 320 };
 	int Depth{ 320 };
 
@@ -51,6 +51,11 @@ void Layer::CreateLayer(bool GenerateGround, std::string FileName, GraphicsEngin
 			{
 				if (Colour == Agents[a]->Colour)
 				{
+					if (Agents[a]->Colour == cv::Vec3b(255, 255, 255))
+					{
+						continue;
+					}
+
 					if (Agents[a]->bIsMesh)
 					{
 						EntityVector.push_back(new EntityMesh(Agents[a]->MeshType, EntityTransform, Materials.at(ColourNames[Agents[a]->LayerColour])));
@@ -145,7 +150,7 @@ void Layer::InitialiseMaterials()
 	}
 	else
 	{
-		Materials.insert({ "White", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+		Materials.insert({ "Black", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
 	}
 }
 

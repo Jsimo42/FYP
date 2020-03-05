@@ -12,7 +12,6 @@ public:
 
 private:
 
-	std::string FileName{ "" };
 	Model* Model{ nullptr };
 };
 
