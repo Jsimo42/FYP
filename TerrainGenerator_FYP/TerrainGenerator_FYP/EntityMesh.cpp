@@ -6,6 +6,11 @@ EntityMesh::EntityMesh(EEntityType EntityType, Transform TransformIn, Material* 
 {
 }
 
+EntityMesh::~EntityMesh()
+{
+	delete Mesh;
+}
+
 void EntityMesh::Initialise(GraphicsEngine * Graphics)
 {
 	switch (Type)

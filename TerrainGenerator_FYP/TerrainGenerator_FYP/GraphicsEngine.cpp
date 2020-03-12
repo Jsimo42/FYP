@@ -23,6 +23,12 @@ GraphicsEngine::~GraphicsEngine()
 	{
 		delete ShaderVector[i];
 	}
+
+	for (int i = 0; i < TextureVector.size(); i++)
+	{
+		delete TextureVector[i];
+	}
+
 }
 
 void GraphicsEngine::Initialise()
@@ -212,6 +218,11 @@ void GraphicsEngine::SetOpenGLOptions()
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
 	glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+}
+
+void GraphicsEngine::InitialiseImGUI()
+{
+
 }
 
 void GraphicsEngine::InitialiseMatrices()

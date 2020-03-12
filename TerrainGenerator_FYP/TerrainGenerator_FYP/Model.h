@@ -8,6 +8,7 @@ class Model
 public:
 	Model() {};
 	Model(std::string Path);
+	~Model();
 
 	void Render(Shader* ShaderIn);
 

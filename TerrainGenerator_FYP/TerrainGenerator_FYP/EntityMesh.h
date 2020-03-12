@@ -5,6 +5,7 @@ class EntityMesh : public Entity
 {
 public:
 	EntityMesh(EEntityType EntityType, Transform TransformIn, Material* MaterialIn, std::string FileNameIn = "");
+	~EntityMesh();
 
 	void Initialise(GraphicsEngine* Graphics) override;
 

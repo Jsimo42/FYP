@@ -1,10 +1,9 @@
 #include "pch.h"
 #include "MainMenu.h"
-
-
-MainMenu::MainMenu()
-{
-}
+#include "ImGUI/imgui.h"
+#include "ImGUI/imgui_impl_win32.h"
+#include "ImGUI/imgui_impl_opengl3.h"
+#include "ImGUI/imgui_impl_glfw.h"
 
 
 MainMenu::~MainMenu()
@@ -13,10 +12,19 @@ MainMenu::~MainMenu()
 
 void MainMenu::Initialise()
 {
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	//ImGui_ImplWin32_Init(Window);
+	ImGui_ImplOpenGL3_Init("4.3");
+	//ImGui_ImplGlfw_InitForOpenGL(Window, true);
+	ImGui::StyleColorsDark();
 }
 
-void MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
+bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
 {
+	ImGui::Begin("Test");
+
 	bGenerateGround = true;
 
 	LayerFilePaths.push_back("Layers/Layer.png");
@@ -35,4 +43,5 @@ void MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 
 	//TODO Setup Model Loading
 	//Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), false, EEntityType::EModel, "Models/scene.fbx"));
+	return true;
 }

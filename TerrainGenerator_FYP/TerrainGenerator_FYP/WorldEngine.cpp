@@ -13,7 +13,7 @@ WorldEngine::~WorldEngine()
 
 bool WorldEngine::Initialise()
 {
-	Graphics = new GraphicsEngine("Terrain Generator", 1960, 1080, 4, 4);
+	Graphics = new GraphicsEngine("Terrain Generator", 1960, 1080, 4, 3);
 	Menu = new MainMenu();
 	MainLevel = new Level();
 

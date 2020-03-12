@@ -11,6 +11,15 @@ Layer::Layer()
 
 Layer::~Layer()
 {
+	for (int i = 0; i < EntityVector.size(); i++)
+	{
+		delete EntityVector[i];
+	}
+
+	for (int i = 0; i < Materials.size(); i++)
+	{
+		//delete Materials[i];
+	}
 }
 
 void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)

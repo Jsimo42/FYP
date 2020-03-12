@@ -7,6 +7,14 @@ Model::Model(std::string Path)
 	LoadModel(Path);
 }
 
+Model::~Model()
+{
+	for (int i = 0; i < MeshVector.size(); i++)
+	{
+		delete MeshVector[i];
+	}
+}
+
 void Model::Render(Shader * ShaderIn)
 {
 	for (int i = 0; i < MeshVector.size(); i++)

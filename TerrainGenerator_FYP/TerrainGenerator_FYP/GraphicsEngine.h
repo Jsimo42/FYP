@@ -83,6 +83,7 @@ private:
 	bool InitialiseGLFW();
 	bool InitialiseWindow(const char* WindowTitle);
 	void SetOpenGLOptions();
+	void InitialiseImGUI();
 
 	void InitialiseMatrices();
 	void InitialiseShaders();

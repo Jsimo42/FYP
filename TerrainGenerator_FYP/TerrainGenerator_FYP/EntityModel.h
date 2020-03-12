@@ -5,6 +5,7 @@ class EntityModel : public Entity
 {
 public:
 	EntityModel(EEntityType EntityType, Transform TransformIn, Material* MaterialIn, std::string FileNameIn);
+	~EntityModel();
 
 	void Initialise(GraphicsEngine* Graphics) override;
 

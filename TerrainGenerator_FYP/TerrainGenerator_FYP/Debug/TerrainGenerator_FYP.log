@@ -1,6 +1,23 @@
-﻿  Level.cpp
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(14): warning C4018: '<': signed/unsigned mismatch
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(28): warning C4018: '<': signed/unsigned mismatch
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(43): warning C4018: '<': signed/unsigned mismatch
-c:\users\t7038904\source\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(51): warning C4018: '<': signed/unsigned mismatch
-  TerrainGenerator_FYP.vcxproj -> C:\Users\t7038904\source\FYP\TerrainGenerator_FYP\Debug\TerrainGenerator_FYP.exe
+﻿  imgui.cpp
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui.cpp(2067,1): warning C4005: 'va_copy': macro redefinition
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui.cpp(2065): message : see previous definition of 'va_copy'
+  imgui_draw.cpp
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui.cpp(10289,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_draw.cpp(128,10): error C2006: '#include': expected "FILENAME" or <FILENAME>
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_draw.cpp(151,10): error C2006: '#include': expected "FILENAME" or <FILENAME>
+  imgui_impl_glfw.cpp
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_draw.cpp(3465,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_glfw.cpp(58,1): warning C4005: 'GLFW_HAS_NEW_CURSORS': macro redefinition
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_glfw.cpp(56): message : see previous definition of 'GLFW_HAS_NEW_CURSORS'
+  imgui_impl_opengl3.cpp
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_glfw.cpp(370,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(126,10): error C2006: '#include': expected "FILENAME" or <FILENAME>
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(134,1): warning C4005: 'IMGUI_IMPL_OPENGL_MAY_HAVE_VTX_OFFSET': macro redefinition
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(132): message : see previous definition of 'IMGUI_IMPL_OPENGL_MAY_HAVE_VTX_OFFSET'
+  imgui_impl_win32.cpp
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(678,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+  imgui_widgets.cpp
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_win32.cpp(335,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+  Texture.cpp
+  Generating Code...
+C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_widgets.cpp(7711,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?

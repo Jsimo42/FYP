@@ -11,8 +11,8 @@
 
 int main()
 {
-	WorldEngine* Engine = new WorldEngine;
+	WorldEngine Engine = WorldEngine();
 
-	Engine->Initialise();
-	Engine->Run();
+	Engine.Initialise();
+	Engine.Run();
 }

@@ -6,6 +6,11 @@ EntityModel::EntityModel(EEntityType EntityType, Transform TransformIn, Material
 {
 }
 
+EntityModel::~EntityModel()
+{
+	delete Model;
+}
+
 void EntityModel::Initialise(GraphicsEngine * Graphics)
 {
 	Model = Graphics->CreateModel(FileName, EntityTransform);
