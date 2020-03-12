@@ -105,31 +105,25 @@
     <ClInclude Include="MainMenu.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="ImGUI\imconfig.h">
+    <ClInclude Include="..\Linking\ImGUI\imconfig.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="ImGUI\imgui.h">
+    <ClInclude Include="..\Linking\ImGUI\imgui.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="ImGUI\imgui_impl_glfw.h">
+    <ClInclude Include="..\Linking\ImGUI\imgui_impl_glfw_gl3.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="ImGUI\imgui_impl_opengl3.h">
+    <ClInclude Include="..\Linking\ImGUI\imgui_internal.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="ImGUI\imgui_impl_win32.h">
+    <ClInclude Include="..\Linking\ImGUI\stb_rect_pack.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="ImGUI\imgui_internal.h">
+    <ClInclude Include="..\Linking\ImGUI\stb_textedit.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
     </ClInclude>
-    <ClInclude Include="ImGUI\imstb_rectpack.h">
-      <Filter>Header Files\Graphics\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGUI\imstb_textedit.h">
-      <Filter>Header Files\Graphics\ImGUI</Filter>
-    </ClInclude>
-    <ClInclude Include="ImGUI\imstb_truetype.h">
+    <ClInclude Include="..\Linking\ImGUI\stb_truetype.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
     </ClInclude>
   </ItemGroup>
@@ -182,22 +176,13 @@
     <ClCompile Include="MainMenu.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="ImGUI\imgui.cpp">
+    <ClCompile Include="..\Linking\ImGUI\imgui.cpp">
       <Filter>Source Files\Graphics\ImGUI</Filter>
     </ClCompile>
-    <ClCompile Include="ImGUI\imgui_draw.cpp">
+    <ClCompile Include="..\Linking\ImGUI\imgui_draw.cpp">
       <Filter>Source Files\Graphics\ImGUI</Filter>
     </ClCompile>
-    <ClCompile Include="ImGUI\imgui_impl_glfw.cpp">
-      <Filter>Source Files\Graphics\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI\imgui_impl_opengl3.cpp">
-      <Filter>Source Files\Graphics\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI\imgui_impl_win32.cpp">
-      <Filter>Source Files\Graphics\ImGUI</Filter>
-    </ClCompile>
-    <ClCompile Include="ImGUI\imgui_widgets.cpp">
+    <ClCompile Include="..\Linking\ImGUI\imgui_impl_glfw_gl3.cpp">
       <Filter>Source Files\Graphics\ImGUI</Filter>
     </ClCompile>
   </ItemGroup>

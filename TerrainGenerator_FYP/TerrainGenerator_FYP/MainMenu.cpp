@@ -1,9 +1,7 @@
 #include "pch.h"
 #include "MainMenu.h"
-#include "ImGUI/imgui.h"
-#include "ImGUI/imgui_impl_win32.h"
-#include "ImGUI/imgui_impl_opengl3.h"
-#include "ImGUI/imgui_impl_glfw.h"
+#include "imgui.h"
+#include "imgui_impl_glfw_gl3.h"
 
 
 MainMenu::~MainMenu()
@@ -12,18 +10,18 @@ MainMenu::~MainMenu()
 
 void MainMenu::Initialise()
 {
-	IMGUI_CHECKVERSION();
+	/*IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	//ImGui_ImplWin32_Init(Window);
 	ImGui_ImplOpenGL3_Init("4.3");
 	//ImGui_ImplGlfw_InitForOpenGL(Window, true);
-	ImGui::StyleColorsDark();
+	ImGui::StyleColorsDark();*/
 }
 
 bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
 {
-	ImGui::Begin("Test");
+	//ImGui::Begin("Test");
 
 	bGenerateGround = true;
 

@@ -1,23 +1,50 @@
-﻿  imgui.cpp
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui.cpp(2067,1): warning C4005: 'va_copy': macro redefinition
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui.cpp(2065): message : see previous definition of 'va_copy'
+﻿  pch.cpp
+  imgui.cpp
   imgui_draw.cpp
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui.cpp(10289,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_draw.cpp(128,10): error C2006: '#include': expected "FILENAME" or <FILENAME>
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_draw.cpp(151,10): error C2006: '#include': expected "FILENAME" or <FILENAME>
-  imgui_impl_glfw.cpp
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_draw.cpp(3465,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_glfw.cpp(58,1): warning C4005: 'GLFW_HAS_NEW_CURSORS': macro redefinition
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_glfw.cpp(56): message : see previous definition of 'GLFW_HAS_NEW_CURSORS'
-  imgui_impl_opengl3.cpp
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_glfw.cpp(370,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(126,10): error C2006: '#include': expected "FILENAME" or <FILENAME>
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(134,1): warning C4005: 'IMGUI_IMPL_OPENGL_MAY_HAVE_VTX_OFFSET': macro redefinition
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(132): message : see previous definition of 'IMGUI_IMPL_OPENGL_MAY_HAVE_VTX_OFFSET'
-  imgui_impl_win32.cpp
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_opengl3.cpp(678,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
-  imgui_widgets.cpp
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_impl_win32.cpp(335,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+  imgui_impl_glfw_gl3.cpp
+  Camera.cpp
+  Entity.cpp
+  EntityMesh.cpp
+  EntityModel.cpp
+  GraphicsEngine.cpp
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(22): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(27): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(112): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(140): warning C4018: '<': signed/unsigned mismatch
+  Layer.cpp
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(14): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(19): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(59): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\layer.cpp(86): warning C4018: '<': signed/unsigned mismatch
+  Level.cpp
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(14): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(28): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(43): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\level.cpp(51): warning C4018: '<': signed/unsigned mismatch
+  MainMenu.cpp
+  Material.cpp
+  Mesh.cpp
+  Model.cpp
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(12): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(20): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(28): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(36): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(44): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(52): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(60): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(68): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(91): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(97): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(110): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(146): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(150): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(176): warning C4018: '<': signed/unsigned mismatch
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\model.cpp(182): warning C4018: '<': signed/unsigned mismatch
+  main.cpp
+  Shader.cpp
   Texture.cpp
+  WorldEngine.cpp
   Generating Code...
-C:\Users\t7038904\Source\FYP\TerrainGenerator_FYP\TerrainGenerator_FYP\ImGUI\imgui_widgets.cpp(7711,1): fatal error C1010: unexpected end of file while looking for precompiled header. Did you forget to add '#include "pch.h"' to your source?
+d:\documents\fyp\terraingenerator_fyp\terraingenerator_fyp\graphicsengine.cpp(86): warning C4715: 'GraphicsEngine::CreatePrimitive': not all control paths return a value
+LINK : warning LNK4098: defaultlib 'MSVCRT' conflicts with use of other libs; use /NODEFAULTLIB:library
+  TerrainGenerator_FYP.vcxproj -> D:\Documents\FYP\TerrainGenerator_FYP\Debug\TerrainGenerator_FYP.exe
