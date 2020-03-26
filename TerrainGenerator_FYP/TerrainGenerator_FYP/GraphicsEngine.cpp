@@ -41,10 +41,12 @@ void GraphicsEngine::Initialise()
 
 void GraphicsEngine::Update()
 {
+	ShaderVector[MainProgram]->UseProgram();
 	glfwPollEvents();
 	UpdateDeltaTime();
 	UpdateInput();
 
+	ShaderVector[MainProgram]->UnuseProgram();
 	//LightVector[0] = MainCamera.GetCameraPosition();
 }
 
@@ -96,6 +98,19 @@ Model* GraphicsEngine::CreateModel(std::string FileName, Transform ModelTransfor
 	return NewModel;
 }
 
+
+void GraphicsEngine::Render()
+{
+	ShaderVector[MainProgram]->UseProgram();
+
+	glClearColor(0.f, 0.f, 0.f, 1.f);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+
+	glfwSwapBuffers(Window);
+	glFlush();
+
+	ShaderVector[MainProgram]->UnuseProgram();
+}
 
 void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn, std::vector<Material*> MaterialVectorIn)
 {
@@ -217,7 +232,7 @@ void GraphicsEngine::SetOpenGLOptions()
 	glEnable(GL_POLYGON_MODE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 
-	glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	//glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void GraphicsEngine::InitialiseImGUI()

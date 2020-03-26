@@ -8,20 +8,61 @@ MainMenu::~MainMenu()
 {
 }
 
-void MainMenu::Initialise()
+void MainMenu::Initialise(GraphicsEngine* Graphics)
 {
-	/*IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	//ImGui_ImplWin32_Init(Window);
-	ImGui_ImplOpenGL3_Init("4.3");
-	//ImGui_ImplGlfw_InitForOpenGL(Window, true);
-	ImGui::StyleColorsDark();*/
+	ImGuiIO& io = ImGui::GetIO(); (void)io;
+	//io.WantCaptureMouse = true;
+	ImGui_ImplGlfwGL3_Init(Graphics->GetWindow(), true);
+
+	// Setup style
+	ImGui::StyleColorsDark();
 }
 
-bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
+bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents, GraphicsEngine* Graphics)
 {
-	//ImGui::Begin("Test");
+	static float f = 0.0f;
+	static int counter = 0;
+	bool Done = false;
+
+	if (ImGui::GetIO().WantCaptureMouse)
+	{
+		std::cout << "True" << std::endl;
+	}
+
+	while (!Done)
+	{
+		ImGui_ImplGlfwGL3_NewFrame();
+
+		{
+			static float f = 0.0f;
+			static int counter = 0;
+			ImGui::Text("Hello, world!");                           // Display some text (you can use a format string too)
+			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f    
+
+			ImGui::Checkbox("Done", &Done);      // Edit bools storing our windows open/close state
+
+			if (ImGui::Button("Button"))                            // Buttons return true when clicked (NB: most widgets return true when edited/activated)
+				counter++;
+			ImGui::SameLine();
+			ImGui::Text("counter = %d", counter);
+
+			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+		}
+
+
+		
+		glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
+		glClearColor(0, 0, 0, 1);
+		glClear(GL_COLOR_BUFFER_BIT);
+		ImGui::Render();
+		ImGui_ImplGlfwGL3_RenderDrawData(ImGui::GetDrawData());
+		glfwSwapBuffers(Graphics->GetWindow());
+	}
+
+	ImGui_ImplGlfwGL3_Shutdown();
+	ImGui::DestroyContext();
+
 
 	bGenerateGround = true;
 

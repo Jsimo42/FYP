@@ -30,9 +30,12 @@ public:
 	int GetWindowShouldClose();
 	void SetWindowShouldClose();
 
+	GLFWwindow* GetWindow() { return Window; }
+
 	Mesh* CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTransform);
 	Model* CreateModel(std::string FileName, Transform ModelTransform);
 
+	void Render();
 	void Render(std::vector<Mesh*> MeshVectorIn, std::vector<Material*> MaterialVectorIn);
 	void RenderModel(std::vector<Model*> ModelVectorIn, std::vector<Material*> MaterialVectorIn);
 
