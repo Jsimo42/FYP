@@ -43,6 +43,7 @@ private:
 
 	//Window
 	GLFWwindow* Window{ nullptr };
+	std::string WindowName{ "" };
 	int WindowWidth{ 0 };
 	int WindowHeight{ 0 };
 	int FrameBufferWidth{ 0 };
@@ -86,7 +87,6 @@ private:
 	bool InitialiseGLFW();
 	bool InitialiseWindow(const char* WindowTitle);
 	void SetOpenGLOptions();
-	void InitialiseImGUI();
 
 	void InitialiseMatrices();
 	void InitialiseShaders();

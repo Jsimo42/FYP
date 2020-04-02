@@ -1,16 +1,11 @@
 #include "pch.h"
 #include "GraphicsEngine.h"
 
-GraphicsEngine::GraphicsEngine(const char * WindowTitle, const int Width, const int Height, const int GLMajorVer, const int GLMinorVer) : WindowWidth(Width), WindowHeight(Height), GLMajorVersion(GLMajorVer), GLMinorVersion(GLMinorVer), MainCamera(glm::vec3(0.f, 5.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f))
+GraphicsEngine::GraphicsEngine(const char * WindowTitle, const int Width, const int Height, const int GLMajorVer, const int GLMinorVer) : WindowName(WindowTitle), WindowWidth(Width), WindowHeight(Height), GLMajorVersion(GLMajorVer), GLMinorVersion(GLMinorVer), MainCamera(glm::vec3(0.f, 5.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f))
 {
 	Window = nullptr;
 	FrameBufferWidth = WindowWidth;
 	FrameBufferHeight = WindowHeight;
-
-	InitialiseGLFW();
-	InitialiseWindow(WindowTitle);
-	InitialiseGLEW();
-	SetOpenGLOptions();
 }
 
 GraphicsEngine::~GraphicsEngine()
@@ -33,6 +28,11 @@ GraphicsEngine::~GraphicsEngine()
 
 void GraphicsEngine::Initialise()
 {
+	InitialiseGLFW();
+	InitialiseWindow(WindowName.c_str());
+	InitialiseGLEW();
+	SetOpenGLOptions();
+
 	InitialiseMatrices();
 	InitialiseShaders();
 	InitialiseLights();
@@ -231,13 +231,7 @@ void GraphicsEngine::SetOpenGLOptions()
 
 	glEnable(GL_POLYGON_MODE);
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-
-	//glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
-}
-
-void GraphicsEngine::InitialiseImGUI()
-{
-
+	glfwSetInputMode(Window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 }
 
 void GraphicsEngine::InitialiseMatrices()
@@ -299,64 +293,67 @@ void GraphicsEngine::UpdateInput()
 
 void GraphicsEngine::UpdateKeyboardInput()
 {
-	if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+	if (glfwGetCurrentContext() == Window)
 	{
-		glfwSetWindowShouldClose(Window, GLFW_TRUE);
-	}
+		if (glfwGetKey(Window, GLFW_KEY_ESCAPE) == GLFW_PRESS)
+		{
+			glfwSetWindowShouldClose(Window, GLFW_TRUE);
+		}
 
-	if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, EForward);
-	}
+		if (glfwGetKey(Window, GLFW_KEY_W) == GLFW_PRESS)
+		{
+			MainCamera.MoveCamera(DeltaTime, EForward);
+		}
 
-	if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, EBack);
-	}
+		if (glfwGetKey(Window, GLFW_KEY_S) == GLFW_PRESS)
+		{
+			MainCamera.MoveCamera(DeltaTime, EBack);
+		}
 
-	if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, ELeft);
-	}
-
-	if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, ERight);
-	}
-
-	if (glfwGetKey(Window, GLFW_KEY_E) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, EUp);
-	}
-
-	if (glfwGetKey(Window, GLFW_KEY_Q) == GLFW_PRESS)
-	{
-		MainCamera.MoveCamera(DeltaTime, EDown);
-	}
-
-	int ControllerAttatched = glfwJoystickPresent(GLFW_JOYSTICK_1);
-
-	if (ControllerAttatched)
-	{
-		int Count;
-		const float* Axis = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &Count);
-
-		if (Axis[0] < 0)
+		if (glfwGetKey(Window, GLFW_KEY_A) == GLFW_PRESS)
 		{
 			MainCamera.MoveCamera(DeltaTime, ELeft);
 		}
-		else if (Axis[0] > 0)
+
+		if (glfwGetKey(Window, GLFW_KEY_D) == GLFW_PRESS)
 		{
 			MainCamera.MoveCamera(DeltaTime, ERight);
 		}
 
-		if (Axis[1] < 0)
+		if (glfwGetKey(Window, GLFW_KEY_E) == GLFW_PRESS)
 		{
-			MainCamera.MoveCamera(DeltaTime, EForward);
+			MainCamera.MoveCamera(DeltaTime, EUp);
 		}
-		else if (Axis[1] > 0)
+
+		if (glfwGetKey(Window, GLFW_KEY_Q) == GLFW_PRESS)
 		{
-			MainCamera.MoveCamera(DeltaTime, EBack);
+			MainCamera.MoveCamera(DeltaTime, EDown);
+		}
+
+		int ControllerAttatched = glfwJoystickPresent(GLFW_JOYSTICK_1);
+
+		if (ControllerAttatched)
+		{
+			int Count;
+			const float* Axis = glfwGetJoystickAxes(GLFW_JOYSTICK_1, &Count);
+
+			if (Axis[0] < 0)
+			{
+				MainCamera.MoveCamera(DeltaTime, ELeft);
+			}
+			else if (Axis[0] > 0)
+			{
+				MainCamera.MoveCamera(DeltaTime, ERight);
+			}
+
+			if (Axis[1] < 0)
+			{
+				MainCamera.MoveCamera(DeltaTime, EForward);
+			}
+			else if (Axis[1] > 0)
+			{
+				MainCamera.MoveCamera(DeltaTime, EBack);
+			}
 		}
 	}
 }

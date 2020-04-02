@@ -17,8 +17,7 @@ bool WorldEngine::Initialise()
 	Menu = new MainMenu();
 	MainLevel = new Level();
 
-	Graphics->Initialise();
-	Menu->Initialise(Graphics);
+	Menu->Initialise(480, 640, 4, 3);
 
 	CreateMenu();
 	return true;
@@ -26,7 +25,9 @@ bool WorldEngine::Initialise()
 
 void WorldEngine::CreateMenu()
 {
-	Menu->ShowMenu(bGenerateGround, LayerFilePaths, Agents, Graphics);
+	Menu->ShowMenu(bGenerateGround, LayerFilePaths, Agents);
+
+	Graphics->Initialise();
 	CreateLevel();
 }
 
