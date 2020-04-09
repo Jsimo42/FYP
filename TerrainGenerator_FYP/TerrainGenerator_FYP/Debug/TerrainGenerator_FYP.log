@@ -1,4 +1,8 @@
 ﻿  MainMenu.cpp
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(95): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
-c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(96): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(94): warning C4018: '<': signed/unsigned mismatch
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(176): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(177): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(218): warning C4018: '<': signed/unsigned mismatch
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(281): warning C4018: '<': signed/unsigned mismatch
+c:\users\jsimo\desktop\fyp\terraingenerator_fyp\terraingenerator_fyp\mainmenu.cpp(336): warning C4018: '<': signed/unsigned mismatch
   TerrainGenerator_FYP.vcxproj -> C:\Users\jsimo\Desktop\FYP\TerrainGenerator_FYP\Debug\TerrainGenerator_FYP.exe

@@ -62,7 +62,7 @@ enum EColour
 	EBlack
 };
 
-const std::string ColourNames[12]{ "White", "Yellow", "Orange", "Red", "Pink", "Purple", "DarkBlue", "Blue", "LightBlue", "LightGreen", "Green", "Black" };
+const std::vector<std::string> ColourNames{ "White", "Yellow", "Orange", "Red", "Pink", "Purple", "DarkBlue", "Blue", "LightBlue", "LightGreen", "Green", "Black" };
 
 struct Agent
 {

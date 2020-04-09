@@ -17,7 +17,7 @@ bool WorldEngine::Initialise()
 	Menu = new MainMenu();
 	MainLevel = new Level();
 
-	Menu->Initialise(480, 640, 4, 3);
+	Menu->Initialise(735, 685, 4, 3);
 
 	CreateMenu();
 	return true;

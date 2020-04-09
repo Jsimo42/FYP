@@ -23,6 +23,19 @@ bool MainMenu::Initialise(const int Width, const int Height, float GLMajorVer, f
 
 bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
 {
+	Agents.push_back(new Agent(EColour::EWhite, cv::Vec3b(255, 255, 255), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::EYellow, cv::Vec3b(0, 255, 255), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::EOrange, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO	
+	Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::EPink, cv::Vec3b(255, 0, 255), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::EPurple, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO
+	Agents.push_back(new Agent(EColour::EDarkBlue, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO
+	Agents.push_back(new Agent(EColour::EBlue, cv::Vec3b(255, 0, 0), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::ELightBlue, cv::Vec3b(255, 255, 0), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::ELightGreen, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO
+	Agents.push_back(new Agent(EColour::EGreen, cv::Vec3b(0, 255, 0), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::EBlack, cv::Vec3b(0, 0, 0), true, EEntityType::ECube));
+
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO(); (void)io;
 	ImGui_ImplGlfwGL3_Init(MenuWindow, true);
@@ -31,7 +44,13 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 	ImGui::StyleColorsDark();
 
 	bool Done = false;
+	bool ShowAgentWindow = false;
+	bool ShowModelWindow = false;
 	int LayerCount = 1;
+
+	char EmptyBuffer[64] = "";
+	char LastBuffer[64] = "";
+	std::string LayerInput = "";
 
 	while (!Done)
 	{
@@ -41,19 +60,95 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 		{
 			ImGui::Checkbox("Generate Ground", &bGenerateGround);
 
-			if (ImGui::Button("Add Layer"))
-				LayerCount++;
+			ImGui::NewLine();
 
-			for (int i = 0; i < LayerCount; i++)
+			char Buffer[64] = "";
+
+			ImGui::Text("Layers/");
+
+			ImGui::SameLine();
+
+			ImGui::InputText("Input Layer", Buffer, IM_ARRAYSIZE(Buffer));
+			
+			ImGui::SameLine();
+
+			ImGui::Button("Submit Layer");
+
+			if (std::strcmp(Buffer, LastBuffer))
 			{
-				//Text Box to enter Layer Filepath
+				if (!std::strcmp(Buffer, EmptyBuffer))
+				{
+					LayerFilePaths.push_back("Layers/" + LayerInput);
+				}
+
+				LayerInput = Buffer;
+
+				for (int i = 0; i < 64; i++)
+				{
+					LastBuffer[i] = Buffer[i];
+				}
+			}
+
+			ImGui::Text("Submitted Layers");
+
+			for (int i = 0; i < LayerFilePaths.size(); i++)
+			{
+				ImGui::Text(LayerFilePaths[i].c_str());
+
+				ImGui::SameLine();
+
+				ImGui::PushID(i);
+
+				std::string ButtonLabel = "Delete##" + std::to_string(i + 1);
+
+				if (ImGui::Button(ButtonLabel.data()))
+				{
+					LayerFilePaths.erase(LayerFilePaths.begin() + i);
+				}
+
+				ImGui::PopID();
+			}
+
+			if (ImGui::Button("Edit Agents"))
+				ShowAgentWindow = true;
+
+			if (ShowAgentWindow)
+			{
+				DrawAgentWindow(Agents, ShowAgentWindow);
+			}
+
+			if (ImGui::Button("Edit Models"))
+				ShowModelWindow = true;
+
+			if (ShowModelWindow)
+			{
+				DrawModelWindow(Agents, ShowModelWindow);
+			}
+
+			CheckEverythingComplete(LayerFilePaths, Agents);
+
+			switch (FormComplete)
+			{
+			case EFormCompletion::ENeedsLayers:
+				ImGui::Text("Please add at least 1 layer!");
+				break;
+			case EFormCompletion::ENeedsModels:
+				ImGui::Text("Please make sure all Models have a file name provided!");
+				break;
+			default:
+				break;
 			}
 
 			if (ImGui::Button("Submit"))
-				Done = true;
+			{
+				if (FormComplete == EFormCompletion::EDone)
+				{
+					Done = true;
+				}
+			}
+
+
 		}
-
-
 		
 		glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
 		glClearColor(0, 0, 0, 1);
@@ -66,22 +161,6 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 	ImGui::DestroyContext(); 
 	glfwTerminate();
 
-	LayerFilePaths.push_back("Layers/Layer.png");
-	LayerFilePaths.push_back("Layers/Layer2.png");
-	LayerFilePaths.push_back("Layers/Layer3.png");
-	//LayerFilePaths.push_back("Layers/Layer4.txt");
-
-	Agents.push_back(new Agent(EColour::EWhite, cv::Vec3b(255,255,255), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::EBlue, cv::Vec3b(255, 0, 0), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::EGreen, cv::Vec3b(0, 255, 0), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::ELightBlue, cv::Vec3b(255, 255, 0), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::EYellow, cv::Vec3b(0, 255, 255), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::EPink, cv::Vec3b(255, 0, 255), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::EBlack, cv::Vec3b(0, 0, 0), true, EEntityType::ECube));
-
-	//TODO Setup Model Loading
-	//Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), false, EEntityType::EModel, "Models/scene.fbx"));
 	return true;
 }
 
@@ -125,4 +204,146 @@ bool MainMenu::InitialiseGLFW(float GLMajorVer, float GLMinorVer)
 	}
 
 	return true;
+}
+
+void MainMenu::DrawAgentWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
+{
+	ImGui::Begin("Agent Window", &ShowWindow);
+
+	ImGui::NewLine();
+	ImGui::Text("Agents");
+
+	std::string MeshType = "";
+
+	for (int i = 0; i < ColourNames.size(); i++)
+	{
+		ImGui::PushID(i);
+
+		ImGui::Text(ColourNames[i].c_str());
+
+
+		ImGui::Text("Mesh Type - ");
+
+		ImGui::SameLine();
+
+		switch (Agents[i]->MeshType)
+		{
+		case EEntityType::ECube:
+			MeshType = "Cube";
+			break;
+		case EEntityType::EPyramid:
+			MeshType = "Pyramid";
+			break;
+		case EEntityType::EModel:
+			MeshType = "Model";
+			break;
+		default:
+			break;
+		}
+
+		ImGui::Text(MeshType.c_str());
+
+		ImGui::SameLine();
+
+		std::string ButtonLabel = "ChangeMeshType##" + std::to_string(i + 1);
+
+		if (ImGui::Button(ButtonLabel.data()))
+		{
+			switch (Agents[i]->MeshType)
+			{
+			case EEntityType::ECube:
+				Agents[i]->MeshType = EEntityType::EPyramid;
+				break;
+			case EEntityType::EPyramid:
+				Agents[i]->MeshType = EEntityType::EModel;
+				break;
+			case EEntityType::EModel:
+				Agents[i]->MeshType = EEntityType::ECube;
+				break;
+			default:
+				break;
+			}
+		}
+
+		ImGui::PopID();
+
+	}
+
+	if (ImGui::Button("Submit"))
+		ShowWindow = false;
+	ImGui::End();
+}
+
+void MainMenu::DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
+{
+	ImGui::Begin("Model Window", &ShowWindow);
+
+	for (int i = 0; i < Agents.size(); i++)
+	{
+		if (Agents[i]->MeshType == EEntityType::EModel)
+		{
+			ImGui::Text(ColourNames[Agents[i]->LayerColour].c_str());
+			
+			char Buffer[64] = "";
+
+			ImGui::Text("Models/");
+
+			ImGui::SameLine();
+
+			ImGui::InputText("", Buffer, IM_ARRAYSIZE(Buffer));
+
+			ImGui::SameLine();
+
+			ImGui::Button("Submit File Name");
+
+			if (std::strcmp(Buffer, LastBuffer))
+			{
+				if (!std::strcmp(Buffer, EmptyBuffer))
+				{
+					Agents[i]->FileName = "Models/" + ModelInput;
+				}
+
+			ModelInput = Buffer;
+
+				for (int i = 0; i < 64; i++)
+				{
+					LastBuffer[i] = Buffer[i];
+				}
+			}
+
+			ImGui::Text("Submitted File Name - ");
+
+			ImGui::SameLine();
+
+			ImGui::Text(Agents[i]->FileName.c_str());
+		}
+	}
+
+	if (ImGui::Button("Submit"))
+		ShowWindow = false;
+	ImGui::End();
+
+}
+
+void MainMenu::CheckEverythingComplete(std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents)
+{
+	if (LayerFilePaths.size() == 0)
+	{
+		FormComplete = EFormCompletion::ENeedsLayers;
+		return;
+	}
+
+	for (int i = 0; i < Agents.size(); i++)
+	{
+		if (Agents[i]->MeshType == EEntityType::EModel)
+		{
+			if (Agents[i]->FileName == "")
+			{
+				FormComplete =  EFormCompletion::ENeedsModels;
+				return;
+			}
+		}
+	}
+
+	FormComplete = EFormCompletion::EDone;
 }

@@ -42,6 +42,9 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 		std::cout << "Cant Load Image: " << FileName << std::endl;
 	}
 
+	Width = Layer.rows;
+	Depth = Layer.cols;
+
 	cv::Vec3b Colour;
 
 	for (int i = 1; i < Depth; i += 10)
