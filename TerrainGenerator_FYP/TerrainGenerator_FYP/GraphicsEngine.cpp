@@ -1,5 +1,8 @@
 #include "pch.h"
 #include "GraphicsEngine.h"
+#include "Entity.h"
+#include "EntityMesh.h"
+#include "EntityModel.h"
 
 GraphicsEngine::GraphicsEngine(const char * WindowTitle, const int Width, const int Height, const int GLMajorVer, const int GLMinorVer) : WindowName(WindowTitle), WindowWidth(Width), WindowHeight(Height), GLMajorVersion(GLMajorVer), GLMinorVersion(GLMinorVer), MainCamera(glm::vec3(0.f, 5.f, 0.f), glm::vec3(0.f, 0.f, 0.f), glm::vec3(0.f, 1.f, 0.f))
 {
@@ -98,21 +101,7 @@ Model* GraphicsEngine::CreateModel(std::string FileName, Transform ModelTransfor
 	return NewModel;
 }
 
-
-void GraphicsEngine::Render()
-{
-	ShaderVector[MainProgram]->UseProgram();
-
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	glfwSwapBuffers(Window);
-	glFlush();
-
-	ShaderVector[MainProgram]->UnuseProgram();
-}
-
-void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn, std::vector<Material*> MaterialVectorIn)
+void GraphicsEngine::Render(std::vector<Entity*> EntityVector)
 {
 	ShaderVector[MainProgram]->UseProgram();
 
@@ -121,42 +110,32 @@ void GraphicsEngine::Render(std::vector<Mesh*> MeshVectorIn, std::vector<Materia
 
 	UpdateUniforms();
 
-	ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
 	ShaderVector[MainProgram]->SetVec3f(LightVector[0], "LightPosition");
 
-	for (int i = 0; i < MeshVectorIn.size(); i++)
+	for (int i = 0; i < EntityVector.size(); i++)
 	{
-		MaterialVectorIn[i]->RenderMaterial(*ShaderVector[MainProgram]);
-		MeshVectorIn[i]->Render(ShaderVector[MainProgram]);
-		MaterialVectorIn[i]->UnBindTextures();
-	}
+		if (EntityVector[i]->GetEntityType() == EEntityType::EModel)
+		{
+			ShaderVector[MainProgram]->Set1f(1.f, "bIsModel");
 
-	glfwSwapBuffers(Window);
-	glFlush();
+			std::vector<Mesh*> MeshVector = EntityVector[i]->GetModel()->GetMesh();
+			std::vector<Material*> MaterialVector = EntityVector[i]->GetModel()->GetMaterials();
 
-	glBindVertexArray(0);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	ShaderVector[MainProgram]->UnuseProgram();
-}
-
-void GraphicsEngine::RenderModel(std::vector<Model*> ModelVectorIn, std::vector<Material*> MaterialVectorIn)
-{
-	ShaderVector[MainProgram]->UseProgram();
-
-	glClearColor(0.f, 0.f, 0.f, 1.f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
-
-	UpdateUniforms();
-
-	ShaderVector[MainProgram]->Set1f(1.f, "bIsModel");
-	ShaderVector[MainProgram]->SetVec3f(LightVector[0], "LightPosition");
-
-	for (int i = 0; i < ModelVectorIn.size(); i++)
-	{
-		MaterialVectorIn[i]->RenderMaterial(*ShaderVector[MainProgram]);
-		ModelVectorIn[i]->Render(ShaderVector[MainProgram]);
-		MaterialVectorIn[i]->UnBindTextures();
+			for (int j = 0; j < MeshVector.size(); j++)
+			{
+				MaterialVector[j]->RenderMaterial(ShaderVector[MainProgram]);
+				MeshVector[j]->RenderModel(ShaderVector[MainProgram]);
+				MaterialVector[j]->UnBindTextures();
+			}
+		}
+		else
+		{
+			ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
+			
+			EntityVector[i]->GetMaterial()->RenderMaterial(ShaderVector[MainProgram]);
+			EntityVector[i]->GetMesh()->Render(ShaderVector[MainProgram]);
+			EntityVector[i]->GetMaterial()->UnBindTextures();
+		}
 	}
 
 	glfwSwapBuffers(Window);

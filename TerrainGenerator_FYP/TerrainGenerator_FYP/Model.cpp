@@ -74,7 +74,7 @@ void Model::Scale(glm::vec3 ScaleAmount)
 void Model::LoadModel(std::string Path)
 {
 	Assimp::Importer Importer;
-	const aiScene* Scene = Importer.ReadFile(Path, aiProcess_Triangulate | aiProcess_CalcTangentSpace);
+	const aiScene* Scene = Importer.ReadFile(Path, aiProcess_Triangulate | aiProcess_CalcTangentSpace | aiProcess_FlipUVs);
 
 	if (!Scene || Scene->mFlags == AI_SCENE_FLAGS_INCOMPLETE || !Scene->mRootNode)
 	{
@@ -84,6 +84,60 @@ void Model::LoadModel(std::string Path)
 
 	Directory = Path.substr(0, Path.find_last_of('/'));
 	ProcessNode(Scene->mRootNode, Scene);
+
+
+	for (int i = 0; i < MeshVector.size(); i++)
+	{
+		cv::Mat DiffuseImage;
+		cv::Mat NormalImage;
+		cv::Mat MetallicImage;
+		cv::Mat RoughnessImage;
+
+		std::vector<TextureInfo> Textures = MeshVector[i]->GetTextures();
+
+		for (unsigned int j = 0; j < Textures.size(); j++)
+		{
+			std::string Name = Textures[j].Type;
+			std::string FilePath = Textures[j].Path.data;
+
+			if (Name == "texture_diffuse")
+			{
+				DiffuseImage = cv::imread("Models/" + FilePath, cv::IMREAD_COLOR);
+			}
+			else if (Name == "texture_normal")
+			{
+				NormalImage = cv::imread("Models/" + FilePath, cv::IMREAD_COLOR);
+			}
+			else if (Name == "texture_specular")
+			{
+				MetallicImage = cv::imread("Models/" + FilePath, cv::IMREAD_COLOR);
+			}
+			else if (Name == "texture_roughness")
+			{
+				RoughnessImage = cv::imread("Models/" + FilePath, cv::IMREAD_COLOR);
+			}
+
+			if (!DiffuseImage.data)
+			{
+				DiffuseImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+			}
+			if (!NormalImage.data)
+			{
+				NormalImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+			}
+			if (!MetallicImage.data)
+			{
+				MetallicImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+			}
+			if (!RoughnessImage.data)
+			{
+				RoughnessImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+			}
+		}
+
+		MaterialVector.push_back(new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), new Texture(DiffuseImage, GL_TEXTURE_2D, 0), new Texture(NormalImage, GL_TEXTURE_2D, 1), new Texture(MetallicImage, GL_TEXTURE_2D, 2), new Texture(RoughnessImage, GL_TEXTURE_2D, 3)));
+
+	}
 }
 
 void Model::ProcessNode(aiNode* Node, const aiScene* Scene)
@@ -158,10 +212,10 @@ Mesh* Model::ProcessMesh(aiMesh* MeshIn, const aiScene* Scene)
 	{
 		aiMaterial* material = Scene->mMaterials[MeshIn->mMaterialIndex];
 
-		std::vector<TextureInfo> DiffuseMaps = this->LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
+		std::vector<TextureInfo> DiffuseMaps = LoadMaterialTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
 		TextureVector.insert(TextureVector.end(), DiffuseMaps.begin(), DiffuseMaps.end());
 
-		std::vector<TextureInfo> SpecularMaps = this->LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
+		std::vector<TextureInfo> SpecularMaps = LoadMaterialTextures(material, aiTextureType_SPECULAR, "texture_specular");
 		TextureVector.insert(TextureVector.end(), SpecularMaps.begin(), SpecularMaps.end());
 	}
 

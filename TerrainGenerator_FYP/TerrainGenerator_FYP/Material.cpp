@@ -13,7 +13,7 @@ Material::Material(glm::vec3 AmbientIn, glm::vec3 DiffuseIn, glm::vec3 SpecularI
 	RoughnessTexture = RoughnessTextureIn;
 }
 
-void Material::RenderMaterial(Shader & ShaderIn)
+void Material::RenderMaterial(Shader* ShaderIn)
 {
 	SendUniforms(ShaderIn);
 
@@ -46,29 +46,29 @@ void Material::UnBindTextures()
 	RoughnessTexture->UnBind();
 }
 
-void Material::SendUniforms(Shader & ShaderIn)
+void Material::SendUniforms(Shader* ShaderIn)
 {
-	ShaderIn.SetVec3f(Ambient, "MeshMaterial.Ambient");
-	ShaderIn.SetVec3f(Diffuse, "MeshMaterial.Diffuse");
-	ShaderIn.SetVec3f(Specular, "MeshMaterial.Specular");
+	ShaderIn->SetVec3f(Ambient, "MeshMaterial.Ambient");
+	ShaderIn->SetVec3f(Diffuse, "MeshMaterial.Diffuse");
+	ShaderIn->SetVec3f(Specular, "MeshMaterial.Specular");
 
 	if (DiffuseTexture)
 	{
-		ShaderIn.Set1i(DiffuseTexture->GetID(), "MeshMaterial.DiffuseTexture");
+		ShaderIn->Set1i(DiffuseTexture->GetID(), "MeshMaterial.DiffuseTexture");
 	}
 
 	if (NormalTexture)
 	{
-		ShaderIn.Set1i(NormalTexture->GetID(), "MeshMaterial.NormalTexture");
+		ShaderIn->Set1i(NormalTexture->GetID(), "MeshMaterial.NormalTexture");
 	}
 
 	if (MetallicTexture)
 	{
-		ShaderIn.Set1i(MetallicTexture->GetID(), "MeshMaterial.MetallicTexture");
+		ShaderIn->Set1i(MetallicTexture->GetID(), "MeshMaterial.MetallicTexture");
 	}
 
 	if (RoughnessTexture)
 	{
-		ShaderIn.Set1i(RoughnessTexture->GetID(), "MeshMaterial.RoughnessTexture");
+		ShaderIn->Set1i(RoughnessTexture->GetID(), "MeshMaterial.RoughnessTexture");
 	}
 }

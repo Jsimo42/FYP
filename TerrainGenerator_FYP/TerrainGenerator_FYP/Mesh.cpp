@@ -26,6 +26,10 @@ Mesh::~Mesh()
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteBuffers(1, &EBO);
+
+	glDeleteVertexArrays(1, &ModelVAO);
+	glDeleteBuffers(1, &ModelVBO);
+	glDeleteBuffers(1, &ModelEBO);
 }
 
 void Mesh::Render(Shader * ShaderIn)
@@ -50,43 +54,15 @@ void Mesh::Render(Shader * ShaderIn)
 
 void Mesh::RenderModel(Shader * ShaderIn)
 {
-	ShaderIn->UseProgram();
-
 	UpdateUniforms(ShaderIn);
 
-	unsigned int DiffuseNum = 1;
-	unsigned int SpecularNum = 1;
-
-	for (unsigned int i = 0; i < Textures.size(); i++)
-	{
-		glActiveTexture(GL_TEXTURE0 + i); //Activate Texture Unit
-
-		//Retrieve texture number (the N in diffuse_textureN)
-		std::string Number;
-		std::string Name = Textures[i].Type;
-
-		if (Name == "texture_diffuse")
-		{
-			Number = std::to_string(DiffuseNum++);	
-			ShaderIn->Set1i(i, "MeshMaterial.DiffuseTexture");
-		}
-		else if (Name == "texture_specular")
-		{
-			Number = std::to_string(SpecularNum++);
-			ShaderIn->Set1i(i, "MeshMaterial.MetallicTexture");
-		}
-
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, Textures[i].ID);
-	}
-
-	//Draw mesh
 	ShaderIn->UseProgram();
-	glBindVertexArray(ModelVAO);
-	glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
-	glBindVertexArray(0);
 
-	glActiveTexture(GL_TEXTURE0);
+	glBindVertexArray(ModelVAO);
+
+	glDrawElements(GL_TRIANGLES, Indices.size(), GL_UNSIGNED_INT, 0);
+
+	glBindVertexArray(0);
 }
 
 void Mesh::SetRotation(glm::vec3 NewRotation)

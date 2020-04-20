@@ -35,6 +35,8 @@ public:
 	void Rotate(glm::vec3 RotationAmount);
 	void Scale(glm::vec3 ScaleAmount) { WorldScale += ScaleAmount; UpdateModelMatrix();};
 
+	std::vector<TextureInfo> GetTextures() { return Textures; }
+ 
 private:
 	//Transforms
 	glm::vec3 WorldPosition = glm::vec3(0.f);

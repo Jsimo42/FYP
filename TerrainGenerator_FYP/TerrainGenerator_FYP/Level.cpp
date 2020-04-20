@@ -35,10 +35,6 @@ void Level::CreateLevel(bool bGenerateGround, std::vector<std::string> FilePaths
 void Level::Render(GraphicsEngine* Graphics)
 {
 	std::vector<Entity*> EntityVector;
-	std::vector<Mesh*> MeshVector;
-	std::vector<Model*> ModelVector;
-	std::vector<Material*> MeshMaterialVector;
-	std::vector<Material*> ModelMaterialVector;
 
 	for (int i = 0; i < LayerVector.size(); i++)
 	{
@@ -48,25 +44,7 @@ void Level::Render(GraphicsEngine* Graphics)
 		NewEntityVector.clear();
 	}
 
-	for (int i = 0; i <  EntityVector.size(); i++)
-	{
-		if (EntityVector[i]->GetEntityType() == EEntityType::EModel)
-		{
-			ModelVector.push_back(EntityVector[i]->GetModel());
-			ModelMaterialVector.push_back(EntityVector[i]->GetMaterial());
-		}
-		else
-		{
-			MeshVector.push_back(EntityVector[i]->GetMesh());
-			MeshMaterialVector.push_back(EntityVector[i]->GetMaterial());
-		}
-
-		
-	}
-
-	Graphics->Render(MeshVector, MeshMaterialVector);
-	//TODO Put into 1 Function
-	//Graphics->RenderModel(ModelVector, ModelMaterialVector);
+	Graphics->Render(EntityVector);
 }
 
 Layer* Level::CreateLayer(std::string FilePath, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)

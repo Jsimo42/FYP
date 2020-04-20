@@ -42,7 +42,7 @@ void main()
 	vec3 SpecularColour = CalculateSpecular();
 
 	//Final Colour
-	FragmentColour = vec4(texture(MeshMaterial.DiffuseTexture, TexCoords).rgb, 1.0f);//vec4(vec4(AmbientColour, 1) + vec4(DiffuseColour, 1) + vec4(SpecularColour, 1)) * Attenuation;
+	FragmentColour = vec4(vec4(AmbientColour, 1) + vec4(DiffuseColour, 1) + vec4(SpecularColour, 1)) * Attenuation;
 }
 
 

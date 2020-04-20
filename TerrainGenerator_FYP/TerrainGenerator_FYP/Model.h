@@ -2,6 +2,7 @@
 
 #include "Libs.h"
 #include "Mesh.h"
+#include "Material.h"
 
 class Model
 {
@@ -11,6 +12,9 @@ public:
 	~Model();
 
 	void Render(Shader* ShaderIn);
+
+	std::vector<Material*> GetMaterials() { return MaterialVector; }
+	std::vector<Mesh*> GetMesh() { return MeshVector; }
 
 	void SetPosition(glm::vec3 NewPosition);
 	void SetRotation(glm::vec3 NewRotation);
@@ -22,6 +26,7 @@ public:
 
 private:
 	std::vector<Mesh*> MeshVector;
+	std::vector<Material*> MaterialVector;
 	std::vector<TextureInfo> TextureVector;
 	std::string Directory;
 
