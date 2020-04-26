@@ -25,15 +25,7 @@ void Texture::UnBind()
 }
 
 void Texture::LoadFromFile(const cv::Mat Image)
-{
-	if (ID)
-	{
-		//glDeleteTextures(1, &ID);
-	}
-
-	//glPixelStorei(GL_UNPACK_ALIGNMENT, (Image.step & 3) ? 1 : 4);
-	//glPixelStorei(GL_UNPACK_ROW_LENGTH, Image.step / Image.elemSize());
-
+{	
 	glGenTextures(1, &ID);
 	glBindTexture(TextureType, ID);
 
@@ -52,7 +44,7 @@ void Texture::LoadFromFile(const cv::Mat Image)
 	else
 	{
 		//TODO Image Name
-		std::cout << "Image Load Error: " << Image.data << std::endl;
+		std::cout << "Image Load Error" << std::endl;
 	}
 
 	glActiveTexture(0);

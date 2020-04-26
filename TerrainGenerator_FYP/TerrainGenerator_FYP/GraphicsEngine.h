@@ -18,6 +18,22 @@ enum EPrimitive
 	EPrimPyramid
 };
 
+struct ShaderSetting
+{
+	enum ELightType
+	{
+		ENone = 1,
+		ESpotLight = 2,
+		EPointLight = 3,
+		EGlobalLighting = 4
+	};
+
+	ELightType LightingSetting = EGlobalLighting;
+
+	bool bWireframeEnabled = false;
+	bool bChangeWireframe = true;
+};
+
 class GraphicsEngine
 {
 public:
@@ -67,7 +83,7 @@ private:
 	//Vectors
 	std::vector <Shader*> ShaderVector;
 	std::vector <TextureInfo*> TextureVector;
-	std::vector <glm::vec3> LightVector;
+	std::vector <Mesh*> LightVector;
 
 	//MVP Matrices
 	glm::mat4 ViewMatrix = glm::mat4(0.f);
@@ -81,6 +97,7 @@ private:
 
 	//Other
 	Camera MainCamera;
+	ShaderSetting* ShaderSettings = new ShaderSetting();
 
 	bool InitialiseGLEW();
 	bool InitialiseGLFW();

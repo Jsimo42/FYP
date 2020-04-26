@@ -50,7 +50,6 @@ void GraphicsEngine::Update()
 	UpdateInput();
 
 	ShaderVector[MainProgram]->UnuseProgram();
-	//LightVector[0] = MainCamera.GetCameraPosition();
 }
 
 int GraphicsEngine::GetWindowShouldClose()
@@ -110,7 +109,15 @@ void GraphicsEngine::Render(std::vector<Entity*> EntityVector)
 
 	UpdateUniforms();
 
-	ShaderVector[MainProgram]->SetVec3f(LightVector[0], "LightPosition");
+	ShaderVector[MainProgram]->SetVec3f(LightVector[0]->GetPosition(), "LightPosition");
+	ShaderVector[MainProgram]->SetVec3f(LightVector[0]->GetRotation(), "LightRotation");
+
+	for (int i = 0; i < LightVector.size(); i++)
+	{
+		ShaderVector[MainProgram]->Set1f(2.f, "bIsModel");
+
+		LightVector[i]->Render(ShaderVector[MainProgram]);
+	}
 
 	for (int i = 0; i < EntityVector.size(); i++)
 	{
@@ -229,7 +236,7 @@ void GraphicsEngine::InitialiseShaders()
 
 void GraphicsEngine::InitialiseLights()
 {
-	LightVector.push_back(glm::vec3(20.f, 5.f, 20.f));
+	LightVector.push_back(new Mesh(new Pyramid(), glm::vec3(0.f, 10.f, 0.f), glm::vec3(0.f, -1.f, 0.f), glm::vec3(1.f, 1.f, 1.f)));
 }
 
 void GraphicsEngine::InitialiseUniforms()
@@ -252,6 +259,8 @@ void GraphicsEngine::UpdateUniforms()
 	ProjectionMatrix = glm::perspective(glm::radians(FOV), (float)FrameBufferWidth / FrameBufferHeight, NearPlane, FarPlane);
 
 	ShaderVector[MainProgram]->SetMat4fv(ProjectionMatrix, "VS_ProjectionMatrix");
+
+	ShaderVector[MainProgram]->Set1i(ShaderSettings->LightingSetting, "LightingSetting");
 }
 
 void GraphicsEngine::UpdateDeltaTime()
@@ -307,6 +316,50 @@ void GraphicsEngine::UpdateKeyboardInput()
 		if (glfwGetKey(Window, GLFW_KEY_Q) == GLFW_PRESS)
 		{
 			MainCamera.MoveCamera(DeltaTime, EDown);
+		}
+
+		if (glfwGetKey(Window, GLFW_KEY_R) == GLFW_PRESS)
+		{
+			if (ShaderSettings->bChangeWireframe)
+			{
+				if (ShaderSettings->bWireframeEnabled)
+				{
+					ShaderSettings->bWireframeEnabled = false;
+					glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+				}
+				else
+				{
+					ShaderSettings->bWireframeEnabled = true;
+					glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+				}
+			}
+
+			ShaderSettings->bChangeWireframe = false;
+		}
+
+		if (glfwGetKey(Window, GLFW_KEY_R) == GLFW_RELEASE)
+		{
+			ShaderSettings->bChangeWireframe = true;
+		}
+
+		if (glfwGetKey(Window, GLFW_KEY_1) == GLFW_PRESS)
+		{
+			ShaderSettings->LightingSetting = ShaderSettings->ENone;
+		}
+
+		if (glfwGetKey(Window, GLFW_KEY_2) == GLFW_PRESS)
+		{
+			ShaderSettings->LightingSetting = ShaderSettings->ESpotLight;
+		}
+
+		if (glfwGetKey(Window, GLFW_KEY_3) == GLFW_PRESS)
+		{
+			ShaderSettings->LightingSetting = ShaderSettings->EPointLight;
+		}
+
+		if (glfwGetKey(Window, GLFW_KEY_4) == GLFW_PRESS)
+		{
+			ShaderSettings->LightingSetting = ShaderSettings->EGlobalLighting;
 		}
 
 		int ControllerAttatched = glfwJoystickPresent(GLFW_JOYSTICK_1);

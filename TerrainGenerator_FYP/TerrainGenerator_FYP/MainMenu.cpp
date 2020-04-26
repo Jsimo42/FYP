@@ -26,7 +26,7 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 	Agents.push_back(new Agent(EColour::EWhite, cv::Vec3b(255, 255, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EYellow, cv::Vec3b(0, 255, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EOrange, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO	
-	Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), false, EEntityType::EModel, "Models/nanosuit.obj"));
+	Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EPink, cv::Vec3b(255, 0, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EPurple, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO
 	Agents.push_back(new Agent(EColour::EDarkBlue, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO

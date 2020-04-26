@@ -27,6 +27,9 @@ public:
 	void Render(Shader* ShaderIn);
 	void RenderModel(Shader* ShaderIn);
 
+	glm::vec3 GetPosition() { return WorldPosition; }
+	glm::vec3 GetRotation() { return WorldRotation; }
+
 	void SetPosition(glm::vec3 NewPosition) { WorldPosition = NewPosition; 	UpdateModelMatrix();};
 	void SetRotation(glm::vec3 NewRotation);
 	void SetScale(glm::vec3 NewScale) { WorldScale = NewScale; UpdateModelMatrix();};
