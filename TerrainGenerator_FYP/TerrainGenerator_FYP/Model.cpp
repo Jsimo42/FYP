@@ -136,7 +136,6 @@ void Model::LoadModel(std::string Path)
 		}
 
 		MaterialVector.push_back(new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), new Texture(DiffuseImage, GL_TEXTURE_2D, 0), new Texture(NormalImage, GL_TEXTURE_2D, 1), new Texture(MetallicImage, GL_TEXTURE_2D, 2), new Texture(RoughnessImage, GL_TEXTURE_2D, 3)));
-
 	}
 }
 
@@ -292,3 +291,5 @@ GLint Model::TextureFromFile(const char* Path, std::string Directory)
 
 	return TextureID;
 }
+
+

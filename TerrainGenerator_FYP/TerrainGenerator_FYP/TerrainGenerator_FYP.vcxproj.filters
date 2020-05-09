@@ -54,9 +54,6 @@
     <ClInclude Include="Libs.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vertex.h">
-      <Filter>Header Files\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Header Files\Graphics</Filter>
     </ClInclude>
@@ -125,6 +122,9 @@
     </ClInclude>
     <ClInclude Include="..\Linking\ImGUI\stb_truetype.h">
       <Filter>Header Files\Graphics\ImGUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Vertex.h">
+      <Filter>Header Files\Primitives</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

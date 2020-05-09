@@ -11,11 +11,10 @@ struct Material
 	sampler2D RoughnessTexture;
 };
 
-uniform float bIsModel;
+uniform float MeshType;
 uniform vec3 LightPosition;
 uniform vec3 LightRotation;
 uniform vec3 CameraPosition;
-uniform vec3 Colour;
 uniform Material MeshMaterial;
 uniform int LightingSetting;
 
@@ -37,7 +36,7 @@ vec3 CalculateSpecular();
 
 void main()
 {
-	if (bIsModel == 2.f)
+	if (MeshType == 2.f)
 	{
 		FragmentColour = vec4(0.5f, 0.5f, 0.5f, 1.f);
 		return;
@@ -64,7 +63,7 @@ void main()
 
 		if (LightToSurfaceAngle > 45.f)
 		{
-			Attenuation = 0.f;
+			Attenuation = 0.2f;
 		}
 
 		break;
@@ -98,7 +97,7 @@ vec3 CalculateDiffuse()
 	vec3 PositionToLight = normalize(LightPosition - Position);
 	float DiffuseColour = (clamp(dot(PositionToLight, N), 0, 1));
 
-	return MeshMaterial.Diffuse * texture(MeshMaterial.DiffuseTexture, TexCoords).rgb;
+	return DiffuseColour * MeshMaterial.Diffuse * texture(MeshMaterial.DiffuseTexture, TexCoords).rgb;
 }
 
 
@@ -118,5 +117,5 @@ vec3 CalculateSpecular()
 	vec3 HalvedDirection = normalize(LightToPosition + PositionToView);
 	float SpecularColour = pow(max(dot(N, HalvedDirection), 0), 30);
 
-	return MeshMaterial.Specular * texture(MeshMaterial.MetallicTexture, TexCoords).rgb;
+	return SpecularColour * MeshMaterial.Specular * texture(MeshMaterial.MetallicTexture, TexCoords).rgb;
 }

@@ -16,3 +16,17 @@ int main()
 	Engine.Initialise();
 	Engine.Run();
 }
+
+/*
+TODO List
+-Use Photo to Generate Level
+	-Read Photo
+	-Edit Size of Photo
+	-Find Edges of Paper in Photo
+	-Detect Colours
+
+
+-Add Lights through UI
+-Scale or Rotate Models in Real Time
+-Advanced Lighting eg Shadows
+*/

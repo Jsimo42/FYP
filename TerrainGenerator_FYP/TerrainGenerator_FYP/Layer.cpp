@@ -24,14 +24,6 @@ Layer::~Layer()
 
 void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int LayerNum, std::vector<Agent*> Agents)
 {
-	//TODO A4 Image size - 2480 x 3500
-	int Width{ 320 };
-	int Depth{ 320 };
-
-	int XPos{ -Width / 20 };
-	int YPos{ LayerNum - 1 };
-	int ZPos{ -Depth / 20 };
-
 	InitialiseMaterials();
 
 	cv::Mat Layer;
@@ -42,10 +34,16 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 		std::cout << "Cant Load Image: " << FileName << std::endl;
 	}
 
-	Width = Layer.rows;
-	Depth = Layer.cols;
+	int Width = Layer.rows;
+	int Depth = Layer.cols;
+
+	int XPos{ -Width / 20 };
+	int YPos{ LayerNum - 1 };
+	int ZPos{ -Depth / 20 };
 
 	cv::Vec3b Colour;
+	EColour PreviousMeshColour = EColour::EWhite;
+	int PreviousMeshID;
 
 	for (int i = 1; i < Depth; i += 10)
 	{
@@ -58,30 +56,151 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 			EntityTransform.Rotation = glm::vec3(0, 0, 0);
 			EntityTransform.Scale = glm::vec3(1, 1, 1);
 
-			//BGR
-			for (int a = 0; a < Agents.size(); a++)
+			if (GetNearestColour(Colour, Agents) == PreviousMeshColour && PreviousMeshColour != EColour::EWhite && EntityVector[PreviousMeshID - 1]->GetEntityType() == EEntityType::ECube)
 			{
-				if (Colour == Agents[a]->Colour)
+				float MovePositionX = (EntityVector[PreviousMeshID - 1]->GetScale().x / 2) - ((EntityVector[PreviousMeshID - 1]->GetScale().x - 1)/ 2);
+				EntityVector[PreviousMeshID - 1]->Move(glm::vec3(MovePositionX, 0, 0));
+				EntityVector[PreviousMeshID - 1]->Scale(glm::vec3(1, 0, 0));
+				XPos++;
+				continue;
+			}
+			
+			switch (GetNearestColour(Colour, Agents))
+			{
+			case EWhite:
+				//Leave Empty Space
+				PreviousMeshColour = EColour::EWhite;
+				break;
+			case EYellow:
+				if (Agents[1]->bIsMesh)
 				{
-					if (Agents[a]->Colour == cv::Vec3b(255, 255, 255))
-					{
-						continue;
-					}
-
-					if (Agents[a]->bIsMesh)
-					{
-						EntityVector.push_back(new EntityMesh(Agents[a]->MeshType, EntityTransform, Materials.at(ColourNames[Agents[a]->LayerColour])));
-					}
-					else
-					{
-						EntityVector.push_back(new EntityModel(Agents[a]->MeshType, EntityTransform, Materials.at(ColourNames[Agents[a]->LayerColour]), Agents[a]->FileName));
-					}
+					EntityVector.push_back(new EntityMesh(Agents[1]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EYellow])));
 				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[1]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EYellow]), Agents[1]->FileName));
+				}
+				PreviousMeshColour = EColour::EYellow;
+				break;
+			case EOrange:
+				if (Agents[2]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[2]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EOrange])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[2]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EOrange]), Agents[2]->FileName));
+				}
+				PreviousMeshColour = EColour::EOrange;
+				break;
+			case ERed:
+				if (Agents[3]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[3]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::ERed])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[3]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::ERed]), Agents[3]->FileName));
+				}
+				PreviousMeshColour = EColour::ERed;
+				break;
+			case EPink:
+				if (Agents[4]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[4]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EPink])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[4]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EPink]), Agents[4]->FileName));
+				}
+				PreviousMeshColour = EColour::EPink;
+				break;
+			case EPurple:
+				if (Agents[5]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[5]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EPurple])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[5]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EPurple]), Agents[5]->FileName));
+				}
+				PreviousMeshColour = EColour::EPurple;
+				break;
+			case EDarkBlue:
+				if (Agents[6]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[6]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EDarkBlue])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[6]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EDarkBlue]), Agents[6]->FileName));
+				}
+				PreviousMeshColour = EColour::EDarkBlue;
+				break;
+			case EBlue:
+				if (Agents[7]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[7]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EBlue])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[7]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EBlue]), Agents[7]->FileName));
+				}
+				PreviousMeshColour = EColour::EBlue;
+				break;
+			case ELightBlue:
+				if (Agents[8]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[8]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::ELightBlue])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[8]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::ELightBlue]), Agents[8]->FileName));
+				}
+				PreviousMeshColour = EColour::ELightBlue;
+				break;
+			case ELightGreen:
+				if (Agents[9]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[9]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::ELightGreen])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[9]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::ELightGreen]), Agents[9]->FileName));
+				}
+				PreviousMeshColour = EColour::ELightGreen;
+				break;
+			case EGreen:
+				if (Agents[10]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[10]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EGreen])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[10]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EGreen]), Agents[10]->FileName));
+				}
+				PreviousMeshColour = EColour::EGreen;
+				break;
+			case EBlack:
+				if (Agents[11]->bIsMesh)
+				{
+					EntityVector.push_back(new EntityMesh(Agents[11]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EBlack])));
+				}
+				else
+				{
+					EntityVector.push_back(new EntityModel(Agents[11]->MeshType, EntityTransform, Materials.at(ColourNames[EColour::EBlack]), Agents[11]->FileName));
+				}
+				PreviousMeshColour = EColour::EBlack;
+				break;
+			default:
+				break;
 			}
 
+			PreviousMeshID = EntityVector.size();
 			XPos++;
 		}
 
+		PreviousMeshColour = EColour::EWhite;
 		XPos = -Width/20;
 		ZPos++;
 	}
@@ -164,5 +283,100 @@ void Layer::InitialiseMaterials()
 	{
 		Materials.insert({ "Black", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
 	}
+
+	Image = cv::imread("Textures/Purple.png", cv::IMREAD_COLOR);
+	if (!Image.data)
+	{
+		std::cout << "Cant Load Image: Purple" << std::endl;
+	}
+	else
+	{
+		Materials.insert({ "Purple", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+	}
+
+	Image = cv::imread("Textures/LightGreen.png", cv::IMREAD_COLOR);
+	if (!Image.data)
+	{
+		std::cout << "Cant Load Image: Light Green" << std::endl;
+	}
+	else
+	{
+		Materials.insert({ "LightGreen", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+	}
+
+	Image = cv::imread("Textures/DarkBlue.png", cv::IMREAD_COLOR);
+	if (!Image.data)
+	{
+		std::cout << "Cant Load Image: Dark Blue" << std::endl;
+	}
+	else
+	{
+		Materials.insert({ "DarkBlue", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+	}
+
+	Image = cv::imread("Textures/Orange.png", cv::IMREAD_COLOR);
+	if (!Image.data)
+	{
+		std::cout << "Cant Load Image: Orange" << std::endl;
+	}
+	else
+	{
+		Materials.insert({ "Orange", new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(0.5f, 0.5f, 0.5f), glm::vec3(0.5f, 0.5f, 0.5f), new Texture(Image, GL_TEXTURE_2D, 0), new Texture(Image, GL_TEXTURE_2D, 1), new Texture(Image, GL_TEXTURE_2D, 2), new Texture(Image, GL_TEXTURE_2D, 3)) });
+	}
 }
 
+EColour Layer::GetNearestColour(cv::Vec3b ColourIn, std::vector<Agent*> Agents)
+{
+	float NearestR = 255 - ColourIn[2];
+	float NearestG = 255 - ColourIn[1];
+	float NearestB = 255 - ColourIn[0];
+	
+	if (NearestB < 63)
+	{
+		NearestB = 255;
+	}
+	else if (NearestB >= 63 && NearestB < 188)
+	{
+		NearestB = 125;
+	}
+	else if (NearestB >= 188)
+	{
+		NearestB = 0;
+	}
+
+	if (NearestG < 63)
+	{
+		NearestG = 255;
+	}
+	else if (NearestG >= 63 && NearestG < 188)
+	{
+		NearestG = 125;
+	}
+	else if (NearestG >= 188)
+	{
+		NearestG = 0;
+	}
+
+	if (NearestR < 63)
+	{
+		NearestR = 255;
+	}
+	else if (NearestR >= 63 && NearestR < 188)
+	{
+		NearestR = 125;
+	}
+	else if (NearestR >= 188)
+	{
+		NearestR = 0;
+	}
+
+	cv::Vec3b NewColour = cv::Vec3b(NearestB, NearestG, NearestR);
+
+	for (int a = 0; a < Agents.size(); a++)
+	{
+		if (NewColour == Agents[a]->Colour)
+		{
+			return Agents[a]->LayerColour;
+		}
+	}
+}

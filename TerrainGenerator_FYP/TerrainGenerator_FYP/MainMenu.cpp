@@ -25,14 +25,14 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 {
 	Agents.push_back(new Agent(EColour::EWhite, cv::Vec3b(255, 255, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EYellow, cv::Vec3b(0, 255, 255), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::EOrange, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO	
+	Agents.push_back(new Agent(EColour::EOrange, cv::Vec3b(0, 125, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::ERed, cv::Vec3b(0, 0, 255), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EPink, cv::Vec3b(255, 0, 255), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::EPurple, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO
-	Agents.push_back(new Agent(EColour::EDarkBlue, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO
+	Agents.push_back(new Agent(EColour::EPurple, cv::Vec3b(125, 0, 125), true, EEntityType::ECube));
+	Agents.push_back(new Agent(EColour::EDarkBlue, cv::Vec3b(125, 0, 0), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EBlue, cv::Vec3b(255, 0, 0), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::ELightBlue, cv::Vec3b(255, 255, 0), true, EEntityType::ECube));
-	Agents.push_back(new Agent(EColour::ELightGreen, cv::Vec3b(6, 6, 6), true, EEntityType::ECube)); //TODO
+	Agents.push_back(new Agent(EColour::ELightGreen, cv::Vec3b(125, 255, 125), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EGreen, cv::Vec3b(0, 255, 0), true, EEntityType::ECube));
 	Agents.push_back(new Agent(EColour::EBlack, cv::Vec3b(0, 0, 0), true, EEntityType::ECube));
 
@@ -146,8 +146,6 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 					Done = true;
 				}
 			}
-
-
 		}
 		
 		glViewport(0, 0, (int)ImGui::GetIO().DisplaySize.x, (int)ImGui::GetIO().DisplaySize.y);
@@ -208,7 +206,8 @@ bool MainMenu::InitialiseGLFW(float GLMajorVer, float GLMinorVer)
 
 void MainMenu::DrawAgentWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 {
-	ImGui::Begin("Agent Window", &ShowWindow);
+	ImGuiWindowFlags Flags = { ImGuiWindowFlags_NoMove };
+	ImGui::Begin("Agent Window", &ShowWindow, Flags);
 
 	ImGui::NewLine();
 	ImGui::Text("Agents");
@@ -285,6 +284,8 @@ void MainMenu::DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 	{
 		if (Agents[i]->MeshType == EEntityType::EModel)
 		{
+			ImGui::PushID(i);
+
 			ImGui::Text(ColourNames[Agents[i]->LayerColour].c_str());
 			
 			char Buffer[64] = "";
@@ -293,7 +294,9 @@ void MainMenu::DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 
 			ImGui::SameLine();
 
-			ImGui::InputText("", Buffer, IM_ARRAYSIZE(Buffer));
+			std::string Label = "##" + std::to_string(i);
+
+			ImGui::InputText(Label.data(), Buffer, IM_ARRAYSIZE(Buffer));
 
 			ImGui::SameLine();
 
@@ -319,6 +322,8 @@ void MainMenu::DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 			ImGui::SameLine();
 
 			ImGui::Text(Agents[i]->FileName.c_str());
+
+			ImGui::PopID();
 		}
 	}
 

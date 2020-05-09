@@ -22,5 +22,6 @@ private:
 	std::unordered_map<std::string, Material*> Materials;
 
 	void InitialiseMaterials();
+	EColour GetNearestColour(cv::Vec3b ColourIn, std::vector<Agent*> Agents);
 };
 

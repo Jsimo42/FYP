@@ -16,13 +16,12 @@ GraphicsEngine::~GraphicsEngine()
 	glfwDestroyWindow(Window);
 	glfwTerminate();
 
-	//TODO Change to int
-	for (int i = 0; i < ShaderVector.size(); i++)
+	for (unsigned int i = 0; i < ShaderVector.size(); i++)
 	{
 		delete ShaderVector[i];
 	}
 
-	for (int i = 0; i < TextureVector.size(); i++)
+	for (unsigned int i = 0; i < TextureVector.size(); i++)
 	{
 		delete TextureVector[i];
 	}
@@ -86,6 +85,9 @@ Mesh* GraphicsEngine::CreatePrimitive(EPrimitive PrimitiveType, Transform MeshTr
 
 		return NewMesh;
 		break;
+	default:
+		std::cout << "Create Primitive Error" << std::endl;
+		return new Mesh();
 	}
 }
 
@@ -112,23 +114,23 @@ void GraphicsEngine::Render(std::vector<Entity*> EntityVector)
 	ShaderVector[MainProgram]->SetVec3f(LightVector[0]->GetPosition(), "LightPosition");
 	ShaderVector[MainProgram]->SetVec3f(LightVector[0]->GetRotation(), "LightRotation");
 
-	for (int i = 0; i < LightVector.size(); i++)
+	for (unsigned int i = 0; i < LightVector.size(); i++)
 	{
-		ShaderVector[MainProgram]->Set1f(2.f, "bIsModel");
+		ShaderVector[MainProgram]->Set1f(2.f, "MeshType");
 
 		LightVector[i]->Render(ShaderVector[MainProgram]);
 	}
 
-	for (int i = 0; i < EntityVector.size(); i++)
+	for (unsigned int i = 0; i < EntityVector.size(); i++)
 	{
 		if (EntityVector[i]->GetEntityType() == EEntityType::EModel)
 		{
-			ShaderVector[MainProgram]->Set1f(1.f, "bIsModel");
+			ShaderVector[MainProgram]->Set1f(1.f, "MeshType");
 
 			std::vector<Mesh*> MeshVector = EntityVector[i]->GetModel()->GetMesh();
 			std::vector<Material*> MaterialVector = EntityVector[i]->GetModel()->GetMaterials();
 
-			for (int j = 0; j < MeshVector.size(); j++)
+			for (unsigned int j = 0; j < MeshVector.size(); j++)
 			{
 				MaterialVector[j]->RenderMaterial(ShaderVector[MainProgram]);
 				MeshVector[j]->RenderModel(ShaderVector[MainProgram]);
@@ -137,7 +139,7 @@ void GraphicsEngine::Render(std::vector<Entity*> EntityVector)
 		}
 		else
 		{
-			ShaderVector[MainProgram]->Set1f(0.f, "bIsModel");
+			ShaderVector[MainProgram]->Set1f(0.f, "MeshType");
 			
 			EntityVector[i]->GetMaterial()->RenderMaterial(ShaderVector[MainProgram]);
 			EntityVector[i]->GetMesh()->Render(ShaderVector[MainProgram]);

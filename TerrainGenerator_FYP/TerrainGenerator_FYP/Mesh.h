@@ -29,6 +29,7 @@ public:
 
 	glm::vec3 GetPosition() { return WorldPosition; }
 	glm::vec3 GetRotation() { return WorldRotation; }
+	glm::vec3 GetScale() { return WorldScale; }
 
 	void SetPosition(glm::vec3 NewPosition) { WorldPosition = NewPosition; 	UpdateModelMatrix();};
 	void SetRotation(glm::vec3 NewRotation);
@@ -44,7 +45,7 @@ private:
 	//Transforms
 	glm::vec3 WorldPosition = glm::vec3(0.f);
 	glm::vec3 WorldRotation = glm::vec3(0.f);
-	glm::vec3 WorldScale = glm::vec3(1.f);
+	glm::vec3 WorldScale = glm::vec3(1.f, 1.f, 1.f);
 
 	unsigned NumVertices{ 0 };
 	unsigned NumIndices{ 0 };	

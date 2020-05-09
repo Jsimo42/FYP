@@ -17,6 +17,12 @@ public:
 	Material* GetMaterial() const { return MeshMaterial; };
 	EEntityType GetEntityType() const { return Type; };
 
+	glm::vec3 GetScale() { return EntityTransform.Scale; }
+
+	void Move(glm::vec3 MoveAmount) { EntityTransform.Position += MoveAmount; };
+	void Rotate(glm::vec3 RotationAmount) { EntityTransform.Rotation += RotationAmount; };
+	void Scale(glm::vec3 ScaleAmount) { EntityTransform.Scale += ScaleAmount; };
+
 protected:
 	EEntityType Type = EEntityType::ENone;
 	std::string FileName{ "" };
