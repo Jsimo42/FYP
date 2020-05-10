@@ -116,5 +116,7 @@ private:
 	void UpdateMouseInput();
 
 	static void WindowResize(GLFWwindow* WindowIn, int Width, int Height);
+
+	void SaveLevel();
 };
 

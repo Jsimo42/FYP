@@ -37,5 +37,7 @@ private:
 	void DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow);
 
 	void CheckEverythingComplete(std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents);
+	void SaveConfig(std::vector<Agent*> &Agents);
+	void LoadConfig(std::vector<Agent*> &Agents);
 };
 

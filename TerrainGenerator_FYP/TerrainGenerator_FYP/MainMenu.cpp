@@ -125,6 +125,12 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 				DrawModelWindow(Agents, ShowModelWindow);
 			}
 
+			if (ImGui::Button("Save Agent Config"))
+				SaveConfig(Agents);
+
+			if (ImGui::Button("Load Agent Config"))
+				LoadConfig(Agents);
+
 			CheckEverythingComplete(LayerFilePaths, Agents);
 
 			switch (FormComplete)
@@ -214,7 +220,7 @@ void MainMenu::DrawAgentWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 
 	std::string MeshType = "";
 
-	for (int i = 0; i < ColourNames.size(); i++)
+	for (int i = 1; i < ColourNames.size() - 1; i++)
 	{
 		ImGui::PushID(i);
 
@@ -280,7 +286,7 @@ void MainMenu::DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 {
 	ImGui::Begin("Model Window", &ShowWindow);
 
-	for (int i = 0; i < Agents.size(); i++)
+	for (int i = 1; i < Agents.size() - 1; i++)
 	{
 		if (Agents[i]->MeshType == EEntityType::EModel)
 		{
@@ -341,7 +347,7 @@ void MainMenu::CheckEverythingComplete(std::vector<std::string>& LayerFilePaths,
 		return;
 	}
 
-	for (int i = 0; i < Agents.size(); i++)
+	for (int i = 1; i < Agents.size() - 1; i++)
 	{
 		if (Agents[i]->MeshType == EEntityType::EModel)
 		{
@@ -354,4 +360,58 @@ void MainMenu::CheckEverythingComplete(std::vector<std::string>& LayerFilePaths,
 	}
 
 	FormComplete = EFormCompletion::EDone;
+}
+
+void MainMenu::SaveConfig(std::vector<Agent*> &Agents)
+{
+	std::ofstream SaveFile;
+
+	SaveFile.open("ConfigSave.txt");
+
+	for (int i = 1; i < Agents.size() - 1; i++)
+	{
+		SaveFile << Agents[i]->MeshType << " " << Agents[i]->FileName << "\n";
+	}
+
+	SaveFile.close();
+}
+
+void MainMenu::LoadConfig(std::vector<Agent*>& Agents)
+{
+	std::ifstream LoadFile ("ConfigSave.txt");
+	char Input;
+	std::string ModelName;
+
+	if (LoadFile.is_open())
+	{
+		for (int i = 1; i < Agents.size() - 1; i++)
+		{
+			LoadFile >> std::skipws >> Input;
+
+			switch (Input - 48)
+			{
+			case 0:
+				Agents[i]->MeshType = EEntityType::EModel;
+				Agents[i]->bIsMesh = false;
+
+				LoadFile >> std::skipws >> ModelName;
+				Agents[i]->FileName = ModelName;
+				break;
+			case 1:
+				Agents[i]->MeshType = EEntityType::ECube;
+				Agents[i]->bIsMesh = true;
+				break;
+			case 2:
+				Agents[i]->MeshType = EEntityType::EPyramid;
+				Agents[i]->bIsMesh = true;
+				break;
+			default:
+				break;
+			}
+			//break;
+			
+		}
+
+		LoadFile.close();
+	}
 }

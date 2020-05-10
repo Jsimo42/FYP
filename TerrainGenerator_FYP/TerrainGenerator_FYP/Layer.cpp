@@ -11,12 +11,12 @@ Layer::Layer()
 
 Layer::~Layer()
 {
-	for (int i = 0; i < EntityVector.size(); i++)
+	for (unsigned int i = 0; i < EntityVector.size(); i++)
 	{
 		delete EntityVector[i];
 	}
 
-	for (int i = 0; i < Materials.size(); i++)
+	for (unsigned int i = 0; i < Materials.size(); i++)
 	{
 		//delete Materials[i];
 	}
@@ -205,7 +205,7 @@ void Layer::CreateLayer(std::string FileName, GraphicsEngine* Graphics, int Laye
 		ZPos++;
 	}
 
-	for (int i = 0; i < EntityVector.size(); i++)
+	for (unsigned int i = 0; i < EntityVector.size(); i++)
 	{
 		EntityVector[i]->Initialise(Graphics);
 	}
@@ -327,9 +327,9 @@ void Layer::InitialiseMaterials()
 
 EColour Layer::GetNearestColour(cv::Vec3b ColourIn, std::vector<Agent*> Agents)
 {
-	float NearestR = 255 - ColourIn[2];
-	float NearestG = 255 - ColourIn[1];
-	float NearestB = 255 - ColourIn[0];
+	float NearestR = 255.f - ColourIn[2];
+	float NearestG = 255.f - ColourIn[1];
+	float NearestB = 255.f - ColourIn[0];
 	
 	if (NearestB < 63)
 	{
@@ -372,11 +372,13 @@ EColour Layer::GetNearestColour(cv::Vec3b ColourIn, std::vector<Agent*> Agents)
 
 	cv::Vec3b NewColour = cv::Vec3b(NearestB, NearestG, NearestR);
 
-	for (int a = 0; a < Agents.size(); a++)
+	for (unsigned int a = 0; a < Agents.size(); a++)
 	{
 		if (NewColour == Agents[a]->Colour)
 		{
 			return Agents[a]->LayerColour;
 		}
 	}
+
+	return EColour::EWhite;
 }
