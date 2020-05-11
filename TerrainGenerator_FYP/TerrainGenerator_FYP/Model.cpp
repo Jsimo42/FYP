@@ -4,6 +4,7 @@
 
 Model::Model(std::string Path) : FileName(Path)
 {
+	LoadModel(Path);
 }
 
 Model::~Model()
@@ -12,11 +13,6 @@ Model::~Model()
 	{
 		delete MeshVector[i];
 	}
-}
-
-void Model::InitialiseModel(std::string FileName)
-{
-	LoadModel(FileName);
 }
 
 void Model::Render(Shader * ShaderIn)

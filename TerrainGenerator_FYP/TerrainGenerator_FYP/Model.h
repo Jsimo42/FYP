@@ -11,16 +11,11 @@ public:
 	Model(std::string Path);
 	~Model();
 
-	void InitialiseModel(std::string FileName);
-
 	void Render(Shader* ShaderIn);
 
 	std::vector<Material*> GetMaterials() { return MaterialVector; }
 	std::vector<Mesh*> GetMesh() { return MeshVector; }
-	std::string GetFileName() { return FileName; }
 
-	void SetMesh(std::vector<Mesh*> MeshVectorIn) { MeshVector = MeshVectorIn; }
-	void SetMaterials(std::vector<Material*> MaterialVectorIn) { MaterialVector= MaterialVectorIn; }
 	void SetPosition(glm::vec3 NewPosition);
 	void SetRotation(glm::vec3 NewRotation);
 	void SetScale(glm::vec3 NewScale);
