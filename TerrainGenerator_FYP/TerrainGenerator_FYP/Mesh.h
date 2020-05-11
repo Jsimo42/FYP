@@ -17,7 +17,7 @@ class Mesh
 {
 public:
 	//Mesh Loading Constructor
-	Mesh(Primitive* PrimitiveIn, glm::vec3 PositionIn = glm::vec3(0.f), glm::vec3 RotationIn = glm::vec3(0.f), glm::vec3 ScaleIn = glm::vec3(1.f)); //TODO Create Vector and Transform
+	Mesh(Primitive* PrimitiveIn, glm::vec3 PositionIn = glm::vec3(0.f), glm::vec3 RotationIn = glm::vec3(0.f), glm::vec3 ScaleIn = glm::vec3(1.f));
 	//Model Loading Constructor
 	Mesh(std::vector<Vertex> VerticesIn, std::vector<GLuint> IndicesIn, std::vector<TextureInfo> TexturesIn);
 

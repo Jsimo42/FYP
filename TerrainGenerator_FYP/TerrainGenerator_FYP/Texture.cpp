@@ -43,7 +43,6 @@ void Texture::LoadFromFile(const cv::Mat Image)
 	}
 	else
 	{
-		//TODO Image Name
 		std::cout << "Image Load Error" << std::endl;
 	}
 

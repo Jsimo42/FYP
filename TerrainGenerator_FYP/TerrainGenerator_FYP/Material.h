@@ -8,7 +8,6 @@ class Material
 {
 public:
 	Material(glm::vec3 Ambient, glm::vec3 Diffuse, glm::vec3 Specular, Texture* DiffuseTexture, Texture* NormalTexture, Texture* MetallicTexture, Texture* RoughnessTexture);
-	Material() {}; //TODO Remove temp constructor
 
 	void RenderMaterial(Shader* ShaderIn);
 	void UnBindTextures();

@@ -11,7 +11,7 @@ Level::Level()
 
 Level::~Level()
 {
-	for (int i = 0; i < LayerVector.size(); i++)
+	for (unsigned int i = 0; i < LayerVector.size(); i++)
 	{
 		delete LayerVector[i];
 	}
@@ -25,7 +25,7 @@ void Level::CreateLevel(bool bGenerateGround, std::vector<std::string> FilePaths
 		LayerCount++;
 	}
 
-	for (int i = 0; i < FilePaths.size(); i++)
+	for (unsigned int i = 0; i < FilePaths.size(); i++)
 	{
 		LayerVector.push_back(CreateLayer(FilePaths[i], Graphics, LayerCount, Agents));
 		LayerCount++;
@@ -36,7 +36,7 @@ void Level::Render(GraphicsEngine* Graphics)
 {
 	std::vector<Entity*> EntityVector;
 
-	for (int i = 0; i < LayerVector.size(); i++)
+	for (unsigned int i = 0; i < LayerVector.size(); i++)
 	{
 		std::vector<Entity*> NewEntityVector = LayerVector[i]->GetEntities();
 		EntityVector.insert(EntityVector.end(), NewEntityVector.begin(), NewEntityVector.end());

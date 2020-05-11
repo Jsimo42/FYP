@@ -97,7 +97,8 @@ Model* GraphicsEngine::CreateModel(std::string FileName, Transform ModelTransfor
 
 	NewModel->SetPosition(ModelTransform.Position);
 	NewModel->SetRotation(ModelTransform.Rotation);
-	NewModel->SetScale(ModelTransform.Scale);
+
+	NewModel->InitialiseModel(NewModel->GetFileName());
 
 	return NewModel;
 }

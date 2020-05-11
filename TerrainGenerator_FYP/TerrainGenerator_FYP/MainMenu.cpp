@@ -8,7 +8,7 @@ MainMenu::~MainMenu()
 {
 }
 
-bool MainMenu::Initialise(const int Width, const int Height, float GLMajorVer, float GLMinorVer)
+bool MainMenu::Initialise(const int Width, const int Height, int GLMajorVer, int GLMinorVer)
 {
 	WindowWidth = Width;
 	WindowHeight = Height;
@@ -91,7 +91,7 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 
 			ImGui::Text("Submitted Layers");
 
-			for (int i = 0; i < LayerFilePaths.size(); i++)
+			for (unsigned int i = 0; i < LayerFilePaths.size(); i++)
 			{
 				ImGui::Text(LayerFilePaths[i].c_str());
 
@@ -168,7 +168,7 @@ bool MainMenu::ShowMenu(bool & bGenerateGround, std::vector<std::string>& LayerF
 	return true;
 }
 
-bool MainMenu::InitialiseGLFW(float GLMajorVer, float GLMinorVer)
+bool MainMenu::InitialiseGLFW(int GLMajorVer, int GLMinorVer)
 {
 	if (glfwInit() == GLFW_FALSE)
 	{
@@ -220,7 +220,7 @@ void MainMenu::DrawAgentWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 
 	std::string MeshType = "";
 
-	for (int i = 1; i < ColourNames.size() - 1; i++)
+	for (unsigned int i = 1; i < ColourNames.size() - 1; i++)
 	{
 		ImGui::PushID(i);
 
@@ -286,7 +286,7 @@ void MainMenu::DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow)
 {
 	ImGui::Begin("Model Window", &ShowWindow);
 
-	for (int i = 1; i < Agents.size() - 1; i++)
+	for (unsigned int i = 1; i < Agents.size() - 1; i++)
 	{
 		if (Agents[i]->MeshType == EEntityType::EModel)
 		{
@@ -347,7 +347,7 @@ void MainMenu::CheckEverythingComplete(std::vector<std::string>& LayerFilePaths,
 		return;
 	}
 
-	for (int i = 1; i < Agents.size() - 1; i++)
+	for (unsigned int i = 1; i < Agents.size() - 1; i++)
 	{
 		if (Agents[i]->MeshType == EEntityType::EModel)
 		{
@@ -368,7 +368,7 @@ void MainMenu::SaveConfig(std::vector<Agent*> &Agents)
 
 	SaveFile.open("ConfigSave.txt");
 
-	for (int i = 1; i < Agents.size() - 1; i++)
+	for (unsigned int i = 1; i < Agents.size() - 1; i++)
 	{
 		SaveFile << Agents[i]->MeshType << " " << Agents[i]->FileName << "\n";
 	}
@@ -384,7 +384,7 @@ void MainMenu::LoadConfig(std::vector<Agent*>& Agents)
 
 	if (LoadFile.is_open())
 	{
-		for (int i = 1; i < Agents.size() - 1; i++)
+		for (unsigned int i = 1; i < Agents.size() - 1; i++)
 		{
 			LoadFile >> std::skipws >> Input;
 

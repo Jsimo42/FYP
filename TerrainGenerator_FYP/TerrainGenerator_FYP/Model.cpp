@@ -2,22 +2,26 @@
 #include "Model.h"
 
 
-Model::Model(std::string Path)
+Model::Model(std::string Path) : FileName(Path)
 {
-	LoadModel(Path);
 }
 
 Model::~Model()
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		delete MeshVector[i];
 	}
 }
 
+void Model::InitialiseModel(std::string FileName)
+{
+	LoadModel(FileName);
+}
+
 void Model::Render(Shader * ShaderIn)
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		MeshVector[i]->RenderModel(ShaderIn);
 	}
@@ -25,7 +29,7 @@ void Model::Render(Shader * ShaderIn)
 
 void Model::SetPosition(glm::vec3 NewPosition)
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		MeshVector[i]->SetPosition(NewPosition);
 	}
@@ -33,7 +37,7 @@ void Model::SetPosition(glm::vec3 NewPosition)
 
 void Model::SetRotation(glm::vec3 NewRotation)
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		MeshVector[i]->SetRotation(NewRotation);
 	}
@@ -41,7 +45,7 @@ void Model::SetRotation(glm::vec3 NewRotation)
 
 void Model::SetScale(glm::vec3 NewScale)
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		MeshVector[i]->SetScale(NewScale);
 	}
@@ -49,7 +53,7 @@ void Model::SetScale(glm::vec3 NewScale)
 
 void Model::Move(glm::vec3 MoveAmount)
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		MeshVector[i]->Move(MoveAmount);
 	}
@@ -57,7 +61,7 @@ void Model::Move(glm::vec3 MoveAmount)
 
 void Model::Rotate(glm::vec3 RotationAmount)
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		MeshVector[i]->Rotate(RotationAmount);
 	}
@@ -65,7 +69,7 @@ void Model::Rotate(glm::vec3 RotationAmount)
 
 void Model::Scale(glm::vec3 ScaleAmount)
 {
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
 		MeshVector[i]->Scale(ScaleAmount);
 	}
@@ -86,12 +90,12 @@ void Model::LoadModel(std::string Path)
 	ProcessNode(Scene->mRootNode, Scene);
 
 
-	for (int i = 0; i < MeshVector.size(); i++)
+	for (unsigned int i = 0; i < MeshVector.size(); i++)
 	{
-		cv::Mat DiffuseImage;
-		cv::Mat NormalImage;
-		cv::Mat MetallicImage;
-		cv::Mat RoughnessImage;
+		cv::Mat DiffuseImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+		cv::Mat NormalImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+		cv::Mat MetallicImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
+		cv::Mat RoughnessImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
 
 		std::vector<TextureInfo> Textures = MeshVector[i]->GetTextures();
 
@@ -116,23 +120,6 @@ void Model::LoadModel(std::string Path)
 			{
 				RoughnessImage = cv::imread("Models/" + FilePath, cv::IMREAD_COLOR);
 			}
-
-			if (!DiffuseImage.data)
-			{
-				DiffuseImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
-			}
-			if (!NormalImage.data)
-			{
-				NormalImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
-			}
-			if (!MetallicImage.data)
-			{
-				MetallicImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
-			}
-			if (!RoughnessImage.data)
-			{
-				RoughnessImage = cv::imread("Textures/White.png", cv::IMREAD_COLOR);
-			}
 		}
 
 		MaterialVector.push_back(new Material(glm::vec3(0.2f, 0.2f, 0.2f), glm::vec3(1.0f, 1.0f, 1.0f), glm::vec3(1.0f, 1.0f, 1.0f), new Texture(DiffuseImage, GL_TEXTURE_2D, 0), new Texture(NormalImage, GL_TEXTURE_2D, 1), new Texture(MetallicImage, GL_TEXTURE_2D, 2), new Texture(RoughnessImage, GL_TEXTURE_2D, 3)));
@@ -141,13 +128,13 @@ void Model::LoadModel(std::string Path)
 
 void Model::ProcessNode(aiNode* Node, const aiScene* Scene)
 {
-	for (int i = 0; i < Node->mNumMeshes; i++)
+	for (unsigned int i = 0; i < Node->mNumMeshes; i++)
 	{
 		aiMesh* Mesh = Scene->mMeshes[Node->mMeshes[i]];
 		MeshVector.push_back(ProcessMesh(Mesh, Scene));
 	}
 
-	for (int i = 0; i < Node->mNumChildren; i++)
+	for (unsigned int i = 0; i < Node->mNumChildren; i++)
 	{
 		ProcessNode(Node->mChildren[i], Scene);
 	}
@@ -160,7 +147,7 @@ Mesh* Model::ProcessMesh(aiMesh* MeshIn, const aiScene* Scene)
 	std::vector<TextureInfo> TextureVector;
 
 	//Process Vertices
-	for (int i = 0; i < MeshIn->mNumVertices; i++)
+	for (unsigned int i = 0; i < MeshIn->mNumVertices; i++)
 	{
 		Vertex Vertex;
 		glm::vec3 Vector;
@@ -196,11 +183,11 @@ Mesh* Model::ProcessMesh(aiMesh* MeshIn, const aiScene* Scene)
 	}
 
 	//Process Indices
-	for (int i = 0; i < MeshIn->mNumFaces; i++)
+	for (unsigned int i = 0; i < MeshIn->mNumFaces; i++)
 	{
 		aiFace Face = MeshIn->mFaces[i];
 
-		for (int j = 0; j < Face.mNumIndices; j++)
+		for (unsigned int j = 0; j < Face.mNumIndices; j++)
 		{
 			IndexVector.push_back(Face.mIndices[j]);
 		}
@@ -226,13 +213,13 @@ std::vector<TextureInfo> Model::LoadMaterialTextures(aiMaterial* Material, aiTex
 {
 	std::vector<TextureInfo> TexVector;
 
-	for (int i = 0; i < Material->GetTextureCount(Type); i++)
+	for (unsigned int i = 0; i < Material->GetTextureCount(Type); i++)
 	{
 		aiString String;
 		Material->GetTexture(Type, i, &String);
 		GLboolean bSkip = false;
 
-		for (int j = 0; j < TextureVector.size(); j++)
+		for (unsigned int j = 0; j < TextureVector.size(); j++)
 		{
 			if (TextureVector[j].Path == String)
 			{

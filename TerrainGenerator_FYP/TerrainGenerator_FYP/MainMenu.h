@@ -17,7 +17,7 @@ public:
 	MainMenu() {};
 	~MainMenu();
 
-	bool Initialise(const int Width, const int Height, float GLMajorVer, float GLMinorVer);
+	bool Initialise(const int Width, const int Height, int GLMajorVer, int GLMinorVer);
 
 	bool ShowMenu(bool& bGenerateGround, std::vector<std::string>& LayerFilePaths, std::vector<Agent*> &Agents);
 
@@ -31,7 +31,7 @@ private:
 	std::string ModelInput = "";
 	EFormCompletion FormComplete = EFormCompletion::ENeedsLayers;
 
-	bool InitialiseGLFW(float GLMajorVer, float GLMinorVer);
+	bool InitialiseGLFW(int GLMajorVer, int GLMinorVer);
 
 	void DrawAgentWindow(std::vector<Agent*> &Agents, bool &ShowWindow);
 	void DrawModelWindow(std::vector<Agent*> &Agents, bool &ShowWindow);
